@@ -11,6 +11,28 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+    	DB::table('roles')->insert([
+    		'rol' => 'Administrador',
+    		'created_at' => Carbon::now(),
+    		'updated_at' => Carbon::now(),
+    	]);
+    	DB::table('roles')->insert([
+    		'rol' => 'Cliente',
+    		'created_at' => Carbon::now(),
+    		'updated_at' => Carbon::now(),
+    	]);
+
+    	DB::table('countries')->insert([
+    		'country' => 'Colombia',
+    		'created_at' => Carbon::now(),
+    		'updated_at' => Carbon::now(),
+    	]);
+    	DB::table('countries')->insert([
+    		'country' => 'Estados Unidos',
+    		'created_at' => Carbon::now(),
+    		'updated_at' => Carbon::now(),
+    	]);
+
         // $this->call(UsersTableSeeder::class);
     }
 }

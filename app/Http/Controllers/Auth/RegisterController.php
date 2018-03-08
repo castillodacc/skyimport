@@ -33,7 +33,7 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
-        return view('adminlte::auth.register');
+        return view('adminlte::auth.registerwithoutvue');
     }
 
     /**
@@ -62,11 +62,17 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name'     => 'required|max:255',
-            'username' => 'sometimes|required|max:255|unique:users',
+            'name'     => 'required|max:255|full_name',
+            // 'username' => 'sometimes|required|max:255|unique:users',
             'email'    => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
             'terms'    => 'required',
+        ],[], [
+            'name' => 'nombre',
+            // 'username' => '',
+            'email'    => 'correo',
+            'password' => 'contraseña',
+            'terms'    => 'terminos',
         ]);
     }
 
@@ -78,8 +84,10 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $data['name'] = explode(' ', $data['name']);
         $fields = [
-            'name'     => $data['name'],
+            'name'     => $data['name'][0],
+            'last_name'     => $data['name'][1],
             'email'    => $data['email'],
             'password' => bcrypt($data['password']),
         ];
