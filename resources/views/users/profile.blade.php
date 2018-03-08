@@ -35,10 +35,10 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="profile">
                     <div class="box-header with-border">
-                        <button type="submit" class="btn btn-primary btn-xs pull-right" id="active_edit_profile"><span class="fa fa-edit"></span> Editar perfil</button>
+                        <button class="btn btn-primary btn-xs pull-right" id="active_edit_profile"><span class="fa fa-edit"></span> Editar perfil</button>
                     </div>
                     <form id="profile" action="{{ route('usuarios.update', $user->id) }}">
-                        {{ csrf_field() }} {{ method_field('POST') }}
+                        {{ csrf_field() }} {{ method_field('PUT') }}
                         <div class="box-body">
                             <div class="row">
                                 <div class="form-group col-md-6">
@@ -95,9 +95,9 @@
                                         <div class="input-group-addon">
                                             <span class="fa fa-globe text-primary"></span>
                                         </div>
-                                        <select id="country" name="country" class="form-control"></select>
+                                        <select id="country_id" name="country_id" class="form-control"></select>
                                     </div>
-                                    <small id="country" class="form-text text-muted">Pais de origen.</small>
+                                    <small id="country_id" class="form-text text-muted">Pais de origen.</small>
                                 </div>
                             </div>
                             <div class="row">
@@ -117,15 +117,15 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-6"> 
-                                    <textarea id="address2" name="address2" class="form-control" placeholder="Direccion secundaria"></textarea>
-                                    <small  class="form-text text-muted" id="address2">Direccion secundaria del usuario.</small>
+                                    <textarea id="address_two" name="address_two" class="form-control" placeholder="Direccion secundaria"></textarea>
+                                    <small id="address_two" class="form-text text-muted">Direccion secundaria del usuario.</small>
                                 </div> 
                             </div>
                         </div>
-                        <div class="box-footer">
+                        <div id="buttons_edit_perfil" class="box-footer">
                             <div class="pull-right">
                                 <div class="btn-group">
-                                    <button id="cancel" name="cancel" class="btn btn-danger btn-sm"><span class="fa fa-close"></span> Cancelar</button>
+                                    <button id="cancel" type="button" class="btn btn-danger btn-sm"><span class="fa fa-close"></span> Cancelar</button>
                                 </div>
                                 <div class="btn-group">
                                     <button type="submit" class="btn btn-primary btn-sm"><span class="fa fa-send"></span> Enviar</button>

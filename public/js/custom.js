@@ -21,31 +21,55 @@ if (location.pathname == '/perfil') {
 	// al cargar la pagina se colocan los inputs con readonly
 	let inputs = $('form#profile').find('input, textarea, select');
 	inputs.attr('disabled', '');
+	$('#buttons_edit_perfil').hide();
+	let messages = {
+	'name': 'Nombres del usuario.',
+	'last_name': 'Apellidos del usuario.',
+	'phone': 'Telefono de contacto.',
+	'email': 'Correo electronico.',
+	'num_id': 'Documento de identidad.',
+	'country_id': 'Pais de origen.',
+	'city': 'Ciudad de origen.',
+	'address': 'Direccion principal del usuario.',
+	'address_two': 'Direccion secundaria del usuario.'
+	};
 	// se altera el estado de los inputs con este boton
-	$('button#active_edit_profile').click(function (e) {
+	$('button#active_edit_profile, button#cancel').click(function (e) {
 		e.preventDefault();
+		for (var i in messages) {
+			$('small#'+i)
+			.removeClass('text-danger')
+			.addClass('text-muted')
+			.text(messages[i])
+		}
 		if ($(inputs[0]).attr('disabled') == undefined) {
 			inputs.attr('disabled', '');
+			$('#buttons_edit_perfil').fadeOut();
+			UserProfile();
 		} else {
+			$('#buttons_edit_perfil').fadeIn();
 			inputs.removeAttr('disabled');
 		}
 	});
-	let id = $('form#profile')[0].action.split('/')[4];
-	$.get(url+'/usuarios/'+id, 	function (response) {
-		let option = '<option value="" selected disabled>Seleccione un pais</option>';
-		for (let i = 0; i < response.countries.length; i++) {
-			let id = response.countries[i].id;
-			let country = response.countries[i].country;
-			option += '<option value="'+id+'">'+country+'</option>';
-		}
-		$('select#country').html(option);
-		for (let i = 0; i < inputs.length; i++) {
-			if (inputs[i].id) {
-				let value = response.user[inputs[i].name];
-				$(inputs[i]).val(value)
+	UserProfile();
+	function UserProfile() {
+		let id = $('form#profile')[0].action.split('/')[4];
+		$.get(url+'/usuarios/'+id, 	function (response) {
+			let option = '<option value="" selected disabled>Seleccione un pais.</option>';
+			for (let i = 0; i < response.countries.length; i++) {
+				let id = response.countries[i].id;
+				let country = response.countries[i].country;
+				option += '<option value="'+id+'">'+country+'</option>';
 			}
-		}
-	});
+			$('select#country_id').html(option);
+			for (let i = 0; i < inputs.length; i++) {
+				if (inputs[i].id) {
+					let value = response.user[inputs[i].name];
+					$(inputs[i]).val(value)
+				}
+			}
+		});
+	}
 	// eventos al enviar el formulario del perfil
 	$('form#profile').submit(function (e) {
 		e.preventDefault();
@@ -53,22 +77,32 @@ if (location.pathname == '/perfil') {
 			toastr.warning("Debe activar la edición en el boton Editar Perfil!")
 			return;
 		}
-		let url  = $(this).attr('method');
-		console.log(url)
-		return
+		let url  = $(this).attr('action');
 		var data = $(this).serializeArray();
 		$.ajax({
-			url: location.origin + '/usuarios/',
+			url: url,
 			type: 'POST',
 			dataType: 'json',
 			data: data,
 		})
-		.done(function(resul) {
-			console.log('usuario editado exitosamente');
+		.done(function(response) {
+			toastr.success('Usuario editado exitosamente!');
+			inputs.attr('disabled', '');
+			$('#buttons_edit_perfil').hide();
+			for (var i in messages) {
+				$('small#'+i)
+				.removeClass('text-danger')
+				.addClass('text-muted')
+				.text(messages[i])
+			}
+			UserProfile();
 		})
-		.fail(function() {
-			console.log('error');
+		.fail(function(response) {
+			for (var i in response.responseJSON) {
+				$('small#'+i).addClass('text-danger').text(response.responseJSON[i])
+			}
+			toastr.error('Ups, Al parecer ah ocurrido un error!');
+			console.clear();
 		});
 	});
-
 }

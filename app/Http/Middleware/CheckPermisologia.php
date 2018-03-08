@@ -14,10 +14,12 @@ class CheckPermisologia
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $module = null, $action = null)
+    public function handle($request, Closure $next, $rol = 1)
     {
-        return $next($request);
+        if (Auth::user()->rol_id == 1) {
+            return $next($request);
+        }
 
-        // return abort(401, 'Unauthorized.');
+        return abort(401, 'Unauthorized.');
     }
 }

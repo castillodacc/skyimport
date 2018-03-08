@@ -4,7 +4,7 @@ namespace skyimport\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use skyimport\Http\Controllers\Controller;
-use skyimport\Http\Requests\UserStoreRequest;
+use skyimport\Http\Requests\ { UserStoreRequest, UserUpdateRequest };
 use skyimport\User;
 
 class UsersController extends Controller
@@ -61,7 +61,6 @@ class UsersController extends Controller
         $countries = \DB::table('countries')
                     ->orderBy('id', 'asc')
                     ->get();
-                    // ->pluck('country', 'id');
         return response()->json(compact('user', 'countries'));
     }
 
@@ -79,22 +78,14 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \skyimport\Http\Requests\UserUpdateRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserUpdateRequest $request, $id)
     {
         if($request->id == 1) return response(['errors' => 'Error al modificar usuario'], 422);
-
-        $data = $request->validated();
-
-        if( !empty($request->password) ){
-            $data['password'] = bcrypt($this->validate($request, [
-                'password' => 'string|min:6|confirmed'
-            ])['password']);
-        }
-        $user = User::findOrFail($id)->update($data);
+        $user = User::findOrFail($id)->update($request->all());
         return response()->json($user);
     }
 

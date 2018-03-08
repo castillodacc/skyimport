@@ -15,6 +15,9 @@ class ValidationsProvider extends ServiceProvider
      */
     public function boot()
     {
+        /**
+         * validacion para agregar nombre y apellido.
+         */
         Validator::extend('full_name', function($attribute, $value, $parameters)
         {
             if (str_contains($value, ' ')) {
@@ -22,6 +25,17 @@ class ValidationsProvider extends ServiceProvider
             }
             return false;
         }, 'El campo :attribute debe poseer nombre y apellido.');
+
+        /**
+         * validacion por expresion regular de una cedula de identidad.
+         * de 6 a 8 caracteres
+         * y solo numeros del 0 al 9
+         */
+        Validator::extend('exr_ced', function($attribute, $value)
+        {
+            if ($value[0] == '0') return false;
+            return preg_match('/^([0-9]{5,10})$/', $value);
+        }, 'El campo :attribute es incorrecto');
     }
 
     /**
