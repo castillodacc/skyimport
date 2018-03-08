@@ -59,8 +59,8 @@ class UsersController extends Controller
     {
         $user = User::findOrFail($id);
         $countries = \DB::table('countries')
-                    ->orderBy('id', 'asc')
-                    ->get();
+        ->orderBy('id', 'asc')
+        ->get();
         return response()->json(compact('user', 'countries'));
     }
 
@@ -84,6 +84,11 @@ class UsersController extends Controller
      */
     public function update(UserUpdateRequest $request, $id)
     {
+        print_r($request->file('avatar'));
+        // $this->validate($request, [
+            // 'avatar' => 'required|image'
+        // ]);
+        return $request->all();
         if($request->id == 1) return response(['errors' => 'Error al modificar usuario'], 422);
         $user = User::findOrFail($id)->update($request->all());
         return response()->json($user);

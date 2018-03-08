@@ -1,11 +1,12 @@
 @extends('vendor.adminlte.layouts.app')
-
 @section('main-content')
 <div class="row">  
     <div class="col-md-3">
         <div class="box box-primary">
             <div class="box-body box-profile">
-                <img class="profile-user-img img-responsive img-circle" src="/img/avatar5.png">
+                <div id="avatar_profile" class="profile-user-img img-circle" style="background-image: url('/img/avatar5.png');background-position: center;background-size: cover;height: 100px">
+                </div>
+                {{-- <img class="img-responsive img-circle" src=""> --}}
                 <h3 class="profile-username text-center">{{ $user->name.' '.$user->last_name }}</h3>
                 <p class="text-muted text-center"> Administrador</p>
                 <ul class="list-group list-group-unbordered">
@@ -37,7 +38,7 @@
                     <div class="box-header with-border">
                         <button class="btn btn-primary btn-xs pull-right" id="active_edit_profile"><span class="fa fa-edit"></span> Editar perfil</button>
                     </div>
-                    <form id="profile" action="{{ route('usuarios.update', $user->id) }}">
+                    <form id="profile" enctype="multipart/form-data" action="{{ route('usuarios.update', $user->id) }}">
                         {{ csrf_field() }} {{ method_field('PUT') }}
                         <div class="box-body">
                             <div class="row">
@@ -110,12 +111,18 @@
                                     </div>
                                     <small id="city" class="form-text text-muted">Ciudad de origen.</small>
                                 </div>
+                                <div class="form-group col-md-6">
+                                    <div class="input-group">
+                                        <input type="file" name="avatar" accept="image/*">
+                                    </div>
+                                    <small id="avatar" class="form-text text-muted">Imagen Personal.</small>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="form-group col-md-6"> 
                                     <textarea id="address" name="address" class="form-control" placeholder="Direccion principal"></textarea>
                                     <small  class="form-text text-muted" id="address">Direccion principal del usuario.</small>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="form-group col-md-6"> 
                                     <textarea id="address_two" name="address_two" class="form-control" placeholder="Direccion secundaria"></textarea>
                                     <small id="address_two" class="form-text text-muted">Direccion secundaria del usuario.</small>

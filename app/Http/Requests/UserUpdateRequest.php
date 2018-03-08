@@ -28,7 +28,7 @@ class UserUpdateRequest extends FormRequest
             'last_name'     => 'required|max:50',
             'email'         => 'required|email|max:60',
             'phone'         => 'required|numeric',
-            'num_id'        => 'required|numeric',
+            'num_id'        => 'required|numeric|exr_ced',
             'country_id'    => 'required|numeric',
             'city'          => 'required|string|max:50',
             'address'       => 'required|string|max:100',

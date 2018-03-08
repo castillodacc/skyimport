@@ -1,20 +1,25 @@
 "use strict";
 toastr.options = {
-  "closeButton": true,
-  "debug": true,
-  "newestOnTop": true,
-  "progressBar": true,
-  "positionClass": "toast-top-right",
-  "preventDuplicates": true,
-  "showDuration": "300",
-  "hideDuration": "1000",
-  "timeOut": "5000",
-  "extendedTimeOut": "1000",
-  "showEasing": "swing",
-  "hideEasing": "linear",
-  "showMethod": "fadeIn",
-  "hideMethod": "fadeOut"
+	"closeButton": true,
+	"debug": true,
+	"newestOnTop": true,
+	"progressBar": true,
+	"positionClass": "toast-top-right",
+	"preventDuplicates": true,
+	"showDuration": "300",
+	"hideDuration": "1000",
+	"timeOut": "5000",
+	"extendedTimeOut": "1000",
+	"showEasing": "swing",
+	"hideEasing": "linear",
+	"showMethod": "fadeIn",
+	"hideMethod": "fadeOut"
 }
+$.ajaxSetup({
+	headers: {
+		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	}
+});
 
 let url = location.origin;
 if (location.pathname == '/perfil') {
@@ -23,15 +28,16 @@ if (location.pathname == '/perfil') {
 	inputs.attr('disabled', '');
 	$('#buttons_edit_perfil').hide();
 	let messages = {
-	'name': 'Nombres del usuario.',
-	'last_name': 'Apellidos del usuario.',
-	'phone': 'Telefono de contacto.',
-	'email': 'Correo electronico.',
-	'num_id': 'Documento de identidad.',
-	'country_id': 'Pais de origen.',
-	'city': 'Ciudad de origen.',
-	'address': 'Direccion principal del usuario.',
-	'address_two': 'Direccion secundaria del usuario.'
+		'name': 'Nombres del usuario.',
+		'last_name': 'Apellidos del usuario.',
+		'phone': 'Telefono de contacto.',
+		'email': 'Correo electronico.',
+		'num_id': 'Documento de identidad.',
+		'country_id': 'Pais de origen.',
+		'city': 'Ciudad de origen.',
+		'address': 'Direccion principal del usuario.',
+		'address_two': 'Direccion secundaria del usuario.',
+		'avatar': 'Imagen Personal.'
 	};
 	// se altera el estado de los inputs con este boton
 	$('button#active_edit_profile, button#cancel').click(function (e) {
@@ -77,8 +83,12 @@ if (location.pathname == '/perfil') {
 			toastr.warning("Debe activar la edición en el boton Editar Perfil!")
 			return;
 		}
+		let file = $(this).find('input[name="avatar"]')[0].files;
+		console.log(file)
 		let url  = $(this).attr('action');
-		var data = $(this).serializeArray();
+		let data = $(this).serializeArray();
+		data.push({ name: "avatar", value: file });
+		// console.log(data.value)
 		$.ajax({
 			url: url,
 			type: 'POST',
@@ -102,7 +112,16 @@ if (location.pathname == '/perfil') {
 				$('small#'+i).addClass('text-danger').text(response.responseJSON[i])
 			}
 			toastr.error('Ups, Al parecer ah ocurrido un error!');
-			console.clear();
+			// console.clear();
 		});
 	});
 }
+$('input[name="avatar"]').change(function (e) {
+	if (this.files && this.files[0]) {
+		var reader = new FileReader();
+		reader.onload = function (e) {
+			$('div#avatar_profile').css({'background-image': 'url('+e.target.result+')'})
+		}
+		reader.readAsDataURL(this.files[0]);
+	}
+});

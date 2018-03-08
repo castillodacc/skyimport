@@ -36,4 +36,26 @@ class UserStoreRequest extends FormRequest
             'rol_id'        => 'required|numeric'
         ];
     }
+
+
+    /**
+     * Cambio de nombres de los atributos.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'name'          => 'nombre',
+            'last_name'     => 'apellido',
+            'email'         => 'correo',
+            'phone'         => 'telefono',
+            'num_id'        => 'cedula',
+            'country_id'    => 'pais',
+            'city'          => 'ciudad',
+            'address'       => 'direccion',
+            'address_two'   => 'direccion',
+            'rol_id'        => 'rol',
+        ];
+    }
 }
