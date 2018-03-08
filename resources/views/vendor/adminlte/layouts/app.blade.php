@@ -53,6 +53,8 @@ desired effect
 
     @include('adminlte::layouts.partials.footer')
 
+    @include('modals.change_password_form')
+
 </div><!-- ./wrapper -->
 </div>
 @section('scripts')

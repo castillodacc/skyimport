@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,26 +9,19 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
 	return view('welcome');
 });
-
 Route::group(['middleware' => 'auth'], function () {
 	Route::group(['namespace' => 'Admin'], function () {
 		Route::resource('usuarios', 'UsersController');
 		Route::get('perfil{id?}', 'UsersController@profile')->name('profile');
 	});
-
     //    Route::get('/link1', function ()    {
 	//        // Uses Auth Middleware
 	//    });
-
     //Please do not remove this if you want adminlte:route and adminlte:link commands to works correctly.
     #adminlte_routes
 });
-
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
-
