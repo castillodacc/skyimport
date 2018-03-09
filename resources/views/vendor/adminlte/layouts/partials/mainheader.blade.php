@@ -60,7 +60,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <span class="fa fa-user"></span>
-                    <span class="hidden-xs">{{ Auth::user()->name }}</span>
+                    <span class="hidden-xs">{{ Auth::user()->fullName() }}</span>
                     <span class="caret"></span></a>
                     </a>
                     <ul class="dropdown-menu" role="menu">

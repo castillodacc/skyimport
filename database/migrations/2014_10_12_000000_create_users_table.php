@@ -40,6 +40,7 @@ class CreateUsersTable extends Migration
             $table->integer('rol_id')->unsigned()->default(1); // rol
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
 
             // relaciones...
             $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');

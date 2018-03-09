@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use skyimport\Http\Controllers\Controller;
 use skyimport\Http\Requests\ { UserStoreRequest, UserUpdateRequest };
 use skyimport\User;
+use Illuminate\Support\Facades\Storage;
 
 class UsersController extends Controller
 {
@@ -84,17 +85,31 @@ class UsersController extends Controller
      */
     public function update(UserUpdateRequest $request, $id)
     {
-        print_r($request->file('avatar'));
-        // $this->validate($request, [
-            // 'avatar' => 'required|image'
-        // ]);
-        return $request->all();
-        if($request->id == 1) return response(['errors' => 'Error al modificar usuario'], 422);
+        // if($request->id == 1) return response(['errors' => 'Error al modificar usuario'], 422);
         $user = User::findOrFail($id)->update($request->all());
         return response()->json($user);
     }
 
     /**
+     * Upload image 'avatar' from user.
+     *
+     * @param  \skyimport\Http\Requests\UserUpdateRequest  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function saveImage(Request $request, $id)
+    {
+        $this->validate($request, ['avatar' => 'required']);
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $ext = $request->avatar->getClientOriginalExtension();
+            $name = $id.'.'.$ext;
+            \Storage::disk('local')->put($name,  \File::get($file));
+        }
+        return response('', 200);
+    }
+
+/**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -120,6 +135,6 @@ class UsersController extends Controller
         } else {
             $user = \Auth::user();
         }
-        return view('users.profile', compact('user'));
+        return view('users.profile', compact('user', 'id'));
     }
 }

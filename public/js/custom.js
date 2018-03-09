@@ -83,12 +83,16 @@ if (location.pathname == '/perfil') {
 			toastr.warning("Debe activar la edición en el boton Editar Perfil!")
 			return;
 		}
-		let file = $(this).find('input[name="avatar"]')[0].files;
-		console.log(file)
+
 		let url  = $(this).attr('action');
 		let data = $(this).serializeArray();
-		data.push({ name: "avatar", value: file });
-		// console.log(data.value)
+
+		let form = new FormData();
+		let file = $('input[name="avatar"]')[0].files[0];
+		form.append('avatar', file);
+		let id = $('form#profile')[0].action.split('/')[4];
+		axios.post(location.origin+'/save-image/'+id, form)
+
 		$.ajax({
 			url: url,
 			type: 'POST',
@@ -112,16 +116,16 @@ if (location.pathname == '/perfil') {
 				$('small#'+i).addClass('text-danger').text(response.responseJSON[i])
 			}
 			toastr.error('Ups, Al parecer ah ocurrido un error!');
-			// console.clear();
+			console.clear();
 		});
 	});
 }
 $('input[name="avatar"]').change(function (e) {
 	if (this.files && this.files[0]) {
 		var reader = new FileReader();
-		reader.onload = function (e) {
-			$('div#avatar_profile').css({'background-image': 'url('+e.target.result+')'})
-		}
 		reader.readAsDataURL(this.files[0]);
+		reader.onload = function (e) {
+			$('div#avatar_profile img').attr({'src': e.target.result})
+		}
 	}
 });
