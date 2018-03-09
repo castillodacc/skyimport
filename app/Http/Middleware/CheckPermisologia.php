@@ -16,7 +16,7 @@ class CheckPermisologia
      */
     public function handle($request, Closure $next, $rol = 1)
     {
-        if (Auth::user()->rol_id == 1) {
+        if (Auth::user()->role_id == 1) {
             return $next($request);
         }
 

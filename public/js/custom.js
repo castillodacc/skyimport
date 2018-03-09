@@ -3,7 +3,6 @@ toastr.options = {
 	"closeButton": true,
 	"debug": true,
 	"newestOnTop": true,
-	"progressBar": true,
 	"positionClass": "toast-top-right",
 	"preventDuplicates": true,
 	"showDuration": "300",
@@ -113,7 +112,7 @@ if (location.pathname == '/perfil') {
 		})
 		.fail(function(response) {
 			for (var i in response.responseJSON) {
-				$('small#'+i).addClass('text-danger').text(response.responseJSON[i])
+				$('small#'+i).addClass('text-danger').text(response.responseJSON[i][0])
 			}
 			toastr.error('Ups, Al parecer ah ocurrido un error!');
 			console.clear();
@@ -129,3 +128,44 @@ $('input[name="avatar"]').change(function (e) {
 		}
 	}
 });
+
+let mgs_profile = {
+	'old_password': 'Contraseña actual.',
+	'new_password': 'Nueva contraseña.',
+	'new_password_confirmation': 'Repita nueva contraseña.',
+}
+$('#btn-change-pass').click(function (e) {
+	$('div#change_password').toggle();
+});
+$('form#change_password_form').submit(function (e) {
+	e.preventDefault();
+	let url  = $(this).attr('action');
+	let data = $(this).serializeArray();
+	retaurarSmallInputs(mgs_profile)
+	$.ajax({
+		url: url,
+		type: 'POST',
+		dataType: 'json',
+		data: data,
+	})
+	.done(function(response) {
+		toastr.success('Contraseña editada exitosamente!');
+		$('div#change_password').toggle();
+	})
+	.fail(function(response) {
+		for (var i in response.responseJSON) {
+			$('small#'+i).addClass('text-danger').text(response.responseJSON[i][0])
+		}
+		toastr.error('Ups, Al parecer ah ocurrido un error!');
+		console.clear();
+	});
+});
+
+function retaurarSmallInputs(msg) {
+	for (var i in msg) {
+		$('small#'+i)
+		.removeClass('text-danger')
+		.addClass('text-muted')
+		.text(msg[i])
+	}
+}

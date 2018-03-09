@@ -64,7 +64,7 @@
                     <span class="caret"></span></a>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="{{ url('changePassword') }}" data-toggle="modal" data-target="#change_password_form"><span class="fa fa-cogs"></span> Cambiar contraseña</a></li>
+                        <li><a href="#" id="btn-change-pass"><span class="fa fa-cogs"></span> Cambiar contraseña</a></li>
                         <li class="divider"></li>
                         <li>
                             <a href="{{ url('/logout') }}"  id="logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><span class="fa fa-sign-out"></span> Cerrar sesion</a>

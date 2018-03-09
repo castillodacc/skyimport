@@ -17,12 +17,14 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('country'); // pais
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('rol'); // rol
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('users', function (Blueprint $table) {
@@ -37,14 +39,14 @@ class CreateUsersTable extends Migration
             $table->string('city')->nullable(); // ciudad
             $table->text('address')->nullable(); // dirección
             $table->text('address_two')->nullable(); // dirección 2
-            $table->integer('rol_id')->unsigned()->default(1); // rol
+            $table->integer('role_id')->unsigned()->default(2); // rol
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
 
             // relaciones...
             $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
-            $table->foreign('rol_id')->references('id')->on('roles')->onDelete('cascade');
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
         });
     }
 

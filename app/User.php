@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'last_name', 'email', 'password', 'address', 'address_two', 'city', 'country_id', 'num_id', 'phone', 'rol_id'
+        'name', 'last_name', 'email', 'password', 'address', 'address_two', 'city', 'country_id', 'num_id', 'phone', 'role_id'
     ];
 
     /**
@@ -50,5 +50,13 @@ class User extends Authenticatable
     public function fullName()
     {
         return $this->name . ' ' . $this->last_name . ' Sky';
+    }
+
+    /**
+     * Get the rol that owns the user.
+     */
+    public function role()
+    {
+        return $this->belongsTo(Models\Role::class);
     }
 }

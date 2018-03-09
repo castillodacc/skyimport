@@ -4,7 +4,7 @@ namespace skyimport\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use skyimport\Http\Controllers\Controller;
-use skyimport\Http\Requests\ { UserStoreRequest, UserUpdateRequest };
+use skyimport\Http\Requests\ { UserStoreRequest, UserUpdateRequest, changePasswordRequest };
 use skyimport\User;
 use Illuminate\Support\Facades\Storage;
 
@@ -22,7 +22,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        if (!request()->ajax()) return view('users.user');
+        if (!request()->ajax()) return view('users.users');
 
         return;
     }
@@ -136,5 +136,20 @@ class UsersController extends Controller
             $user = \Auth::user();
         }
         return view('users.profile', compact('user', 'id'));
+    }
+
+    /**
+     * Change of password.
+     *
+     * @param \skyimport\Http\Requests\changePasswordRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function changePassword(changePasswordRequest $request)
+    {
+        $user = User::findOrFail(\Auth::user()->id)->fill([
+            'password' => bcrypt($request->password)
+        ]);
+
+        return response()->json($user->save());
     }
 }

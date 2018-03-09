@@ -7,8 +7,8 @@
         <div id="avatar_profile" class="profile-user-img img-circle" style="height: 100px">
           <img class="img-circle img-responsive" style="height: 100%; width: 100%" src="{{ Auth::user()->pathAvatar($id) }}">
         </div>
-        <h3 class="profile-username text-center">{{ $user->name.' '.$user->last_name }} Sky.</h3>
-        <p class="text-muted text-center">Administrador.</p>
+        <h3 class="profile-username text-center">{{ $user->fullName() }}.</h3>
+        <p class="text-muted text-center">{{ $user->role->rol }}.</p>
         <ul class="list-group list-group-unbordered">
           <li class="list-group-item">
             <b>Abiertos:</b>
