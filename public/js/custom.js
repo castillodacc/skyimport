@@ -3,7 +3,6 @@ toastr.options = {
 	"closeButton": true,
 	"debug": true,
 	"newestOnTop": true,
-	"progressBar": true,
 	"positionClass": "toast-top-right",
 	"preventDuplicates": true,
 	"showDuration": "300",
@@ -83,12 +82,16 @@ if (location.pathname == '/perfil') {
 			toastr.warning("Debe activar la edición en el boton Editar Perfil!")
 			return;
 		}
-		let file = $(this).find('input[name="avatar"]')[0].files;
-		console.log(file)
+
 		let url  = $(this).attr('action');
 		let data = $(this).serializeArray();
-		data.push({ name: "avatar", value: file });
-		// console.log(data.value)
+
+		let form = new FormData();
+		let file = $('input[name="avatar"]')[0].files[0];
+		form.append('avatar', file);
+		let id = $('form#profile')[0].action.split('/')[4];
+		axios.post(location.origin+'/save-image/'+id, form)
+
 		$.ajax({
 			url: url,
 			type: 'POST',
@@ -109,19 +112,60 @@ if (location.pathname == '/perfil') {
 		})
 		.fail(function(response) {
 			for (var i in response.responseJSON) {
-				$('small#'+i).addClass('text-danger').text(response.responseJSON[i])
+				$('small#'+i).addClass('text-danger').text(response.responseJSON[i][0])
 			}
 			toastr.error('Ups, Al parecer ah ocurrido un error!');
-			// console.clear();
+			console.clear();
 		});
 	});
 }
 $('input[name="avatar"]').change(function (e) {
 	if (this.files && this.files[0]) {
 		var reader = new FileReader();
-		reader.onload = function (e) {
-			$('div#avatar_profile').css({'background-image': 'url('+e.target.result+')'})
-		}
 		reader.readAsDataURL(this.files[0]);
+		reader.onload = function (e) {
+			$('div#avatar_profile img').attr({'src': e.target.result})
+		}
 	}
 });
+
+let mgs_profile = {
+	'old_password': 'Contraseña actual.',
+	'new_password': 'Nueva contraseña.',
+	'new_password_confirmation': 'Repita nueva contraseña.',
+}
+$('#btn-change-pass').click(function (e) {
+	$('div#change_password').toggle();
+});
+$('form#change_password_form').submit(function (e) {
+	e.preventDefault();
+	let url  = $(this).attr('action');
+	let data = $(this).serializeArray();
+	retaurarSmallInputs(mgs_profile)
+	$.ajax({
+		url: url,
+		type: 'POST',
+		dataType: 'json',
+		data: data,
+	})
+	.done(function(response) {
+		toastr.success('Contraseña editada exitosamente!');
+		$('div#change_password').toggle();
+	})
+	.fail(function(response) {
+		for (var i in response.responseJSON) {
+			$('small#'+i).addClass('text-danger').text(response.responseJSON[i][0])
+		}
+		toastr.error('Ups, Al parecer ah ocurrido un error!');
+		console.clear();
+	});
+});
+
+function retaurarSmallInputs(msg) {
+	for (var i in msg) {
+		$('small#'+i)
+		.removeClass('text-danger')
+		.addClass('text-muted')
+		.text(msg[i])
+	}
+}

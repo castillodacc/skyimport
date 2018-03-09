@@ -33,10 +33,9 @@ class UserStoreRequest extends FormRequest
             'city'          => 'required|string|max:50',
             'address'       => 'required|string|max:100',
             'address_two'   => 'nullable|string|max:100',
-            'rol_id'        => 'required|numeric'
+            'role_id'        => 'required|numeric'
         ];
     }
-
 
     /**
      * Cambio de nombres de los atributos.
@@ -55,7 +54,7 @@ class UserStoreRequest extends FormRequest
             'city'          => 'ciudad',
             'address'       => 'direccion',
             'address_two'   => 'direccion',
-            'rol_id'        => 'rol',
+            'role_id'        => 'rol',
         ];
     }
 }
