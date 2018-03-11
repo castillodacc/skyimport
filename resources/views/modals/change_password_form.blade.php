@@ -14,7 +14,7 @@
                                 <div class="input-group-addon">
                                     <span class="fa fa-key text-primary"></span>
                                 </div>
-                                <input type="text" id="old_password" name="old_password" class="form-control" placeholder="Contraseña actual">
+                                <input type="password" id="old_password" name="old_password" class="form-control" placeholder="Contraseña actual">
                             </div>
                             <small id="old_password" class="form-text text-muted">Contraseña actual.</small>
                         </div>
@@ -23,7 +23,7 @@
                                 <div class="input-group-addon">
                                     <span class="fa fa-lock text-primary"></span>
                                 </div>
-                                <input type="text" id="password" name="password" class="form-control" placeholder="Nueva contraseña">
+                                <input type="password" id="password" name="password" class="form-control" placeholder="Nueva contraseña">
                             </div>
                             <small id="password" class="form-text text-muted">Nueva contraseña.</small>
                         </div>
@@ -34,14 +34,14 @@
                                 <div class="input-group-addon">
                                     <span class="fa fa-unlock text-primary"></span>
                                 </div>
-                                <input type="text" id="password_confirmation" name="password_confirmation" class="form-control" placeholder="Repita nueva contraseña">
+                                <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" placeholder="Repita nueva contraseña">
                             </div>
                             <small id="password_confirmation" class="form-text text-muted">Repita nueva contraseña.</small>
                         </div> 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-close"></span> Cerrar</button>
-                        <button type="submit" class="btn btn-primary"><span class="fa fa-send"></span> Enviar</button>
+                        <button type="submit" class="btn btn-primary"><span class="fa fa-send"></span> Guardar</button>
                     </div>
                 </form>
             </div>

@@ -7,6 +7,7 @@ use skyimport\Http\Controllers\Controller;
 use skyimport\Http\Requests\ { UserStoreRequest, UserUpdateRequest, changePasswordRequest };
 use skyimport\User;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\Datatables;
 
 class UsersController extends Controller
 {
@@ -24,17 +25,10 @@ class UsersController extends Controller
     {
         if (!request()->ajax()) return view('users.users');
 
-        return;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Datatables::of(User::query())
+        ->addColumn('action', function ($user) {
+            return '<input type="radio" name="user" value='.$user->id.'>';
+        })->make(true);
     }
 
     /**
@@ -45,8 +39,7 @@ class UsersController extends Controller
      */
     public function store(UserStoreRequest $request)
     {
-        return $request->validated();
-        $user = User::create($request->validated());
+        $user = User::create($request->all());
         return response()->json($user);
     }
 
@@ -59,21 +52,8 @@ class UsersController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        $countries = \DB::table('countries')
-        ->orderBy('id', 'asc')
-        ->get();
+        $countries = \DB::table('countries')->latest('id')->select('id', 'country')->get();
         return response()->json(compact('user', 'countries'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -99,7 +79,7 @@ class UsersController extends Controller
      */
     public function saveImage(Request $request, $id)
     {
-        $this->validate($request, ['avatar' => 'required']);
+        $this->validate($request, ['avatar' => 'image']);
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
             $ext = $request->avatar->getClientOriginalExtension();
@@ -109,7 +89,7 @@ class UsersController extends Controller
         return response('', 200);
     }
 
-/**
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -117,7 +97,7 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        if($id === 1) return response(['error' => 'Error al modificar usuario'], 422);
+        if($id == 1) return response(['error' => 'Error al modificar usuario'], 421);
         $user = User::findOrFail($id)->delete();
         return response()->json($user);
     }
@@ -149,7 +129,13 @@ class UsersController extends Controller
         $user = User::findOrFail(\Auth::user()->id)->fill([
             'password' => bcrypt($request->password)
         ]);
-
         return response()->json($user->save());
+    }
+
+    public function dataForRegister()
+    {
+        $countries = \DB::table('countries')->latest('id')->select('id', 'country')->get();
+        $roles = \DB::table('roles')->latest('id')->select('id', 'rol')->get();
+        return response()->json(compact('countries', 'roles'));
     }
 }

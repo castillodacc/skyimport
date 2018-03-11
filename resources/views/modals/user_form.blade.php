@@ -83,9 +83,29 @@
                                 <div class="input-group-addon">
                                     <span class="fa fa-toggle-on text-primary"></span>
                                 </div>
-                                <select id="rol" name="rol" class="form-control"></select>
+                                <select id="role_id" name="role_id" class="form-control"></select>
                             </div>
-                            <small id="rol" class="form-text text-muted">Rol del usuario.</small>
+                            <small id="role_id" class="form-text text-muted">Rol del usuario.</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <span class="fa fa-map text-primary"></span>
+                                </div>
+                                <input type="password" id="password" name="password" class="form-control" placeholder="Contraseña">
+                            </div>
+                            <small id="password" class="form-text text-muted">Contraseña.</small>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <span class="fa fa-toggle-on text-primary"></span>
+                                </div>
+                                <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" placeholder="Confirmación de Contraseña.">
+                            </div>
+                            <small id="" class="form-text text-muted">Confirmación de Contraseña.</small>
                         </div>     
                     </div>
                     <div class="row">

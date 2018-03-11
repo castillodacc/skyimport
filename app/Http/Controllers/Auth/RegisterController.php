@@ -86,8 +86,8 @@ class RegisterController extends Controller
     {
         $data['name'] = explode(' ', $data['name']);
         $fields = [
-            'name'     => $data['name'][0],
-            'last_name'     => $data['name'][1],
+            'name'     => ucfirst($data['name'][0]),
+            'last_name'=> ucfirst($data['name'][1]),
             'email'    => $data['email'],
             'password' => bcrypt($data['password']),
         ];
