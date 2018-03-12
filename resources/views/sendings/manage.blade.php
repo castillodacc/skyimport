@@ -1,4 +1,5 @@
 @extends('vendor.adminlte.layouts.app')
+
 @section('main-content')
 <div class="box box-primary">
     <div class="box-header">
@@ -58,7 +59,7 @@
             </div>
         </form>
     </div>
-    <div class="box-body table-responsive">
+    <div class="box-body">
         <table id="users-table" class="table table-striped table-bordered table-hover table-condensed" cellspacing="0" width="100%">
             <thead>
                 <tr>

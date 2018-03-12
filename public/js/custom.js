@@ -17,9 +17,35 @@ toastr.options = {
 $.ajaxSetup({
 	headers: {
 		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	}
+	},
+	beforeSend: function (xhr) {
+		xhr.setRequestHeader('Authorization');
+	},
 });
-
+let translateTable = {
+	sProcessing: 'Procesando...',
+	sLengthMenu: 'Mostrar _MENU_ registros',
+	sZeroRecords: 'No se encontraron resultados',
+	sEmptyTable: 'Ningún dato disponible en esta tabla',
+	sInfo: 'Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros',
+	sInfoEmpty: 'Mostrando registros del 0 al 0 de un total de 0 registros',
+	sInfoFiltered: '(filtrado de un total de _MAX_ registros)',
+	sInfoPostFix: '',
+	sSearch: 'Buscar:',
+	sUrl: '',
+	sInfoThousands: ',',
+	sLoadingRecords: 'Cargando...',
+	oPaginate: {
+		sFirst: 'Primero',
+		sLast: 'Último',
+		sNext: 'Siguiente',
+		sPrevious: 'Anterior'
+	},
+	oAria: {
+		sSortAscending: ': Activar para ordenar la columna de manera ascendente',
+		sSortDescending: ': Activar para ordenar la columna de manera descendente'
+	}
+};
 let messages = {
 	'name': 'Nombres del usuario.',
 	'last_name': 'Apellidos del usuario.',
@@ -32,6 +58,8 @@ let messages = {
 	'address_two': 'Direccion secundaria del usuario.',
 	'role_id': 'Rol del usuario.',
 	'avatar': 'Imagen Personal.',
+	'password2': 'Nueva contraseña.',
+	'password2_confirmation': 'Repita nueva contraseña.',
 };
 let url = location.origin;
 if (location.pathname == '/perfil') {
@@ -119,6 +147,7 @@ if (location.pathname == '/perfil') {
 }
 // abrir el modal de cambio de password
 $('#btn-change-pass').click(function (e) {
+	$('form#change_password_form')[0].reset();
 	$('div#change_password').modal('toggle');
 });
 // enviar los datos por ajax del cambio de password
@@ -185,38 +214,9 @@ if (location.pathname == '/usuarios') {
 		serverSide: true,
 		responsive: true,
 		render: true,
-		language: {
-			sProcessing: 'Procesando...',
-			sLengthMenu: 'Mostrar _MENU_ registros',
-			sZeroRecords: 'No se encontraron resultados',
-			sEmptyTable: 'Ningún dato disponible en esta tabla',
-			sInfo: 'Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros',
-			sInfoEmpty: 'Mostrando registros del 0 al 0 de un total de 0 registros',
-			sInfoFiltered: '(filtrado de un total de _MAX_ registros)',
-			sInfoPostFix: '',
-			sSearch: 'Buscar:',
-			sUrl: '',
-			sInfoThousands: ',',
-			sLoadingRecords: 'Cargando...',
-			oPaginate: {
-				sFirst: 'Primero',
-				sLast: 'Último',
-				sNext: 'Siguiente',
-				sPrevious: 'Anterior'
-			},
-			oAria: {
-				sSortAscending: ': Activar para ordenar la columna de manera ascendente',
-				sSortDescending: ': Activar para ordenar la columna de manera descendente'
-			}
-		},
+		language: translateTable,
 		ajax: {
 			url: location.origin + '/usuarios',
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			},
-			beforeSend: function (xhr) {
-				xhr.setRequestHeader('Authorization');
-			},
 			complete: function () {
 				$('input[type="radio"][name="user"]').click(function (){
 					$('a[data-title="Edit"]').attr('id', $(this).val());
@@ -269,6 +269,8 @@ if (location.pathname == '/usuarios') {
 		}
 		let id = $(this).attr('id');
 		let url = location.origin + '/usuarios/' + id;
+		restoreSmallInputs(messages);
+		$('form#user_form')[0].reset();
 		$('#modal_user_form form')
 		.attr('action', url)
 		.find('input[name="_method"]')
@@ -298,6 +300,7 @@ if (location.pathname == '/usuarios') {
 		.modal('toggle')
 		.find('h4.modal-title')
 		.text('Registrar Usuario.');
+		restoreSmallInputs(messages);
 		$('#modal_user_form form').attr('action', location.origin + '/usuarios/');
 		$('#modal_user_form input[name="_method"]').attr('value', 'POST');
 		$('form#user_form')[0].reset();
@@ -327,4 +330,32 @@ if (location.pathname == '/usuarios') {
 			mgs_errors(response.responseJSON)
 		});
 	})
+}
+
+if (location.pathname == '/envios') {
+	let oTable = $('table#users-table').DataTable({
+		processing: true,
+		serverSide: true,
+		responsive: true,
+		render: true,
+		language: translateTable,
+		ajax: {	
+			url: location.origin + '/envios',
+			complete: function () {}
+		},
+		"columns": [
+		{
+			data: 'action',
+			name: 'action',
+			searchable: false,
+			sortable: false
+		},
+		{data: 'name', name: 'name'},
+		{data: 'num_id', name: 'num_id'},
+		{data: 'id', name: 'id'},
+		{data: 'email', name: 'email'},
+		{data: 'country_id', name: 'country_id'},
+		{data: 'phone', name: 'phone'},
+		]
+	});
 }

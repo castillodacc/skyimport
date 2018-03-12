@@ -27,7 +27,7 @@ class UsersController extends Controller
 
         return Datatables::of(User::query())
         ->addColumn('action', function ($user) {
-            return '<input type="radio" name="user" value='.$user->id.'>';
+            return '<input type="radio" name="user" style="margin: 0 50%;" value='.$user->id.'>';
         })->make(true);
     }
 
@@ -65,9 +65,19 @@ class UsersController extends Controller
      */
     public function update(UserUpdateRequest $request, $id)
     {
-        // if($request->id == 1) return response(['errors' => 'Error al modificar usuario'], 422);
-        $user = User::findOrFail($id)->update($request->all());
-        return response()->json($user);
+        if($request->id == 1) return response(['errors' => 'Error al modificar usuario'], 422);
+        $data = $request->all();
+        // return $request->password2;
+        if( !empty($data['password2']) ){
+            $this->validate($request, [
+                'password2' => 'string|min:6|confirmed'
+            ]);
+            $data['password'] = bcrypt($request->password2);
+        }
+        unset($data['password2']);
+        unset($data['password2_confirmation']);
+        $user = User::findOrFail($id)->fill($data);
+        return response()->json($user->save());
     }
 
     /**

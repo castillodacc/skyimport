@@ -32,7 +32,8 @@ class UserUpdateRequest extends FormRequest
             'country_id'    => 'required|numeric',
             'city'          => 'required|string|max:50',
             'address'       => 'required|string|max:100',
-            'address_two'   => 'nullable|string|max:100'
+            'address_two'   => 'nullable|string|max:100',
+            'role_id'       => 'required|numeric',
         ];
     }
 

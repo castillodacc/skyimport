@@ -94,18 +94,18 @@
                                 <div class="input-group-addon">
                                     <span class="fa fa-map text-primary"></span>
                                 </div>
-                                <input type="password" id="password" name="password" class="form-control" placeholder="Contraseña">
+                                <input type="password" id="password2" name="password2" class="form-control" placeholder="Contraseña">
                             </div>
-                            <small id="password" class="form-text text-muted">Contraseña.</small>
+                            <small id="password2" class="form-text text-muted">Contraseña.</small>
                         </div>
                         <div class="form-group col-md-6">
                             <div class="input-group">
                                 <div class="input-group-addon">
                                     <span class="fa fa-toggle-on text-primary"></span>
                                 </div>
-                                <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" placeholder="Confirmación de Contraseña.">
+                                <input type="password" id="password_confirmation2" name="password2_confirmation" class="form-control" placeholder="Confirmación de Contraseña.">
                             </div>
-                            <small id="" class="form-text text-muted">Confirmación de Contraseña.</small>
+                            <small id="password_confirmation2" class="form-text text-muted">Confirmación de Contraseña.</small>
                         </div>     
                     </div>
                     <div class="row">
