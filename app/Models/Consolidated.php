@@ -5,7 +5,7 @@ namespace skyimport\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Role extends Model
+class Consolidated extends Model
 {
     use SoftDeletes;
 
@@ -15,7 +15,7 @@ class Role extends Model
      * @var array
      */
     protected $fillable = [
-        'rol',
+        'number', 'user_id', 'state', 'close_at'
     ];
 
     /**
@@ -26,12 +26,4 @@ class Role extends Model
     protected $hidden = [
         'created_at', 'updated_at'
     ];
-
-    /**
-     * Get the users for the role.
-     */
-    public function users()
-    {
-        return $this->hasMany(\skyimport\User::class);
-    }
 }

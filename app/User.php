@@ -59,4 +59,12 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Models\Role::class);
     }
+
+    /**
+     * Get the country that owns the user.
+     */
+    public function country()
+    {
+        return $this->belongsTo(Models\Country::class);
+    }
 }

@@ -4,7 +4,7 @@
 <div class="box box-primary">
     <div class="box-header">
         <a id="addform" href="" class="btn btn-primary btn-xs" data-toggle="modal" data-placement="top" data-target="#send_form" title="Crear consolidado"><span class="fa fa-plus"></span> Registrar</a>
-        <a class="btn btn-warning btn-xs" data-toggle="tooltip" data-placement="top" title="Buscar por campo" id="consolidated"><span class="fa fa-search"></span> Busqueda avanzada</a>
+        <a class="btn btn-warning btn-xs" data-toggle="tooltip" data-placement="top" title="Buscar por campo" id="search-avanced"><span class="fa fa-search"></span> Busqueda avanzada</a>
         <div class="pull-right">
             <div class="btn-group">
                 <a class="btn btn-info btn-xs" href="" data-title="Show" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Mostrar consolidado"><span class="fa fa-eye"></span></a>
@@ -14,7 +14,7 @@
             </div>
         </div>
     </div>
-    <div class="box-header" id="header2">
+    <div class="box-header" id="header2" style="display: none;">
         <form id="searchconsolidate" method="POST" role="form">
             <div class="row"> 
                 <div class="form-group col-md-2">

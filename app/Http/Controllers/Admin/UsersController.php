@@ -25,7 +25,7 @@ class UsersController extends Controller
     {
         if (!request()->ajax()) return view('users.users');
 
-        return Datatables::of(User::query())
+        return (new Datatables)->of(User::query()->with(['country', 'role'])->select())
         ->addColumn('action', function ($user) {
             return '<input type="radio" name="user" style="margin: 0 50%;" value='.$user->id.'>';
         })->make(true);
@@ -39,7 +39,9 @@ class UsersController extends Controller
      */
     public function store(UserStoreRequest $request)
     {
-        $user = User::create($request->all());
+        $data = $request->all();
+        $data['password'] = bcrypt($request->password2);
+        $user = User::create($data);
         return response()->json($user);
     }
 
@@ -67,7 +69,6 @@ class UsersController extends Controller
     {
         if($request->id == 1) return response(['errors' => 'Error al modificar usuario'], 422);
         $data = $request->all();
-        // return $request->password2;
         if( !empty($data['password2']) ){
             $this->validate($request, [
                 'password2' => 'string|min:6|confirmed'
@@ -142,6 +143,11 @@ class UsersController extends Controller
         return response()->json($user->save());
     }
 
+    /**
+     * Data for register of user.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function dataForRegister()
     {
         $countries = \DB::table('countries')->latest('id')->select('id', 'country')->get();

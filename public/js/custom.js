@@ -233,9 +233,9 @@ if (location.pathname == '/usuarios') {
 		},
 		{data: 'name', name: 'name'},
 		{data: 'num_id', name: 'num_id'},
-		{data: 'id', name: 'id'},
+		{data: 'role.rol', name: 'role.id'},
 		{data: 'email', name: 'email'},
-		{data: 'country_id', name: 'country_id'},
+		{data: 'country.country', name: 'country.id'},
 		{data: 'phone', name: 'phone'},
 		]
 	});
@@ -344,18 +344,16 @@ if (location.pathname == '/envios') {
 			complete: function () {}
 		},
 		"columns": [
-		{
-			data: 'action',
-			name: 'action',
-			searchable: false,
-			sortable: false
-		},
-		{data: 'name', name: 'name'},
-		{data: 'num_id', name: 'num_id'},
-		{data: 'id', name: 'id'},
-		{data: 'email', name: 'email'},
-		{data: 'country_id', name: 'country_id'},
-		{data: 'phone', name: 'phone'},
+		// {
+		// 	data: 'action',
+		// 	name: 'action',
+		// 	searchable: false,
+		// 	sortable: false
+		// },
+		// {data: 'phone', name: 'phone'},
 		]
+	});
+	$('#search-avanced').click(function () {
+		$('#header2').fadeToggle();
 	});
 }

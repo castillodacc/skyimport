@@ -5,7 +5,7 @@ namespace skyimport\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Role extends Model
+class Country extends Model
 {
     use SoftDeletes;
 
@@ -15,7 +15,7 @@ class Role extends Model
      * @var array
      */
     protected $fillable = [
-        'rol',
+        'country'
     ];
 
     /**
@@ -28,7 +28,7 @@ class Role extends Model
     ];
 
     /**
-     * Get the users for the role.
+     * Get the users for the country.
      */
     public function users()
     {

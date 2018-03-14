@@ -11,27 +11,46 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-    	DB::table('roles')->insert([
-    		'rol' => 'Administrador',
-    		'created_at' => Carbon::now(),
-    		'updated_at' => Carbon::now(),
-    	]);
-    	DB::table('roles')->insert([
-    		'rol' => 'Cliente',
-    		'created_at' => Carbon::now(),
-    		'updated_at' => Carbon::now(),
-    	]);
+        /* Roles */
+        DB::table('roles')->insert([
+            'rol' => 'Administrador',
+            'created_at' => Carbon::now(),
+            'updated_at' => null,
+        ]);
+        DB::table('roles')->insert([
+            'rol' => 'Cliente',
+            'created_at' => Carbon::now(),
+            'updated_at' => null,
+        ]);
 
-    	DB::table('countries')->insert([
-    		'country' => 'Colombia',
-    		'created_at' => Carbon::now(),
-    		'updated_at' => Carbon::now(),
-    	]);
-    	DB::table('countries')->insert([
-    		'country' => 'Estados Unidos',
-    		'created_at' => Carbon::now(),
-    		'updated_at' => Carbon::now(),
-    	]);
+        /* Paises */
+        DB::table('countries')->insert([
+            'country' => 'Colombia',
+            'created_at' => Carbon::now(),
+            'updated_at' => null,
+        ]);
+        DB::table('countries')->insert([
+            'country' => 'Estados Unidos',
+            'created_at' => Carbon::now(),
+            'updated_at' => null,
+        ]);
+
+        /* Estados del consolidado */
+        DB::table('states')->insert([
+            'state' => 'Activo',
+            'created_at' => Carbon::now(),
+            'updated_at' => null,
+        ]);
+        DB::table('states')->insert([
+            'state' => 'Pendiente',
+            'created_at' => Carbon::now(),
+            'updated_at' => null,
+        ]);
+        DB::table('states')->insert([
+            'state' => 'Cerrado',
+            'created_at' => Carbon::now(),
+            'updated_at' => null,
+        ]);
 
         // $this->call(UsersTableSeeder::class);
     }

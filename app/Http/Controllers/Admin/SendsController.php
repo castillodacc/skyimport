@@ -9,7 +9,7 @@ class SendsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('ajax')->except(['index', 'profile']);
+        $this->middleware('ajax')->except(['index']);
     }
 
     /**
