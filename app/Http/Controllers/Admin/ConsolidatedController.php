@@ -4,8 +4,9 @@ namespace skyimport\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use skyimport\Http\Controllers\Controller;
+use Yajra\DataTables\Datatables;
 
-class SendsController extends Controller
+class ConsolidatedController extends Controller
 {
     public function __construct()
     {
@@ -21,10 +22,15 @@ class SendsController extends Controller
     {
         if (!request()->ajax()) return view('sendings.manage');
 
-        // return Datatables::of(User::query())
-        // ->addColumn('action', function ($user) {
-        //     return '<input type="radio" name="user" value='.$user->id.'>';
-        // })->make(true);
+        return (new Datatables)->of(User::query()->with(['country', 'role'])->select())
+        ->addColumn('action', function ($user) {
+            return '<input type="radio" name="user" style="margin: 0 50%;" value='.$user->id.'>';
+        })->make(true);
+
+        return Datatables::of(User::query())
+        ->addColumn('action', function ($user) {
+            return '<input type="radio" name="user" value='.$user->id.'>';
+        })->make(true);
     }
 
     /**

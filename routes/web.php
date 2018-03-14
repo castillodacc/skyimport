@@ -19,7 +19,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('get-data-user', 'UsersController@dataForRegister');
 		Route::post('save-image/{id?}', 'UsersController@saveImage');
 		Route::post('change-password', 'UsersController@changePassword');
-		Route::resource('envios', 'SendsController');
+		Route::resource('envios', 'ConsolidatedController');
 	});
     //    Route::get('/link1', function ()    {
 	//        // Uses Auth Middleware

@@ -35,11 +35,11 @@ class CreateUsersTable extends Migration
             $table->string('phone')->nullable(); // telefono
             $table->integer('num_id')->unsigned()->unique()->nullable(); // número de identificación
             $table->string('password'); // contraseña
-            $table->integer('country_id')->unsigned()->nullable(); // pais_id
+            $table->integer('country_id')->unsigned()->default(1); // pais_id(default:colombia)
             $table->string('city')->nullable(); // ciudad
             $table->text('address')->nullable(); // dirección
             $table->text('address_two')->nullable(); // dirección 2
-            $table->integer('role_id')->unsigned()->default(2); // rol
+            $table->integer('role_id')->unsigned()->default(2); // rol(default:cliente)
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

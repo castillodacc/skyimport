@@ -7,10 +7,10 @@
         <a class="btn btn-warning btn-xs" data-toggle="tooltip" data-placement="top" title="Buscar por campo" id="search-avanced"><span class="fa fa-search"></span> Busqueda avanzada</a>
         <div class="pull-right">
             <div class="btn-group">
-                <a class="btn btn-info btn-xs" href="" data-title="Show" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Mostrar consolidado"><span class="fa fa-eye"></span></a>
+                <a id="viewConsolidates" class="btn btn-info btn-xs" href="#" data-title="Show" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Mostrar consolidado"><span class="fa fa-eye"></span></a>
             </div>
             <div class="btn-group">
-                <a class="btn btn-danger btn-xs" href="" data-title="Close" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Cancelar"><span class="fa fa-trash"></span></a>
+                <a id="deleteConsolidates" class="btn btn-danger btn-xs" href="#" data-title="Close" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Cancelar"><span class="fa fa-trash"></span></a>
             </div>
         </div>
     </div>
@@ -72,21 +72,21 @@
             </thead>
             <tbody>
                 <tr class="success">
-                    <td class="text-center"><input type="checkbox" name=""></td>
+                    <td class="text-center"><input type="radio" name="consolidated" id="1"></td>
                     <td>123456789123</td>
                     <td>Emanuel Surveyor Parra Coello</td>
                     <td>09/03/2018</td>
                     <td>Despachado</td>
                 </tr>
                 <tr class="warning">
-                    <td class="text-center"><input type="checkbox" name=""></td>
+                    <td class="text-center"><input type="radio" name="consolidated" id="2"></td>
                     <td>123456789123</td>
                     <td>Emanuel Surveyor Parra Coello</td>
                     <td>09/03/2018</td>
                     <td>En proceso</td>
                 </tr>
                 <tr class="danger">
-                    <td class="text-center"><input type="checkbox" name=""></td>
+                    <td class="text-center"><input type="radio" name="consolidated" id="3"></td>
                     <td>5151515565656</td>
                     <td>Emanuel Surveyor Parra Coello</td>
                     <td>08/03/2018</td>

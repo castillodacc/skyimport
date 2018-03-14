@@ -109,14 +109,7 @@ if (location.pathname == '/perfil') {
 
 		let url  = $(this).attr('action');
 		let data = $(this).serializeArray();
-
-		let form = new FormData();
-		let file = $('input[name="avatar"]')[0].files[0];
-		form.append('avatar', file);
-		let id = $('form#profile')[0].action.split('/')[4];
-		axios.post(location.origin+'/save-image/'+id, form)
 		restoreSmallInputs(messages)
-
 		$.ajax({
 			url: url,
 			type: 'POST',
@@ -133,6 +126,23 @@ if (location.pathname == '/perfil') {
 		.fail(function(response) {
 			mgs_errors(response.responseJSON)
 		});
+		if ($('input[name="avatar"]')[0].files[0]) {	
+			$('#country_id').removeClass('text-danger')
+			.text('Imagen Personal');
+			let form = new FormData();
+			let file = $('input[name="avatar"]')[0].files[0];
+			form.append('avatar', file);
+			let id = $('form#profile')[0].action.split('/')[4];
+			axios
+			.post(location.origin+'/save-image/'+id, form)
+			.then(function (response) {
+				toastr.success('Imagen editada con exito');
+			})
+			.catch(function (error) {
+				$('#country_id').addClass('text-danger')
+				.text(error.response.data.avatar[0])
+			});
+		}
 	});
 	// coloca un preview de la imagen subida
 	$('input[name="avatar"]').change(function (e) {
@@ -178,7 +188,6 @@ $('form#change_password_form').submit(function (e) {
 });
 
 function restoreSmallInputs(msg) {
-	console.log('$("small#'+i+'")');
 	for (var i in msg) {
 		$('small#'+i)
 		.removeClass('text-danger')
@@ -334,16 +343,21 @@ if (location.pathname == '/usuarios') {
 
 if (location.pathname == '/envios') {
 	let oTable = $('table#users-table').DataTable({
-		processing: true,
-		serverSide: true,
-		responsive: true,
-		render: true,
-		language: translateTable,
-		ajax: {	
-			url: location.origin + '/envios',
-			complete: function () {}
-		},
-		"columns": [
+	// 	processing: true,
+	// 	serverSide: true,
+	// 	responsive: true,
+	// 	render: true,
+		// language: translateTable,
+		// ajax: {	
+		// 	url: location.origin + '/envios',
+		// 	complete: function () {
+			// $('input[type="radio"][name="consolidated"]').click(function () {
+				// $('a#viewConsolidates').attr('consolidated', $(this)[0].id);
+				// $('a#deleteConsolidates').attr('consolidated', $(this)[0].id);
+			// });
+		// }
+		// },
+		// "columns": [
 		// {
 		// 	data: 'action',
 		// 	name: 'action',
@@ -351,7 +365,7 @@ if (location.pathname == '/envios') {
 		// 	sortable: false
 		// },
 		// {data: 'phone', name: 'phone'},
-		]
+		// ]
 	});
 	$('#search-avanced').click(function () {
 		$('#header2').fadeToggle();
