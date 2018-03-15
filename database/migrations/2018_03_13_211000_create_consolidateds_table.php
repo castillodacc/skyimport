@@ -23,7 +23,7 @@ class CreateConsolidatedsTable extends Migration
             $table->softDeletes();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('cstates_id')->references('id')->on('statesc')->onDelete('cascade');
+            $table->foreign('cstates_id')->references('id')->on('cstates')->onDelete('cascade');
         });
     }
 

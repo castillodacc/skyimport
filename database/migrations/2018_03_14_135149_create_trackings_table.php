@@ -19,7 +19,7 @@ class CreateTrackingsTable extends Migration
             $table->string('tracking'); // 
             $table->text('description'); // descripción
             $table->integer('distributor_id')->unsigned(); // repartidor
-            $table->number('weight'); // peso(lb)
+            $table->integer('weight')->unsigned(); // peso(lb)
             $table->integer('tstate_id')->unsigned(); // estado del consolidado
             $table->timestamps();
             $table->softDeletes();

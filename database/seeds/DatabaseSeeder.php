@@ -36,17 +36,17 @@ class DatabaseSeeder extends Seeder
         ]);
 
         /* Estados del consolidado */
-        DB::table('states')->insert([
+        DB::table('cstates')->insert([
             'state' => 'Activo',
             'created_at' => Carbon::now(),
             'updated_at' => null,
         ]);
-        DB::table('states')->insert([
+        DB::table('cstates')->insert([
             'state' => 'Pendiente',
             'created_at' => Carbon::now(),
             'updated_at' => null,
         ]);
-        DB::table('states')->insert([
+        DB::table('cstates')->insert([
             'state' => 'Cerrado',
             'created_at' => Carbon::now(),
             'updated_at' => null,
