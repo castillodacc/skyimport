@@ -11,15 +11,11 @@
         <p class="text-muted text-center">{{ $user->role->rol }}.</p>
         <ul class="list-group list-group-unbordered">
           <li class="list-group-item">
-            <b>Abiertos:</b>
+            <b>Consolidados sin formalizar:</b>
             <a class="pull-right">10</a>
           </li>
           <li class="list-group-item">
-            <b>En proceso:</b>
-            <a class="pull-right">10</a>
-          </li>
-          <li class="list-group-item">
-            <b>Cerrados:</b>
+            <b>Consolidados formalizados:</b>
             <a class="pull-right">10</a>
           </li>
         </ul>
@@ -36,7 +32,7 @@
       <div class="tab-content">
         <div class="tab-pane active" id="profile">
           <div class="box-header with-border">
-            <button class="btn btn-primary btn-xs pull-right" id="active_edit_profile"><span class="fa fa-edit"></span> Editar perfil</button>
+            <button class="btn btn-primary btn-xs pull-right btn-flat" id="active_edit_profile"><span class="fa fa-edit"></span> Editar perfil</button>
           </div>
           <form id="profile" enctype="multipart/form-data" action="{{ route('usuarios.update', $user->id) }}">
             {{ csrf_field() }} {{ method_field('PUT') }}
@@ -45,7 +41,7 @@
                 <div class="form-group col-md-6">
                   <div class="input-group">
                     <div class="input-group-addon">
-                      <span class="fa fa-user-circle text-primary"></span>
+                      <span class="fa fa-user-circle"></span>
                     </div>
                     <input type="text" id="name" name="name" class="form-control" placeholder="Nombres">
                   </div>
@@ -54,7 +50,7 @@
                 <div class="form-group col-md-6">
                   <div class="input-group">
                     <div class="input-group-addon">
-                      <span class="fa fa-user-circle-o text-primary"></span>
+                      <span class="fa fa-user-circle-o"></span>
                     </div>
                     <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Apellidos">
                   </div>
@@ -65,7 +61,7 @@
                 <div class="form-group col-md-6">
                   <div class="input-group">
                     <div class="input-group-addon">
-                      <span class="fa fa-phone text-primary"></span>
+                      <span class="fa fa-phone"></span>
                     </div>
                     <input type="text" id="phone" name="phone" class="form-control" placeholder="Telefono">
                   </div>
@@ -74,7 +70,7 @@
                 <div class="form-group col-md-6">
                   <div class="input-group">
                     <div class="input-group-addon">
-                      <span class="fa fa-envelope text-primary"></span>
+                      <span class="fa fa-envelope"></span>
                     </div>
                     <input type="email" id="email" name="email" class="form-control" placeholder="ejemplo@ejemplo.com">
                   </div>
@@ -85,7 +81,7 @@
                 <div class="form-group col-md-6">
                   <div class="input-group">
                     <div class="input-group-addon">
-                      <span class="fa fa-id-card text-primary"></span>
+                      <span class="fa fa-id-card"></span>
                     </div>
                     <input type="text" id="num_id" name="num_id" class="form-control" placeholder="ID">
                   </div>
@@ -94,7 +90,7 @@
                 <div class="form-group col-md-6">
                   <div class="input-group">
                     <div class="input-group-addon">
-                      <span class="fa fa-globe text-primary"></span>
+                      <span class="fa fa-globe"></span>
                     </div>
                     <select id="country_id" name="country_id" class="form-control"></select>
                   </div>
@@ -105,7 +101,7 @@
                 <div class="form-group col-md-6">
                   <div class="input-group">
                     <div class="input-group-addon">
-                      <span class="fa fa-map text-primary"></span>
+                      <span class="fa fa-map"></span>
                     </div>
                     <input type="text" id="city" name="city" class="form-control" placeholder="Ciudad">
                   </div>
@@ -132,10 +128,10 @@
             <div id="buttons_edit_perfil" class="box-footer">
               <div class="pull-right">
                 <div class="btn-group">
-                  <button id="cancel" type="button" class="btn btn-danger btn-sm"><span class="fa fa-close"></span> Cancelar</button>
+                  <button id="cancel" type="button" class="btn btn-danger btn-sm btn-flat"><span class="fa fa-close"></span> Cancelar</button>
                 </div>
                 <div class="btn-group">
-                  <button type="submit" class="btn btn-primary btn-sm"><span class="fa fa-send"></span> Enviar</button>
+                  <button type="submit" class="btn btn-primary btn-sm btn-flat"><span class="fa fa-send"></span> Enviar</button>
                 </div>
               </div>
             </div>

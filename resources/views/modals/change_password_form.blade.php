@@ -12,7 +12,7 @@
                         <div class="form-group col-md-6">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <span class="fa fa-key text-primary"></span>
+                                    <span class="fa fa-key"></span>
                                 </div>
                                 <input type="password" id="old_password" name="old_password" class="form-control" placeholder="Contraseña actual">
                             </div>
@@ -21,7 +21,7 @@
                         <div class="form-group col-md-6">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <span class="fa fa-lock text-primary"></span>
+                                    <span class="fa fa-lock"></span>
                                 </div>
                                 <input type="password" id="password" name="password" class="form-control" placeholder="Nueva contraseña">
                             </div>
@@ -32,7 +32,7 @@
                         <div class="form-group col-md-6">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <span class="fa fa-unlock text-primary"></span>
+                                    <span class="fa fa-unlock"></span>
                                 </div>
                                 <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" placeholder="Repita nueva contraseña">
                             </div>
@@ -40,8 +40,8 @@
                         </div> 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-close"></span> Cerrar</button>
-                        <button type="submit" class="btn btn-primary"><span class="fa fa-send"></span> Guardar</button>
+                        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal"><span class="fa fa-close"></span> Cerrar</button>
+                        <button type="submit" class="btn btn-primary btn-flat"><span class="fa fa-send"></span> Guardar</button>
                     </div>
                 </form>
             </div>

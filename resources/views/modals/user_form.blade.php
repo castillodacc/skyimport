@@ -12,7 +12,7 @@
                         <div class="form-group col-md-6">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <span class="fa fa-user-circle text-primary"></span>
+                                    <span class="fa fa-user-circle"></span>
                                 </div>
                                 <input type="text" id="name" name="name" class="form-control" placeholder="Nombres">
                             </div>
@@ -21,7 +21,7 @@
                         <div class="form-group col-md-6">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <span class="fa fa-user-circle-o text-primary"></span>
+                                    <span class="fa fa-user-circle-o"></span>
                                 </div>
                                 <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Apellidos">
                             </div>
@@ -32,7 +32,7 @@
                         <div class="form-group col-md-6">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <span class="fa fa-phone text-primary"></span>
+                                    <span class="fa fa-phone"></span>
                                 </div>
                                 <input type="text" id="phone" name="phone" class="form-control" placeholder="Telefono">
                             </div>
@@ -41,7 +41,7 @@
                         <div class="form-group col-md-6">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <span class="fa fa-envelope text-primary"></span>
+                                    <span class="fa fa-envelope"></span>
                                 </div>
                                 <input type="email" id="email" name="email" class="form-control" placeholder="ejemplo@ejemplo.com">
                             </div>
@@ -52,7 +52,7 @@
                         <div class="form-group col-md-6">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <span class="fa fa-id-card text-primary"></span>
+                                    <span class="fa fa-id-card"></span>
                                 </div>
                                 <input type="text" id="num_id" name="num_id" class="form-control" placeholder="Identificacion">
                             </div>
@@ -61,7 +61,7 @@
                         <div class="form-group col-md-6">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <span class="fa fa-globe text-primary"></span>
+                                    <span class="fa fa-globe"></span>
                                 </div>
                                 <select id="country_id" name="country_id" class="form-control"></select>
                             </div>
@@ -72,7 +72,7 @@
                         <div class="form-group col-md-6">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <span class="fa fa-map text-primary"></span>
+                                    <span class="fa fa-map"></span>
                                 </div>
                                 <input type="text" id="city" name="city" class="form-control" placeholder="Ciudad">
                             </div>
@@ -81,7 +81,7 @@
                         <div class="form-group col-md-6">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <span class="fa fa-toggle-on text-primary"></span>
+                                    <span class="fa fa-toggle-on"></span>
                                 </div>
                                 <select id="role_id" name="role_id" class="form-control"></select>
                             </div>
@@ -92,7 +92,7 @@
                         <div class="form-group col-md-6">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <span class="fa fa-map text-primary"></span>
+                                    <span class="fa fa-map"></span>
                                 </div>
                                 <input type="password" id="password2" name="password2" class="form-control" placeholder="Contraseña">
                             </div>
@@ -101,7 +101,7 @@
                         <div class="form-group col-md-6">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <span class="fa fa-toggle-on text-primary"></span>
+                                    <span class="fa fa-toggle-on"></span>
                                 </div>
                                 <input type="password" id="password_confirmation2" name="password2_confirmation" class="form-control" placeholder="Confirmación de Contraseña.">
                             </div>
@@ -119,8 +119,8 @@
                         </div> 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-close"></span> Cerrar</button>
-                        <button type="submit" class="btn btn-primary"><span class="fa fa-send"></span> Enviar</button>
+                        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal"><span class="fa fa-close"></span> Cerrar</button>
+                        <button type="submit" class="btn btn-primary btn-flat"><span class="fa fa-send"></span> Enviar</button>
                     </div>
                 </form>
             </div>

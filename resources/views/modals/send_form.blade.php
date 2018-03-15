@@ -12,7 +12,7 @@
                         <div class="form-group col-md-3">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <span class="fa fa-cart-plus text-primary"></span>
+                                    <span class="fa fa-cart-plus"></span>
                                 </div>
                                 <select id="courier" name="courier" class="form-control input-sm"></select>
                             </div>
@@ -21,7 +21,7 @@
                         <div class="form-group col-md-3">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <span class="fa fa-location-arrow text-primary"></span>
+                                    <span class="fa fa-location-arrow"></span>
                                 </div>
                                 <input type="text" id="tracking" name="tracking" class="form-control input-sm" placeholder="Traking">
                             </div>
@@ -30,7 +30,7 @@
                         <div class="form-group col-md-3">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <span class="fa fa-commenting text-primary"></span>
+                                    <span class="fa fa-commenting"></span>
                                 </div>
                                 <input type="text" id="description" name="description" class="form-control input-sm" placeholder="Descripcion">
                             </div>
@@ -39,14 +39,14 @@
                         <div class="form-group col-md-2">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <span class="fa fa-dollar text-primary"></span>
+                                    <span class="fa fa-dollar"></span>
                                 </div>
                                 <input type="text" id="price" name="price" class="form-control input-sm" placeholder="Valor en $">
                             </div>
                             <small id="price" class="form-text text-muted">Valor declarado $</small>
                         </div>
                         <div class="form-group col-md-1">
-                            <button type="submit" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar tracking"><span class="fa fa-plus"></span></button>
+                            <button type="submit" class="btn btn-primary btn-sm btn-flat" data-toggle="tooltip" data-placement="top" title="Agregar tracking"><span class="fa fa-plus"></span></button>
                         </div>
                     </div>
                 </div>
@@ -69,9 +69,9 @@
                                     <td>Phone</td>
                                     <td>$ 444</td>
                                     <td class="text-center">
-                                        <a class="btn btn-primary btn-xs" data-toggle="tooltip"
+                                        <a class="btn btn-primary btn-xs btn-flat" data-toggle="tooltip"
                                         title="Editar"><span class="fa fa-pencil"></span></a>
-                                        <a class="btn btn-danger btn-xs" data-toggle="tooltip"
+                                        <a class="btn btn-danger btn-xs btn-flat" data-toggle="tooltip"
                                         title="Cancelar"><span class="fa fa-close"></span></a>
                                     </td>
                                 </tr>
@@ -81,9 +81,9 @@
                                     <td>Motherboard</td>
                                     <td>$ 200</td>
                                     <td class="text-center">
-                                        <a class="btn btn-primary btn-xs" data-toggle="tooltip"
+                                        <a class="btn btn-primary btn-xs btn-flat" data-toggle="tooltip"
                                         title="Editar"><span class="fa fa-pencil"></span></a>
-                                        <a class="btn btn-danger btn-xs" data-toggle="tooltip"
+                                        <a class="btn btn-danger btn-xs btn-flat" data-toggle="tooltip"
                                         title="Cancelar"><span class="fa fa-close"></span></a>
                                     </td>
                                 </tr>
@@ -93,9 +93,9 @@
                                     <td>Motherboard</td>
                                     <td>$ 200</td>
                                     <td class="text-center">
-                                        <a class="btn btn-primary btn-xs" data-toggle="tooltip"
+                                        <a class="btn btn-primary btn-xs btn-flat" data-toggle="tooltip"
                                         title="Editar"><span class="fa fa-pencil"></span></a>
-                                        <a class="btn btn-danger btn-xs" data-toggle="tooltip"
+                                        <a class="btn btn-danger btn-xs btn-flat" data-toggle="tooltip"
                                         title="Cancelar"><span class="fa fa-close"></span></a>
                                     </td>
                                 </tr>
@@ -105,9 +105,9 @@
                                     <td>Motherboard</td>
                                     <td>$ 200</td>
                                     <td class="text-center">
-                                        <a class="btn btn-primary btn-xs" data-toggle="tooltip"
+                                        <a class="btn btn-primary btn-xs btn-flat" data-toggle="tooltip"
                                         title="Editar"><span class="fa fa-pencil"></span></a>
-                                        <a class="btn btn-danger btn-xs" data-toggle="tooltip"
+                                        <a class="btn btn-danger btn-xs btn-flat" data-toggle="tooltip"
                                         title="Cancelar"><span class="fa fa-close"></span></a>
                                     </td>
                                 </tr>
@@ -117,9 +117,9 @@
                                     <td>Motherboard</td>
                                     <td>$ 200</td>
                                     <td class="text-center">
-                                        <a class="btn btn-primary btn-xs" data-toggle="tooltip"
+                                        <a class="btn btn-primary btn-xs btn-flat" data-toggle="tooltip"
                                         title="Editar"><span class="fa fa-pencil"></span></a>
-                                        <a class="btn btn-danger btn-xs" data-toggle="tooltip"
+                                        <a class="btn btn-danger btn-xs btn-flat" data-toggle="tooltip"
                                         title="Cancelar"><span class="fa fa-close"></span></a>
                                     </td>
                                 </tr>
@@ -141,8 +141,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-close"></span> Cerrar</button>
-                    <button type="submit" class="btn btn-primary"><span class="fa fa-send"></span> Enviar</button>
+                    <button type="button" class="btn btn-default btn-flat" data-dismiss="modal"><span class="fa fa-close"></span> Cerrar</button>
+                    <button type="submit" class="btn btn-primary btn-flat"><span class="fa fa-send"></span> Enviar</button>
                 </div>
             </form>
         </div>
