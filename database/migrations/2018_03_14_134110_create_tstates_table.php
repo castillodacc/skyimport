@@ -16,6 +16,7 @@ class CreateTstatesTable extends Migration
         Schema::create('tstates', function (Blueprint $table) {
             $table->increments('id');
             $table->string('state'); // estados de trackings: 
+            $table->text('description'); // description
             $table->timestamps();
         });
     }

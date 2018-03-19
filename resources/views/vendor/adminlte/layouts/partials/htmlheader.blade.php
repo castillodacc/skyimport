@@ -2,7 +2,9 @@
     <meta charset="UTF-8">
     <title> Importadora Sky @yield('htmlheader_title', 'Your title here') </title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <!-- CSRF Token -->
+    {{-- url --}}
+    <meta name="url" content="{{ env('APP_URL') }}">
+    {{-- CSRF Token --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link href="{{ asset('/plugins/toastr.min.css') }}" rel="stylesheet" type="text/css" />

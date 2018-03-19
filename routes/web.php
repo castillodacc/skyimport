@@ -9,9 +9,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-	return view('welcome');
-});
+Route::get('/', 'HomeController@index');
 Route::group(['middleware' => 'auth'], function () {
 	Route::group(['namespace' => 'Admin'], function () {
 		Route::resource('usuarios', 'UsersController');
@@ -19,13 +17,18 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('get-data-user', 'UsersController@dataForRegister');
 		Route::post('save-image/{id?}', 'UsersController@saveImage');
 		Route::post('change-password', 'UsersController@changePassword');
-		Route::resource('envios', 'ConsolidatedController');
 	});
+	Route::group(['namespace' => 'ShippingManager'], function () {
+		Route::resource('consolidados', 'ConsolidatedController');
+		Route::post('data-for-consolidated', 'ConsolidatedController@dataForRegister');
+		Route::resource('tracking', 'TrackingController');
+	});
+
     //    Route::get('/link1', function ()    {
 	//        // Uses Auth Middleware
 	//    });
     //Please do not remove this if you want adminlte:route and adminlte:link commands to works correctly.
     #adminlte_routes
 });
+
 Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');

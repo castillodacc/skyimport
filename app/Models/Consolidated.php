@@ -15,8 +15,10 @@ class Consolidated extends Model
      * @var array
      */
     protected $fillable = [
-        'number', 'user_id', 'state', 'close_at'
+        'number', 'user_id', 'cstate_id', 'close_at', 'created_at'
     ];
+
+    protected $dates = ['close_at'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -24,6 +26,22 @@ class Consolidated extends Model
      * @var array
      */
     protected $hidden = [
-        'created_at', 'updated_at'
+        'updated_at'
     ];
+
+    /**
+     * Get the user that owns the consolidated.
+     */
+    public function user()
+    {
+        return $this->belongsTo(\skyimport\User::class);
+    }
+
+    /**
+     * Get the cstate that owns the consolidated.
+     */
+    public function cstate()
+    {
+        return $this->belongsTo(\skyimport\Models\Cstate::class);
+    }
 }
