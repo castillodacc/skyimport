@@ -53,14 +53,13 @@
                                 </div>
                                 <input type="number" id="weight" name="weight" class="form-control input-sm" placeholder="99" required="">
                             </div>
-                            <small id="weight" class="form-text text-muted">Peso en Libras</small>
-                        </div>
+                            <small id="weight" class="form-text text-muted">Peso en Libras</small> </div>
                         <div id="btn-create-tracking" class="form-group col-md-1">
                             <button type="submit" class="btn btn-primary btn-sm btn-flat" data-toggle="tooltip" data-placement="top" title="Agregar tracking"><span class="fa fa-plus"></span></button>
                         </div>
-                        <div id="btn-edit-tracking" class="form-group col-md-1 hidden">
-                            <button type="reset" class="btn btn-default btn-sm btn-flat" data-toggle="tooltip" data-placement="top" title="Agregar tracking"><span class="fa fa-plus"></span></button>
-                            <button type="submit" class="btn btn-warning btn-sm btn-flat" data-toggle="tooltip" data-placement="top" title="Agregar tracking"><span class="fa fa-edit"></span></button>
+                        <div id="btns-edit-tracking" class="form-group col-md-1 hidden" style="padding: 0;">
+                            <button id="btn-cancel-tracking" type="reset" class="btn btn-danger btn-xs btn-flat" data-toggle="tooltip" data-placement="top" title="Cancelar Edición"><span class="fa fa-close"></span></button>
+                            <button id="btn-edit-tracking" type="button" class="btn btn-warning btn-xs btn-flat" data-toggle="tooltip" data-placement="top" title="Editar Tracking"><span class="fa fa-edit"></span></button>
                         </div>
                     </form>
                 </div>

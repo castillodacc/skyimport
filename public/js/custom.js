@@ -362,7 +362,6 @@ if (location.pathname == '/consolidados') {
 	$('#addForm').click(function (e) {
 		e.preventDefault();
 		$(this).attr('disabled', '');
-		setTimeout(() => {$(this).removeAttr('disabled');},1000);
 		$.ajax({
 			url: path + 'consolidados',
 			type: 'POST',
@@ -378,6 +377,7 @@ if (location.pathname == '/consolidados') {
 			$('form#tracking-form-register input#consolidated_id').val(response.id);
 			consTable.draw();
 			$('#modal-send-form').modal('toggle').find('.modal-title').html('<span class="fa fa-plus"></span> Crear Nuevo Consolidado.');
+			$('#addForm').removeAttr('disabled');
 			toastr.success('Nuevo Consolidado Abierto');
 		})
 		.fail(function(response) {
