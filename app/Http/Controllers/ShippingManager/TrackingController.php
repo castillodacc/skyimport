@@ -19,8 +19,8 @@ class TrackingController extends Controller
     {
         $request = request();
         $query = Tracking::query()
-                    ->with(['distributor'])
-                    ->select(['trackings.id','trackings.description','trackings.tracking','trackings.distributor_id']);
+        ->with(['distributor'])
+        ->select(['trackings.id','trackings.description','trackings.tracking','trackings.distributor_id']);
         return (new Datatables)->of($query)
         ->addColumn('action', function ($tracking) {
             return '<a id="editTracking" tracking="'.$tracking->id.'" class="btn btn-primary btn-xs btn-flat" href="#" data-toggle="tooltip" title="Editar"><span class="fa fa-pencil"></span></a> <a id="deleteTracking" tracking="'.$tracking->id.'" class="btn btn-danger btn-xs btn-flat" href="#" data-toggle="tooltip" title="Eliminar"><span class="fa fa-close"></span></a>';
@@ -89,7 +89,8 @@ class TrackingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $tracking = Tracking::findOrFail($id)->update($request->all());
+        return response()->json($tracking);
     }
 
     /**

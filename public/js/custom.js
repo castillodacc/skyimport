@@ -81,7 +81,7 @@ if (location.pathname == '/perfil') {
 	UserProfile();
 	function UserProfile() {
 		let id = $('form#profile')[0].action.split('/')[4];
-		$.get(url+'/usuarios/'+id, 	function (response) {
+		$.get(path + 'usuarios/'+id, function (response) {
 			let option = '<option value="" selected disabled>Seleccione un pais.</option>';
 			for (let i = 0; i < response.countries.length; i++) {
 				let id = response.countries[i].id;
@@ -467,13 +467,17 @@ if (location.pathname == '/consolidados') {
 				});
 				$('a#editTracking').click(function () {
 					let tracking = $(this).attr('tracking');
+					$(this).parent().parent().addClass('info');
 					$.get(path + 'tracking/' + tracking, function (response) {
 						let entradas = $('form#tracking-form-register');
 						for (let i in response) {
 							entradas.find('input#'+i+', select#'+i).val(response[i])
 						}
 						$('#btn-create-tracking').hide();
-						$('#btn-edit-tracking').removeClass('hidden')
+						$('#btns-edit-tracking').show();
+						$('#btns-edit-tracking').removeClass('hidden');
+						$('#tracking-form-register input[name=_method]').val('PUT');
+						$('#tracking-form-register').attr('action', path + 'tracking/' + tracking);
 						toastr.info('Editar Tracking.');
 					});
 				});
@@ -496,10 +500,66 @@ if (location.pathname == '/consolidados') {
 	});
 	$('button#deleteConsolidated').click(function () {
 		let consolidated = $(this).attr('consolidated');
-		if (consolidated === undefined) return;
+		if (consolidated === undefined) {
+			toastr.warning('Debe seleccionar un consolidado.')
+			return;
+		};
 		$.post(path + 'consolidados/' + consolidated, {'_method': 'DELETE'}, function () {
 			consTable.draw();
 			toastr.success('Consolidado Eliminado.');
+		});
+	});
+	$('button#btn-cancel-tracking, button#btn-edit-tracking').click(function () {
+		if ($(this)[0].id == 'btn-edit-tracking') {
+			let form = $('#tracking-form-register');
+			let url = form.attr('action');
+			let data = form.serializeArray();
+			$.ajax({
+				url: url,
+				type: 'POST',
+				dataType: 'json',
+				data: data
+			})
+			.done(function(response) {
+				trackTable.draw();
+				if (response.msg) {
+					toastr.error(response.msg);
+					return;
+				}
+				toastr.success('Tracking Editado.');
+			})
+			.fail(function(response) {
+				toastr.error('Opps al parecer a ocurrido un error');
+			});
+		}
+		$('#tracking-form-register').attr('action', path + 'tracking/');
+		$('#tracking-form-register')[0].reset();
+		$('#btn-create-tracking').show();
+		$('#btns-edit-tracking').hide();
+		$('#tracking-form-register input[name=_method]').val('POST')
+		$('tr').removeClass('info');
+		if ($(this)[0].id == 'btn-cancel-tracking') {
+			toastr.info('Edición Cancelada.');
+		}
+	});
+	$('button#extendConsolidated').click(function () {
+		let consolidated = $(this).attr('consolidated');
+		if (!consolidated) {
+			toastr.warning('Debe seleccionar un consolidado.');
+			return;
+		}
+		let url = path + 'extend-consolidated/' + consolidated;
+		$.ajax({
+			url: url,
+			type: 'POST',
+			dataType: 'json',
+		})
+		.done(function(response) {
+			consTable.draw();
+			toastr.success('Consolidado Extendido un día.');
+		})
+		.fail(function(response) {
+			toastr.error('Opps al parecer a ocurrido un error');
 		});
 	})
 }
