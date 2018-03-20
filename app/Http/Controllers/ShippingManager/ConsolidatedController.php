@@ -26,7 +26,7 @@ class ConsolidatedController extends Controller
         
         $request = request();
         $query = Consolidated::query()
-                    ->with(['user', 'cstate']);
+        ->with(['user', 'cstate']);
         return (new Datatables)->of($query)
         ->editColumn('created_at', function ($consolidated) {
             return $consolidated->created_at->diffForHumans();
@@ -122,7 +122,8 @@ class ConsolidatedController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $consolidated = Consolidated::findOrFail($id)->delete();
+        return response()->json($consolidated);
     }
 
     /**

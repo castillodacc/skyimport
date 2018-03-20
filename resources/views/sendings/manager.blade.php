@@ -5,21 +5,21 @@
         <h3 class="box-title">Consolidados abiertos:</h3>
         <div class="pull-right">
             <div class="btn-group">
-                <a id="search-cons-a" class="btn bg-green btn-xs btn-flat" href="#" data-title="Search" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Buscar filtros"><span class="fa fa-search"></span></a>
+                <button id="search-cons-a" type="button" class="btn bg-green btn-xs btn-flat" data-title="Search" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Buscar filtros"><span class="fa fa-search"></span></button>
             </div>
             <div class="btn-group">
-                <a id="extendConsolidated" class="btn btn-warning btn-xs btn-flat" href="" data-title="Extend" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Extender consolidado"><span class="fa fa-calendar-plus-o"></span></a>
+                <button id="extendConsolidated" type="button" class="btn btn-warning btn-xs btn-flat" data-title="Extend" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Extender consolidado"><span class="fa fa-calendar-plus-o"></span></button>
             </div>
             <div class="btn-group">
-                <a id="viewConsolidated" class="btn btn-info btn-xs btn-flat" href="" data-title="Show" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Mostrar consolidado"><span class="fa fa-eye"></span></a>
+                <button id="viewConsolidated" type="button" class="btn btn-info btn-xs btn-flat" data-title="Show" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Mostrar consolidado"><span class="fa fa-eye"></span></button>
             </div>
             @if(Auth::user()->rol_id == 2)
             <div class="btn-group">
-                <a id="editConsolidated" class="btn btn-primary btn-xs btn-flat" href="" data-title="Update" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Actualizar"><span class="fa fa-edit"></span></a>
+                <button id="editConsolidated" type="button" class="btn btn-primary btn-xs btn-flat" data-title="Update" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Actualizar"><span class="fa fa-edit"></span></button>
             </div>
             @endif
             <div class="btn-group">
-                <a id="deleteConsolidated" class="btn btn-danger btn-xs btn-flat" href="" data-title="Delete" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Cancelar"><span class="fa fa-trash"></span></a>
+                <button id="deleteConsolidated" type="button" class="btn btn-danger btn-xs btn-flat" data-title="Delete" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Cancelar"><span class="fa fa-trash"></span></button>
             </div>
         </div>
     </div>

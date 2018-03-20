@@ -341,7 +341,7 @@ if (location.pathname == '/usuarios') {
 
 if (location.pathname == '/consolidados') {
 	$('div#header-search-a').hide();
-	$('a#search-cons-a').click(function (e) {
+	$('#search-cons-a').click(function (e) {
 		e.preventDefault();
 		$('div#header-search-a').fadeToggle();
 	});
@@ -426,7 +426,7 @@ if (location.pathname == '/consolidados') {
 			complete: function () {
 				$('input[type="radio"][name="consolidated"]').click(function () {
 					let consolidated = $(this).val();
-					$('a#deleteConsolidated, a#viewConsolidated, a#editConsolidated, a#extendConsolidated')
+					$('button#deleteConsolidated, button#viewConsolidated, button#editConsolidated, button#extendConsolidated')
 					.attr('consolidated', consolidated);
 				});
 			}
@@ -461,19 +461,30 @@ if (location.pathname == '/consolidados') {
 				$('a#deleteTracking').click(function () {
 					let tracking = $(this).attr('tracking');
 					$.post(path + 'tracking/' + tracking, {'_method': 'DELETE'}, function () {
-						setTimeout(() => {trackTable.draw(); }, 350);
-						toastr.success('Tracking Eliminado');
+						trackTable.draw();
+						toastr.success('Tracking Eliminado.');
+					});
+				});
+				$('a#editTracking').click(function () {
+					let tracking = $(this).attr('tracking');
+					$.get(path + 'tracking/' + tracking, function (response) {
+						let entradas = $('form#tracking-form-register');
+						for (let i in response) {
+							entradas.find('input#'+i+', select#'+i).val(response[i])
+						}
+						$('#btn-create-tracking').hide();
+						$('#btn-edit-tracking').removeClass('hidden')
+						toastr.info('Editar Tracking.');
 					});
 				});
 			}
 		},
 		"columns": [
-		{data: 'name', name: 'distributor.id'},
-		{data: 'tracking', name: 'trackings.tracking'},
+		{data: 'distributor.name', name: 'trackings.distributor_id'},
+		{data: 'tracking', name: 'trackings.id'},
 		{data: 'description', name: 'trackings.description'},
 		{
 			data: 'action',
-			name: 'action',
 			searchable: false,
 			sortable: false
 		},
@@ -483,4 +494,12 @@ if (location.pathname == '/consolidados') {
 		e.preventDefault();
 		consTable.draw();
 	});
+	$('button#deleteConsolidated').click(function () {
+		let consolidated = $(this).attr('consolidated');
+		if (consolidated === undefined) return;
+		$.post(path + 'consolidados/' + consolidated, {'_method': 'DELETE'}, function () {
+			consTable.draw();
+			toastr.success('Consolidado Eliminado.');
+		});
+	})
 }

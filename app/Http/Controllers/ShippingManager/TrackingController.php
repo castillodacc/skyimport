@@ -20,11 +20,10 @@ class TrackingController extends Controller
         $request = request();
         $query = Tracking::query()
                     ->with(['distributor'])
-                    ->select(['trackings.id', 'tracking', 'description', 'distributors.name']);
+                    ->select(['trackings.id','trackings.description','trackings.tracking','trackings.distributor_id']);
         return (new Datatables)->of($query)
         ->addColumn('action', function ($tracking) {
-            return '<a class="btn btn-primary btn-xs btn-flat" data-toggle="tooltip" title="Editar"><span class="fa fa-pencil"></span></a>
-            <a id="deleteTracking" tracking="'.$tracking->id.'" class="btn btn-danger btn-xs btn-flat" data-toggle="tooltip" title="Eliminar"><span class="fa fa-close"></span></a>';
+            return '<a id="editTracking" tracking="'.$tracking->id.'" class="btn btn-primary btn-xs btn-flat" href="#" data-toggle="tooltip" title="Editar"><span class="fa fa-pencil"></span></a> <a id="deleteTracking" tracking="'.$tracking->id.'" class="btn btn-danger btn-xs btn-flat" href="#" data-toggle="tooltip" title="Eliminar"><span class="fa fa-close"></span></a>';
         })->filter(function ($query) use ($request) {
             $query->where('consolidated_id', '=', $request->consolidated_id);
         })->make(true);
@@ -66,7 +65,8 @@ class TrackingController extends Controller
      */
     public function show($id)
     {
-        //
+        $tracking = Tracking::findOrFail($id);
+        return response()->json($tracking);
     }
 
     /**

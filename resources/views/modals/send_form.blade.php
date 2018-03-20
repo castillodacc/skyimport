@@ -55,8 +55,12 @@
                             </div>
                             <small id="weight" class="form-text text-muted">Peso en Libras</small>
                         </div>
-                        <div class="form-group col-md-1">
+                        <div id="btn-create-tracking" class="form-group col-md-1">
                             <button type="submit" class="btn btn-primary btn-sm btn-flat" data-toggle="tooltip" data-placement="top" title="Agregar tracking"><span class="fa fa-plus"></span></button>
+                        </div>
+                        <div id="btn-edit-tracking" class="form-group col-md-1 hidden">
+                            <button type="reset" class="btn btn-default btn-sm btn-flat" data-toggle="tooltip" data-placement="top" title="Agregar tracking"><span class="fa fa-plus"></span></button>
+                            <button type="submit" class="btn btn-warning btn-sm btn-flat" data-toggle="tooltip" data-placement="top" title="Agregar tracking"><span class="fa fa-edit"></span></button>
                         </div>
                     </form>
                 </div>
