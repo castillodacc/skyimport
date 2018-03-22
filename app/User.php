@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'last_name', 'email', 'password', 'address', 'address_two', 'city', 'country_id', 'num_id', 'phone', 'role_id'
+        'name', 'last_name', 'email', 'password', 'address', 'address_two', 'city', 'num_id', 'phone', 'role_id', 'state_id'
     ];
 
     /**
@@ -41,7 +41,7 @@ class User extends Authenticatable
                 return asset('storage/app/'.$file);
             }
         }
-        return '/img/avatar'.rand(1, 5).'.png';
+        return '/img/avatar-default.png';
     }
 
     /**
@@ -61,10 +61,18 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the country that owns the user.
+     * Get the state that owns the user.
      */
-    public function country()
+    public function state()
     {
-        return $this->belongsTo(Models\Country::class);
+        return $this->belongsTo(Models\State::class);
+    }
+
+    /**
+     * Get the consolidateds for the user.
+     */
+    public function consolidated()
+    {
+        return $this->hasMany(Models\Consolidated::class);
     }
 }

@@ -81,11 +81,13 @@
                         <div class="form-group col-md-6">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <span class="fa fa-toggle-on"></span>
+                                    <span class="fa fa-globe"></span>
                                 </div>
-                                <select id="role_id" name="role_id" class="form-control"></select>
+                                <select id="state_id" name="state_id" class="form-control">
+                                    <option value="">Seleccione primero un pais.</option>
+                                </select>
                             </div>
-                            <small id="role_id" class="form-text text-muted">Rol del usuario.</small>
+                            <small id="state_id" class="form-text text-muted">Estado o Departamento.</small>
                         </div>
                     </div>
                     <div class="row">
@@ -117,6 +119,18 @@
                             <textarea id="address_two" name="address_two" class="form-control" placeholder="Direccion secundaria"></textarea>
                             <small id="address_two" class="form-text text-muted">Direccion secundaria del usuario.</small>
                         </div> 
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <span class="fa fa-toggle-on"></span>
+                                </div>
+                                <select id="role_id" name="role_id" class="form-control" required="">
+                                </select>
+                            </div>
+                            <small id="role_id" class="form-text text-muted">Rol del usuario.</small>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default btn-flat" data-dismiss="modal"><span class="fa fa-close"></span> Cerrar</button>

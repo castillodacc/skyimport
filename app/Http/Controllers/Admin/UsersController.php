@@ -24,9 +24,16 @@ class UsersController extends Controller
     public function index()
     {
         if (!request()->ajax()) return view('users.users');
+        $query = User::query()->with(['role'])
+        ->select(['name', 'last_name', 'num_id', 'email', 'phone', 'role_id', 'state_id']);
 
-        return (new Datatables)->of(User::query()->with(['country', 'role'])->select())
-        ->addColumn('action', function ($user) {
+        return (new Datatables)->of($query)
+        ->addColumn('name', function ($user) {
+            return $user->name . ' ' . $user->last_name;
+        })->addColumn('pais', function ($user) {
+            if ($user->state == null) return '-';
+            return $user->state->state . ' / ' . $user->state->countrie->country;
+        })->addColumn('action', function ($user) {
             return '<input type="radio" name="user" style="margin: 0 50%;" value='.$user->id.'>';
         })->make(true);
     }
@@ -54,7 +61,10 @@ class UsersController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        $countries = \DB::table('countries')->latest('id')->select('id', 'country')->get();
+        $user->state;
+        $user['consolidateda'] = $user->consolidated->where('closed_at', 'IS NULL')->count();
+        $user['consolidatedc'] = $user->consolidated->where('closed_at', 'IS NOT NULL')->count();
+        $countries = \DB::table('countries')->latest('id')->pluck('country', 'id');
         return response()->json(compact('user', 'countries'));
     }
 
@@ -153,5 +163,14 @@ class UsersController extends Controller
         $countries = \DB::table('countries')->latest('id')->select('id', 'country')->get();
         $roles = \DB::table('roles')->latest('id')->select('id', 'rol')->get();
         return response()->json(compact('countries', 'roles'));
+    }
+
+    public function dataStates($id)
+    {
+        $states = \DB::table('states')
+        ->where('countrie_id', '=', $id)
+        ->orderBy('state', 'ASC')
+        ->pluck('state', 'id');
+        return response()->json($states);
     }
 }

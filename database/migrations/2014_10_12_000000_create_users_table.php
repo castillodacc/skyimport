@@ -20,6 +20,16 @@ class CreateUsersTable extends Migration
             $table->softDeletes();
         });
 
+        Schema::create('states', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('state'); // departamentos
+            $table->integer('countrie_id')->unsigned(); // id del pais
+            $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('countrie_id')->references('id')->on('countries')->onDelete('cascade');
+        });
+
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('rol'); // rol
@@ -35,7 +45,7 @@ class CreateUsersTable extends Migration
             $table->string('phone')->nullable(); // telefono
             $table->integer('num_id')->unsigned()->unique()->nullable(); // número de identificación
             $table->string('password'); // contraseña
-            $table->integer('country_id')->unsigned()->default(1); // pais_id(default:colombia)
+            $table->integer('state_id')->unsigned()->nullable(); // estado
             $table->string('city')->nullable(); // ciudad
             $table->text('address')->nullable(); // dirección
             $table->text('address_two')->nullable(); // dirección 2
@@ -45,7 +55,7 @@ class CreateUsersTable extends Migration
             $table->softDeletes();
 
             // relaciones...
-            $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
+            $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
         });
     }
@@ -58,6 +68,7 @@ class CreateUsersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('countries');
+        Schema::dropIfExists('departments');
         Schema::dropIfExists('roles');
         Schema::dropIfExists('users');
     }

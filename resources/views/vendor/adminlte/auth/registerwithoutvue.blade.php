@@ -46,6 +46,10 @@
                         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback">
+                        <input type="num_id" class="form-control" placeholder="Numero de identificación" name="num_id" value="{{ old('num_id') }}"/>
+                        <span class="glyphicon glyphicon-credit-card form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
                         <input type="password" class="form-control" placeholder="{{ trans('adminlte_lang::message.password') }}" name="password"/>
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>

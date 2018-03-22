@@ -64,12 +64,14 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name'     => 'required|max:255|full_name',
             // 'username' => 'sometimes|required|max:255|unique:users',
+            'num_id'    => 'required|numeric|unique:users',
             'email'    => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
             'terms'    => 'required',
         ],[], [
             'name' => 'nombre',
             // 'username' => '',
+            'num_id'    => 'Identificación',
             'email'    => 'correo',
             'password' => 'contraseña',
             'terms'    => 'terminos',
@@ -89,6 +91,7 @@ class RegisterController extends Controller
             'name'     => ucfirst($data['name'][0]),
             'last_name'=> ucfirst($data['name'][1]),
             'email'    => $data['email'],
+            'num_id'    => $data['num_id'],
             'password' => bcrypt($data['password']),
         ];
         if (config('auth.providers.users.field','email') === 'username' && isset($data['username'])) {

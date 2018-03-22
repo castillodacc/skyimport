@@ -17,13 +17,13 @@ class CreateConsolidatedsTable extends Migration
             $table->increments('id');
             $table->string('number'); // is4124124124214
             $table->integer('user_id')->unsigned(); // usuario
-            $table->integer('cstate_id')->unsigned()->default(1); // estado del consolidado
-            $table->timestamp('close_at')->nullable(); // fecha de cierre
+            $table->integer('shippingstate_id')->unsigned()->default(1); // estado del consolidado
+            $table->timestamp('closed_at')->nullable(); // fecha de cierre
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('cstate_id')->references('id')->on('cstates')->onDelete('cascade');
+            $table->foreign('shippingstate_id')->references('id')->on('shippingstates')->onDelete('cascade');
         });
     }
 

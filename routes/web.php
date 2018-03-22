@@ -15,6 +15,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::resource('usuarios', 'UsersController');
 		Route::get('perfil/{id?}', 'UsersController@profile')->name('profile');
 		Route::get('get-data-user', 'UsersController@dataForRegister');
+		Route::get('get-data-states/{state}', 'UsersController@dataStates');
 		Route::post('save-image/{id?}', 'UsersController@saveImage');
 		Route::post('change-password', 'UsersController@changePassword');
 	});

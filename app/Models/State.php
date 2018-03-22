@@ -3,16 +3,19 @@
 namespace skyimport\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Cstate extends Model
+class State extends Model
 {
+	use SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'state'
+    	'state', 'countrie_id'
     ];
 
     /**
@@ -21,6 +24,15 @@ class Cstate extends Model
      * @var array
      */
     protected $hidden = [
-        'created_at', 'updated_at'
+    	'created_at', 'updated_at', 'deleted_at'
     ];
+    //
+
+    /**
+     * Get the countrie for the country.
+     */
+    public function countrie()
+    {
+    	return $this->belongsTo(Country::class);
+    }
 }

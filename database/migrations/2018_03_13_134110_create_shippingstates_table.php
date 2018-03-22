@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTstatesTable extends Migration
+class CreateShippingstatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateTstatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('tstates', function (Blueprint $table) {
+        Schema::create('shippingstates', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('state'); // estados de trackings: 
-            $table->text('description'); // description
+            $table->integer('ref_id')->unsigned(); // FK 1) consolidados - 2) trackings
+            $table->string('state'); // estados de trackings / consolidados
+            $table->text('description')->nullable(); // description
             $table->timestamps();
         });
     }

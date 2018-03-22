@@ -83,16 +83,39 @@ if (location.pathname == '/perfil') {
 		let id = $('form#profile')[0].action.split('/')[4];
 		$.get(path + 'usuarios/'+id, function (response) {
 			let option = '<option value="" selected disabled>Seleccione un pais.</option>';
-			for (let i = 0; i < response.countries.length; i++) {
-				let id = response.countries[i].id;
-				let country = response.countries[i].country;
-				option += '<option value="'+id+'">'+country+'</option>';
+			let countries = response.countries;
+			for (let i in countries) {
+				option += '<option value="'+i+'">'+countries[i]+'</option>';
 			}
-			$('select#country_id').html(option);
-			for (let i = 0; i < inputs.length; i++) {
-				if (inputs[i].id) {
-					let value = response.user[inputs[i].name];
-					$(inputs[i]).val(value)
+			let user = response.user;
+			$('select#country_id').html(option)
+			$('a#sin-form').text(user.consolidateda);
+			$('a#form').text(user.consolidatedc);
+			if (user.state) {
+				$('select#country_id').val(user.state.countrie_id);
+				$.get(path + 'get-data-states/' + user.state.countrie_id, function (response) {
+					if (user.country_id == 1) {
+						option = '<option value="">Seleccione un Departamento</option>';
+					} else {
+						option = '<option value="">Seleccione un Estado</option>';
+					}
+					for (let i in response) {
+						option += '<option value="'+i+'">'+response[i]+'</option>';
+					}
+					$('select#state_id').html(option);
+					for(let i in inputs) {
+						if (inputs[i].id && inputs[i].id != 'country_id') {
+							let value = user[inputs[i].name];
+							$(inputs[i]).val(value);
+						}
+					}
+				});
+			} else {
+				for(let i in inputs) {
+					if (inputs[i].id && inputs[i].id != 'country_id') {
+						let value = user[inputs[i].name];
+						$(inputs[i]).val(value);
+					}
 				}
 			}
 		});
@@ -153,6 +176,23 @@ if (location.pathname == '/perfil') {
 		}
 	});
 }
+if (location.pathname == '/usuarios' || location.pathname == '/perfil') {
+	$('select#country_id').change(function (e) {
+		let num = $(this).val();
+		let option;
+		$.get(path + 'get-data-states/' + num, function (response) {
+			if (num == 1) {
+				option = '<option value="">Seleccione un Departamento</option>';
+			} else {
+				option = '<option value="">Seleccione un Estado</option>';
+			}
+			for (let i in response) {
+				option += '<option value="'+i+'">'+response[i]+'</option>';
+			}
+			$('select#state_id').html(option);
+		});
+	});
+}
 // abrir el modal de cambio de password
 $('#btn-change-pass').click(function (e) {
 	$('form#change_password_form')[0].reset();
@@ -200,7 +240,7 @@ function mgs_errors(msg) {
 		.text(msg[i][0]);
 	}
 	toastr.error('Ups, Al parecer ah ocurrido un error!');
-	// console.clear();
+	console.clear();
 }
 
 if (location.pathname == '/usuarios') {
@@ -242,7 +282,7 @@ if (location.pathname == '/usuarios') {
 		{data: 'num_id', name: 'num_id'},
 		{data: 'role.rol', name: 'role.id'},
 		{data: 'email', name: 'email'},
-		{data: 'country.country', name: 'country.id'},
+		{data: 'pais', name: 'state_id'},
 		{data: 'phone', name: 'phone'},
 		]
 	});
@@ -310,6 +350,7 @@ if (location.pathname == '/usuarios') {
 		restoreSmallInputs(messages);
 		$('#modal_user_form form').attr('action', location.origin + '/usuarios/');
 		$('#modal_user_form input[name="_method"]').attr('value', 'POST');
+		$('select#state_id').html('<option value="">Seleccione primero un pais.</option>');
 		$('form#user_form')[0].reset();
 	});
 	$('form#user_form').submit(function (e) {

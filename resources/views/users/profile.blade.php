@@ -12,11 +12,11 @@
         <ul class="list-group list-group-unbordered">
           <li class="list-group-item">
             <b>Consolidados sin formalizar:</b>
-            <a class="pull-right">10</a>
+            <a id="sin-form" class="pull-right">10</a>
           </li>
           <li class="list-group-item">
             <b>Consolidados formalizados:</b>
-            <a class="pull-right">10</a>
+            <a id="form" class="pull-right">10</a>
           </li>
         </ul>
       </div>
@@ -109,9 +109,14 @@
                 </div>
                 <div class="form-group col-md-6">
                   <div class="input-group">
-                    <input type="file" name="avatar" accept="image/*">
+                    <div class="input-group-addon">
+                      <span class="fa fa-globe"></span>
+                    </div>
+                    <select id="state_id" name="state_id" class="form-control">
+                      <option value="">Seleccione primero un pais.</option>
+                    </select>
                   </div>
-                  <small id="avatar" class="form-text text-muted">Imagen Personal.</small>
+                  <small id="state_id" class="form-text text-muted">Departamento o Estado.</small>
                 </div>
               </div>
               <div class="row">
@@ -123,6 +128,14 @@
                   <textarea id="address_two" name="address_two" class="form-control" placeholder="Direccion secundaria"></textarea>
                   <small id="address_two" class="form-text text-muted">Direccion secundaria del usuario.</small>
                 </div> 
+              </div>
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <div class="input-group">
+                    <input type="file" name="avatar" accept="image/*">
+                  </div>
+                  <small id="avatar" class="form-text text-muted">Imagen Personal.</small>
+                </div>
               </div>
             </div>
             <div id="buttons_edit_perfil" class="box-footer">
