@@ -137,4 +137,18 @@ class ConsolidatedController extends Controller
         $states = Cstate::all()->pluck('state', 'id');
         return response()->json(compact('distributors', 'states'));
     }
+
+    /**
+     * extiende el tiempo en espera del consolidado.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function extend($id)
+    {
+        $consolidated = Consolidated::findOrFail($id);
+        $consolidated->close_at = $consolidated->close_at->addDay(1);
+        $consolidated->save();
+        return response()->json($consolidated);
+    }
 }
