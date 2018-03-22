@@ -1,3 +1,12 @@
+ $('.date').datepicker({
+        format: "yyyy-mm-dd",
+        todayBtn: true,
+        clearBtn: true,
+        language: "es",
+        orientation: "bottom auto",
+        autoclose: true,
+        todayHighlight: true
+});
 "use strict";
 toastr.options = {
 	"closeButton": true,
@@ -271,20 +280,22 @@ if (location.pathname == '/usuarios') {
 				});
 			}
 		},
-		"columns": [
-		{
-			data: 'action',
-			name: 'action',
-			searchable: false,
-			sortable: false
-		},
+		order: [[0, 'DESC']],
+		columns: [
+		{data: 'action', name: 'action', orderable: false, searchable: false},
 		{data: 'name', name: 'name'},
 		{data: 'num_id', name: 'num_id'},
 		{data: 'role.rol', name: 'role.id'},
 		{data: 'email', name: 'email'},
+<<<<<<< HEAD
 		{data: 'pais', name: 'state_id'},
 		{data: 'phone', name: 'phone'},
 		]
+=======
+		{data: 'country.country', name: 'country.id'},
+		{data: 'phone', name: 'phone'}
+		],
+>>>>>>> 0bf91fc4eb1789c1ff00a05043983d616d4e0edc
 	});
 	$('a[data-title="Delete"]').click(function (e) {
 		e.preventDefault();
@@ -472,13 +483,9 @@ if (location.pathname == '/consolidados') {
 				});
 			}
 		},
-		"columns": [
-		{
-			data: 'action',
-			name: 'action',
-			searchable: false,
-			sortable: false
-		},
+		order: [[0, 'DESC']],
+		columns: [
+		{data: 'action', name: 'action', orderable: false, searchable: false},
 		{data: 'number', name: 'number'},
 		{data: 'fullname', name: 'user_id'},
 		{data: 'created_at', name: 'created_at'},
