@@ -40,7 +40,7 @@
                         <div class="input-group-addon">
                             <span class="fa fa-calendar-plus-o"></span>
                         </div>
-                        <input type="date" id="create_date" name="create_date" class="form-control input-sm" placeholder="dd/mm/aaaa">
+                        <input type="text" id="create_date" name="create_date" class="form-control input-sm" placeholder="dd/mm/aaaa">
                     </div>
                     <small id="create_date" class="form-text text-muted">Fecha de creacion.</small>
                 </div>
@@ -49,7 +49,7 @@
                         <div class="input-group-addon">
                             <span class="fa fa-calendar-times-o"></span>
                         </div>
-                        <input type="date" id="close_date" name="close_date" class="form-control input-sm" placeholder="dd/mm/aaaa">
+                        <input type="text" id="close_date" name="close_date" class="form-control input-sm" placeholder="dd/mm/aaaa">
                     </div>
                     <small id="close_date" class="form-text text-muted">Fecha de cierre.</small>
                 </div>
@@ -60,10 +60,11 @@
         </form>
     </div>
     <div class="box-body table-responsive">
-        <table id="consolidated-a-table" class="table table-sm table-striped table-bordered table-hover table-condensed" cellspacing="0" width="100%">
+        <div class="col-md-12">
+             <table id="consolidated-a-table" class="table table-sm table-striped table-bordered table-hover table-condensed" cellspacing="0" width="100%">
             <thead>
                 <tr>
-                    <th class="text-center"><span class="fa fa-check-circle-o"></span> Elegir</th>
+                    <th><span class="fa fa-check-circle-o"></span> Elegir</th>
                     <th><span class="fa fa-cube"></span> Consolidado</th>
                     <th><span class="fa fa-user"></span> Usuario</th>
                     <th><span class="fa fa-calendar-plus-o"></span> Creación</th>
@@ -82,6 +83,8 @@
                 </tr>
             </tbody>
         </table>
+        </div>
+       
     </div>
     @if(Auth::user()->rol_id == 2 || 1)
     <div class="box-footer">
@@ -91,7 +94,7 @@
 </div>
 
 <div class="box box-primary">
-{{--     <div class="box-header with-border">
+     <div class="box-header with-border">
         <h3 class="box-title">Consolidados formalizados</h3>
         <div class="pull-right">
             <div class="btn-group">
@@ -107,16 +110,16 @@
                 <a class="btn btn-danger btn-xs btn-flat" href="" data-title="Delete" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Cancelar"><span class="fa fa-trash"></span></a>
             </div>
         </div>
-    </div> --}}
-{{--     <div class="box-header" id="header2">
-        <form id="searchconsolidate" method="POST" role="form">
+    </div>
+  <div class="box-header" id="header2">
+        <form id="search-consolidate-formalized" method="POST" role="form">
             <div class="row"> 
                 <div class="form-group col-md-2">
                     <div class="input-group">
                         <div class="input-group-addon">
                             <span class="fa fa-location-arrow"></span>
                         </div>
-                        <input type="text" class="form-control input-sm" id="consolidated" name="consolidated" title="" placeholder="Consolidado">
+                        <input type="text" class="form-control input-sm" id="consolidate-formalized" name="consolidated-formalized" title="" placeholder="Consolidado">
                     </div>
                     <small id="number_record" class="form-text text-muted">Consolidado.</small>
                 </div>
@@ -134,7 +137,7 @@
                         <div class="input-group-addon">
                             <span class="fa fa-calendar-plus-o"></span>
                         </div>
-                        <input type="text" id="create_date" name="create_date" class="form-control input-sm" placeholder="dd/mm/aaaa">
+                        <input type="text" id="1" name="" class="form-control input-sm" placeholder="dd/mm/aaaa">
                     </div>
                     <small id="create_date" class="form-text text-muted">Fecha de creacion.</small>
                 </div>
@@ -143,7 +146,7 @@
                         <div class="input-group-addon">
                             <span class="fa fa-calendar-check-o"></span>
                         </div>
-                        <input type="text" id="create_date" name="create_date" class="form-control input-sm" placeholder="dd/mm/aaaa">
+                        <input type="text" id="2" name="" class="form-control input-sm" placeholder="dd/mm/aaaa">
                     </div>
                     <small id="create_date" class="form-text text-muted">Fecha de cierre.</small>
                 </div>
@@ -152,8 +155,8 @@
                 </div>
             </div>
         </form>
-    </div> --}}
-{{--     <div class="box-body table-responsive">
+    </div>
+<div class="box-body table-responsive">
         <table id="users-table" class="table table-striped table-bordered table-hover table-condensed" cellspacing="0" width="100%">
             <thead>
                 <tr>
@@ -202,7 +205,7 @@
                 </tr>
             </tbody>
         </table>
-    </div> --}}
+    </div>
 </div>
 @include('modals.send_form')
 @endsection
