@@ -1,11 +1,11 @@
- $('.date').datepicker({
-        format: "yyyy-mm-dd",
-        todayBtn: true,
-        clearBtn: true,
-        language: "es",
-        orientation: "bottom auto",
-        autoclose: true,
-        todayHighlight: true
+$('.date').datepicker({
+	format: "yyyy-mm-dd",
+	todayBtn: true,
+	clearBtn: true,
+	language: "es",
+	orientation: "bottom auto",
+	autoclose: true,
+	todayHighlight: true
 });
 "use strict";
 toastr.options = {
@@ -283,19 +283,13 @@ if (location.pathname == '/usuarios') {
 		order: [[0, 'DESC']],
 		columns: [
 		{data: 'action', name: 'action', orderable: false, searchable: false},
-		{data: 'name', name: 'name'},
+		{data: 'fullname', name: 'name'},
 		{data: 'num_id', name: 'num_id'},
-		{data: 'role.rol', name: 'role.id'},
+		{data: 'role.rol', name: 'role_id'},
 		{data: 'email', name: 'email'},
-<<<<<<< HEAD
 		{data: 'pais', name: 'state_id'},
 		{data: 'phone', name: 'phone'},
 		]
-=======
-		{data: 'country.country', name: 'country.id'},
-		{data: 'phone', name: 'phone'}
-		],
->>>>>>> 0bf91fc4eb1789c1ff00a05043983d616d4e0edc
 	});
 	$('a[data-title="Delete"]').click(function (e) {
 		e.preventDefault();
@@ -339,6 +333,23 @@ if (location.pathname == '/usuarios') {
 			dataType: 'json',
 		})
 		.done(function(response) {
+			if (response.user.state) {
+				let countrie = response.user.state.countrie_id;
+				let state = response.user.state.id;
+				let option;
+				$('select#country_id').val(countrie);
+				$.get(path + 'get-data-states/' + countrie, function (response) {
+					if (countrie == 1) {
+						option = '<option value="">Seleccione un Departamento</option>';
+					} else {
+						option = '<option value="">Seleccione un Estado</option>';
+					}
+					for (let i in response) {
+						option += '<option value="'+i+'">'+response[i]+'</option>';
+					}
+					$('select#state_id').html(option).val(state);
+				});
+			}
 			for (var i in response.user) {
 				$('form#user_form')
 				.find('#'+i)
@@ -423,11 +434,11 @@ if (location.pathname == '/consolidados') {
 			}
 		})
 		.done(function(response) {
-			trackTable.draw();
+			// trackTable.draw();
 			$('.f-close').text(response.cierre);
 			$('.f-create').text(response.creacion);
 			$('form#tracking-form-register input#consolidated_id').val(response.id);
-			consTable.draw();
+			// consTable.draw();
 			$('#modal-send-form').modal('toggle').find('.modal-title').html('<span class="fa fa-plus"></span> Crear Nuevo Consolidado.');
 			$('#addForm').removeAttr('disabled');
 			toastr.success('Nuevo Consolidado Abierto');
@@ -447,7 +458,7 @@ if (location.pathname == '/consolidados') {
 			data: data
 		})
 		.done(function(response) {
-			trackTable.draw();
+			// trackTable.draw();
 			if (response.msg) {
 				toastr.error(response.msg);
 				return;
@@ -459,92 +470,92 @@ if (location.pathname == '/consolidados') {
 			toastr.error('Opps al parecer a ocurrido un error');
 		});
 	});
-	var consTable = $('table#consolidated-a-table').DataTable({
-		lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "Todos"]],	
-		processing: true,
-		serverSide: true,
-		responsive: true,
-		render: true,
-		language: translateTable,
-		ajax: {
-			url: path + 'consolidados',
-			data: function (d) {
-				d.consolidated = $('form#searchconsolidate input[name="consolidated"]').val();
-				d.user = $('form#searchconsolidate input[name="user"]').val();
-				d.close_date = $('form#searchconsolidate input[name="close_date"]').val();
-				d.create_date = $('form#searchconsolidate input[name="create_date"]').val();
-				d.status = $('form#searchconsolidate input[name="status"]').val();
-			},
-			complete: function () {
-				$('input[type="radio"][name="consolidated"]').click(function () {
-					let consolidated = $(this).val();
-					$('button#deleteConsolidated, button#viewConsolidated, button#editConsolidated, button#extendConsolidated')
-					.attr('consolidated', consolidated);
-				});
-			}
-		},
-		order: [[0, 'DESC']],
-		columns: [
-		{data: 'action', name: 'action', orderable: false, searchable: false},
-		{data: 'number', name: 'number'},
-		{data: 'fullname', name: 'user_id'},
-		{data: 'created_at', name: 'created_at'},
-		{data: 'cstate.state', name: 'cstate.state'},
-		{data: 'close_at', name: 'close_at'},
-		]
-	});
-	let trackTable = $('table#tracking-table').DataTable({
-		lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "Todos"]],	
-		processing: true,
-		serverSide: true,
-		responsive: true,
-		render: true,
-		language: translateTable,
-		ajax: {
-			url: path + 'tracking',
-			data: function (d) {
-				d.consolidated_id = $('form#tracking-form-register input#consolidated_id').val();
-			},
-			complete: function () {
-				$('a#deleteTracking').click(function () {
-					let tracking = $(this).attr('tracking');
-					$.post(path + 'tracking/' + tracking, {'_method': 'DELETE'}, function () {
-						trackTable.draw();
-						toastr.success('Tracking Eliminado.');
-					});
-				});
-				$('a#editTracking').click(function () {
-					let tracking = $(this).attr('tracking');
-					$(this).parent().parent().addClass('info');
-					$.get(path + 'tracking/' + tracking, function (response) {
-						let entradas = $('form#tracking-form-register');
-						for (let i in response) {
-							entradas.find('input#'+i+', select#'+i).val(response[i])
-						}
-						$('#btn-create-tracking').hide();
-						$('#btns-edit-tracking').show();
-						$('#btns-edit-tracking').removeClass('hidden');
-						$('#tracking-form-register input[name=_method]').val('PUT');
-						$('#tracking-form-register').attr('action', path + 'tracking/' + tracking);
-						toastr.info('Editar Tracking.');
-					});
-				});
-			}
-		},
-		"columns": [
-		{data: 'distributor.name', name: 'trackings.distributor_id'},
-		{data: 'tracking', name: 'trackings.id'},
-		{data: 'description', name: 'trackings.description'},
-		{
-			data: 'action',
-			searchable: false,
-			sortable: false
-		},
-		]
-	});
+	// var consTable = $('table#consolidated-a-table').DataTable({
+	// 	lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "Todos"]],	
+	// 	processing: true,
+	// 	serverSide: true,
+	// 	responsive: true,
+	// 	render: true,
+	// 	language: translateTable,
+	// 	ajax: {
+	// 		url: path + 'consolidados',
+	// 		data: function (d) {
+	// 			d.consolidated = $('form#searchconsolidate input[name="consolidated"]').val();
+	// 			d.user = $('form#searchconsolidate input[name="user"]').val();
+	// 			d.close_date = $('form#searchconsolidate input[name="close_date"]').val();
+	// 			d.create_date = $('form#searchconsolidate input[name="create_date"]').val();
+	// 			d.status = $('form#searchconsolidate input[name="status"]').val();
+	// 		},
+	// 		complete: function () {
+	// 			$('input[type="radio"][name="consolidated"]').click(function () {
+	// 				let consolidated = $(this).val();
+	// 				$('button#deleteConsolidated, button#viewConsolidated, button#editConsolidated, button#extendConsolidated')
+	// 				.attr('consolidated', consolidated);
+	// 			});
+	// 		}
+	// 	},
+	// 	order: [[0, 'DESC']],
+	// 	columns: [
+	// 	{data: 'action', name: 'action', orderable: false, searchable: false},
+	// 	{data: 'number', name: 'number'},
+	// 	{data: 'fullname', name: 'user_id'},
+	// 	{data: 'created_at', name: 'created_at'},
+	// 	{data: 'cstate.state', name: 'cstate.state'},
+	// 	{data: 'close_at', name: 'close_at'},
+	// 	]
+	// });
+	// let trackTable = $('table#tracking-table').DataTable({
+	// 	lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "Todos"]],	
+	// 	processing: true,
+	// 	serverSide: true,
+	// 	responsive: true,
+	// 	render: true,
+	// 	language: translateTable,
+	// 	ajax: {
+	// 		url: path + 'tracking',
+	// 		data: function (d) {
+	// 			d.consolidated_id = $('form#tracking-form-register input#consolidated_id').val();
+	// 		},
+	// 		complete: function () {
+	// 			$('a#deleteTracking').click(function () {
+	// 				let tracking = $(this).attr('tracking');
+	// 				$.post(path + 'tracking/' + tracking, {'_method': 'DELETE'}, function () {
+	// 					trackTable.draw();
+	// 					toastr.success('Tracking Eliminado.');
+	// 				});
+	// 			});
+	// 			$('a#editTracking').click(function () {
+	// 				let tracking = $(this).attr('tracking');
+	// 				$(this).parent().parent().addClass('info');
+	// 				$.get(path + 'tracking/' + tracking, function (response) {
+	// 					let entradas = $('form#tracking-form-register');
+	// 					for (let i in response) {
+	// 						entradas.find('input#'+i+', select#'+i).val(response[i])
+	// 					}
+	// 					$('#btn-create-tracking').hide();
+	// 					$('#btns-edit-tracking').show();
+	// 					$('#btns-edit-tracking').removeClass('hidden');
+	// 					$('#tracking-form-register input[name=_method]').val('PUT');
+	// 					$('#tracking-form-register').attr('action', path + 'tracking/' + tracking);
+	// 					toastr.info('Editar Tracking.');
+	// 				});
+	// 			});
+	// 		}
+	// 	},
+	// 	"columns": [
+	// 	{data: 'distributor.name', name: 'trackings.distributor_id'},
+	// 	{data: 'tracking', name: 'trackings.id'},
+	// 	{data: 'description', name: 'trackings.description'},
+	// 	{
+	// 		data: 'action',
+	// 		searchable: false,
+	// 		sortable: false
+	// 	},
+	// 	]
+	// });
 	$('form#searchconsolidate').submit(function (e) {
 		e.preventDefault();
-		consTable.draw();
+		// consTable.draw();
 	});
 	$('button#deleteConsolidated').click(function () {
 		let consolidated = $(this).attr('consolidated');
@@ -553,7 +564,7 @@ if (location.pathname == '/consolidados') {
 			return;
 		};
 		$.post(path + 'consolidados/' + consolidated, {'_method': 'DELETE'}, function () {
-			consTable.draw();
+			// consTable.draw();
 			toastr.success('Consolidado Eliminado.');
 		});
 	});
@@ -569,7 +580,7 @@ if (location.pathname == '/consolidados') {
 				data: data
 			})
 			.done(function(response) {
-				trackTable.draw();
+				// trackTable.draw();
 				if (response.msg) {
 					toastr.error(response.msg);
 					return;
@@ -603,7 +614,7 @@ if (location.pathname == '/consolidados') {
 			dataType: 'json',
 		})
 		.done(function(response) {
-			consTable.draw();
+			// consTable.draw();
 			toastr.success('Consolidado Extendido un día.');
 		})
 		.fail(function(response) {

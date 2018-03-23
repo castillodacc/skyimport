@@ -7,7 +7,7 @@ use skyimport\Http\Controllers\Controller;
 use skyimport\Models\Distributor;
 use skyimport\Models\Consolidated;
 use Yajra\DataTables\Datatables;
-use skyimport\Models\Cstate;
+use skyimport\Models\Shippingstate;
 
 class ConsolidatedController extends Controller
 {
@@ -70,10 +70,10 @@ class ConsolidatedController extends Controller
             $consolidado = Consolidated::create([
                 'number' => 'is' . rand(10000000000, 99999999999),
                 'user_id' => \Auth::user()->id,
-                'cstate_id' => 1,
-                'close_at' => \Carbon::now()->addDay(3),
+                'shippingstate_id' => 1,
+                'closed_at' => \Carbon::now()->addDay(3),
             ]);
-            $cierre = $consolidado->close_at->diffForHumans();
+            $cierre = $consolidado->closed_at->diffForHumans();
             $creacion = $consolidado->created_at->diffForHumans();
             $id = $consolidado->id;
             return response()->json(compact('creacion', 'cierre', 'id'));
@@ -134,7 +134,7 @@ class ConsolidatedController extends Controller
     public function dataForRegister()
     {
         $distributors = Distributor::all()->pluck('name', 'id');
-        $states = Cstate::all()->pluck('state', 'id');
+        $states = Shippingstate::where('ref_id', '=', 1)->pluck('state', 'id');
         return response()->json(compact('distributors', 'states'));
     }
 

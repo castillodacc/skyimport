@@ -25,10 +25,10 @@ class UsersController extends Controller
     {
         if (!request()->ajax()) return view('users.users');
         $query = User::query()->with(['role'])
-        ->select(['name', 'last_name', 'num_id', 'email', 'phone', 'role_id', 'state_id']);
+        ->select(['id', 'name', 'last_name', 'num_id', 'email', 'phone', 'role_id', 'state_id']);
 
         return (new Datatables)->of($query)
-        ->addColumn('name', function ($user) {
+        ->addColumn('fullname', function ($user) {
             return $user->name . ' ' . $user->last_name;
         })->addColumn('pais', function ($user) {
             if ($user->state == null) return '-';
