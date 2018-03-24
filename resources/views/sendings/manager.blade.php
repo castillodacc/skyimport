@@ -68,7 +68,8 @@
                     <th><span class="fa fa-cube"></span> Consolidado</th>
                     <th><span class="fa fa-user"></span> Usuario</th>
                     <th><span class="fa fa-calendar-plus-o"></span> Creación</th>
-                    <th><span class="fa fa-check-square-o"></span> Estado</th>
+                    <th width="15%"><span class="fa fa-check-square-o"></span> Estado</th>
+                    <th><span class="fa fa-location-arrow"></span> Trackings</th>
                     <th><span class="fa fa-calendar-times-o"></span> Cierre</th>
                 </tr>
             </thead>

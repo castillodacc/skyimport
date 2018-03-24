@@ -28,7 +28,7 @@ class TrakingStoreRequest extends FormRequest
             'description' => 'required|string',
             'consolidated_id' => 'required|numeric',
             'distributor_id' => 'required|numeric',
-            'weight' => 'required|numeric',
+            'price' => 'numeric',
         ];
     }
 }

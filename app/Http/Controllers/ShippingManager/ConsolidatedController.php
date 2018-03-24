@@ -23,25 +23,35 @@ class ConsolidatedController extends Controller
     public function index()
     {
         if (!request()->ajax()) return view('sendings.manager');
-        
+
         $request = request();
         $query = Consolidated::query()
-        ->with(['user', 'cstate']);
+        ->with(['user', 'Shippingstate'])
+        ->select(['id', 'closed_at', 'user_id', 'created_at', 'number', 'shippingstate_id']);
+
         return (new Datatables)->of($query)
-        ->editColumn('created_at', function ($consolidated) {
-            return $consolidated->created_at->diffForHumans();
-        })
-        ->editColumn('close_at', function ($consolidated) {
-            return $consolidated->close_at->diffForHumans();
-        })
         ->addColumn('action', function ($consolidated) {
             return '<input type="radio" name="consolidated" value="'.$consolidated->id.'" style="margin:0 50%">';
         })
+        ->editColumn('created_at', function ($consolidated) {
+            return $consolidated->created_at->diffForHumans().'.';
+        })
+        ->editColumn('closed_at', function ($consolidated) {
+            return $consolidated->closed_at->diffForHumans().'.';
+        })
+        ->editColumn('shippingstate', function ($consolidated) {
+            if ($consolidated->shippingstate->id == 1) {
+                $class = "info";
+            }
+            return '<span class="label label-' . $class . '">'.$consolidated->shippingstate->state.'</span>';
+        })
+        ->addColumn('num_trackings', function ($consolidated) {
+            return $consolidated->trackings->count();
+        })
         ->addColumn('fullname', function ($consolidated) {
             return $consolidated->user->name . ' ' . $consolidated->user->last_name;
-        })->filter(function ($query) use ($request) {
-            $query->where('cstate_id', '!=', 3);
-
+        })
+        ->filter(function ($query) use ($request) {
             if ($request->has('consolidated')) {
                 $query->orWhere('number', 'like', "%{$request->consolidated}%");
             }
@@ -49,9 +59,10 @@ class ConsolidatedController extends Controller
                 $query->orWhere('created_at', 'like', "%{$request->create_date}%");
             }
             if ($request->has('close_date')) {
-                $query->orWhere('close_at', 'like', "%{$request->close_date}%");
+                $query->orWhere('closed_at', 'like', "%{$request->close_date}%");
             }
-        })->make(true); 
+        })
+        ->make(true); 
     }
 
     /**

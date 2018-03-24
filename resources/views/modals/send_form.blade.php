@@ -49,11 +49,12 @@
                         <div class="form-group col-md-2">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    Lb
+                                    <span class="fa fa-dollar"></span>
                                 </div>
-                                <input type="number" id="weight" name="weight" class="form-control input-sm" placeholder="99" required="">
+                                <input type="text" id="price" name="price" class="form-control input-sm" placeholder="Valor en $">
                             </div>
-                            <small id="weight" class="form-text text-muted">Peso en Libras</small> </div>
+                            <small id="price" class="form-text text-muted">Valor declarado $</small>
+                        </div>
                         <div id="btn-create-tracking" class="form-group col-md-1">
                             <button type="submit" class="btn btn-primary btn-sm btn-flat" data-toggle="tooltip" data-placement="top" title="Agregar tracking"><span class="fa fa-plus"></span></button>
                         </div>

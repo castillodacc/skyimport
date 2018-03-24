@@ -18,7 +18,9 @@ class Consolidated extends Model
         'number', 'user_id', 'shippingstate_id', 'closed_at', 'created_at'
     ];
 
-    protected $dates = ['closed_at'];
+    protected $dates = [
+        'closed_at'
+    ];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -38,10 +40,18 @@ class Consolidated extends Model
     }
 
     /**
-     * Get the cstate that owns the consolidated.
+     * Get the Shippingstate that owns the consolidated.
      */
     public function Shippingstate()
     {
         return $this->belongsTo(Shippingstate::class);
+    }
+
+    /**
+     * Get the trackings that owns the consolidated.
+     */
+    public function trackings()
+    {
+        return $this->hasMany(Tracking::class);
     }
 }

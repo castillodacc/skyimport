@@ -77,7 +77,7 @@ class UsersController extends Controller
      */
     public function update(UserUpdateRequest $request, $id)
     {
-        if($request->id == 1) return response(['errors' => 'Error al modificar usuario'], 422);
+        if($id == 1) return response(['errors' => 'Error al modificar usuario'], 422);
         $data = $request->all();
         if( !empty($data['password2']) ){
             $this->validate($request, [
