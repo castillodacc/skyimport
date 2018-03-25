@@ -11,7 +11,10 @@
                 <button id="extendConsolidated" type="button" class="btn btn-warning btn-xs btn-flat" data-title="Extend" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Extender consolidado"><span class="fa fa-calendar-plus-o"></span></button>
             </div>
             <div class="btn-group">
-                <button id="viewConsolidated" type="button" class="btn btn-info btn-xs btn-flat" data-title="Show" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Mostrar consolidado"><span class="fa fa-eye"></span></button>
+                <button id="viewConsolidated" type="button" class="btn btn-default btn-xs btn-flat" data-title="Show" data-toggle="modal" data-target="#modal-send-show" data-placement="top" rel="tooltip" title="Mostrar consolidado"><span class="fa fa-eye"></span></button>
+            </div>
+            <div class="btn-group">
+                <a class="btn bg-teal btn-xs btn-flat" href="" data-title="Update" data-toggle="modal" data-target="#modal-send-edit" data-placement="top" rel="tooltip" title="Actualizar"><span class="fa fa-edit"></span></a>
             </div>
             {{-- @if(Auth::user()->rol_id == 2) --}}
             <div class="btn-group">
@@ -175,4 +178,6 @@
     </div>
 </div>
 @include('modals.send_form')
+@include('modals.send_edit_form')
+@include('modals.send_show')
 @endsection
