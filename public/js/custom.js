@@ -322,7 +322,7 @@ if (location.href.indexOf('/usuarios') > 0) {
 			return;
 		}
 		let id = $(this).attr('id');
-		let url = path + '/usuarios/' + id;
+		let url = path + 'usuarios/' + id;
 		restoreSmallInputs(messages);
 		$('form#user_form')[0].reset();
 		$('#modal_user_form form')
@@ -372,7 +372,7 @@ if (location.href.indexOf('/usuarios') > 0) {
 		.find('h4.modal-title')
 		.text('Registrar Usuario.');
 		restoreSmallInputs(messages);
-		$('#modal_user_form form').attr('action', path + '/usuarios/');
+		$('#modal_user_form form').attr('action', path + 'usuarios/');
 		$('#modal_user_form input[name="_method"]').attr('value', 'POST');
 		$('select#state_id').html('<option value="">Seleccione primero un pais.</option>');
 		$('form#user_form')[0].reset();
@@ -380,7 +380,11 @@ if (location.href.indexOf('/usuarios') > 0) {
 	$('form#user_form').submit(function (e) {
 		e.preventDefault();
 		let url = $(this).attr('action');
-		url = url.substring(0, url.length-1);
+		if ($(this).attr('action') == path + 'usuarios/') {
+			url = $(this).attr('action').substring(0, url.length-1);
+		} else {
+			url = $(this).attr('action');
+		}
 		let func = $(this).find('input[name="_method"]')[0].value;
 		let data = $(this).serializeArray();
 		restoreSmallInputs(messages);
