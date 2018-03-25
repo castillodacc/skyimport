@@ -484,10 +484,9 @@ if (location.href.indexOf('/consolidados') > 0) {
 			url: path + 'consolidados',
 			data: function (d) {
 				d.consolidated = $('form#searchconsolidate input[name="consolidated"]').val();
-				d.user = $('form#searchconsolidate input[name="user"]').val();
 				d.close_date = $('form#searchconsolidate input[name="close_date"]').val();
 				d.create_date = $('form#searchconsolidate input[name="create_date"]').val();
-				d.status = $('form#searchconsolidate input[name="status"]').val();
+				d.c = 'abierto';
 			},
 			complete: function () {
 				$('input[type="radio"][name="consolidated"]').click(function () {
@@ -664,5 +663,43 @@ if (location.href.indexOf('/consolidados') > 0) {
 			$('#modal-send-form').modal('toggle').find('.modal-title').html('<span class="fa fa-edit"></span> Editar Consolidado ' + response.number + '.');
 			trackTable.draw();
 		});
+	});
+	var consTable2 = $('table#consolidated-b-table').DataTable({
+		lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "Todos"]],	
+		processing: true,
+		serverSide: true,
+		responsive: true,
+		render: true,
+		language: translateTable,
+		ajax: {
+			url: path + 'consolidados',
+			data: function (d) {
+				d.consolidated = $('form#search-consolidate-formalized input[name="consolidated_formalized"]').val();
+				d.user = $('form#search-consolidate-formalized input[name="user"]').val();
+				d.close_date = $('form#search-consolidate-formalized input[name="closed_at"]').val();
+				d.create_date = $('form#search-consolidate-formalized input[name="created_at"]').val();
+				d.c = 'cerrado';
+			},
+			complete: function () {
+			}
+		},
+		order: [[3, 'DESC']],
+		columns: [
+		{data: 'action', orderable: false, searchable: false},
+		{data: 'number', name: 'number'},
+		{data: 'fullname', name: 'user_id'},
+		{data: 'created_at', name: 'created_at'},
+		{data: 'num_trackings', orderable: false, searchable: false},
+		{data: 'closed_at', name: 'closed_at'},
+		]
+	});
+	$('div#header-search-b').hide();
+	$('#search-cons-b').click(function (e) {
+		e.preventDefault();
+		$('div#header-search-b').fadeToggle();
+	});
+	$('form#search-consolidate-formalized').submit(function (e) {
+		e.preventDefault();
+		consTable2.draw();
 	});
 }

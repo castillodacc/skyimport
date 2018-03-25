@@ -25,12 +25,16 @@ class ConsolidatedController extends Controller
         if (!request()->ajax()) return view('sendings.manager');
 
         $request = request();
-        $query = Consolidated::query()
+        $object = Consolidated::query()
         ->with(['user', 'Shippingstate'])
-        ->where('closed_at', '>', \Carbon::now())
         ->select(['id', 'closed_at', 'user_id', 'created_at', 'number', 'shippingstate_id']);
+        if ($request->c === 'abierto') {
+            $object->where('closed_at', '>', \Carbon::now());
+        } else {
+            $object->where('closed_at', '<', \Carbon::now());
+        }
 
-        return (new Datatables)->of($query)
+        return (new Datatables)->of($object)
         ->addColumn('action', function ($consolidated) {
             return '<input type="radio" name="consolidated" value="'.$consolidated->id.'" style="margin:0 50%">';
         })
@@ -54,13 +58,13 @@ class ConsolidatedController extends Controller
         })
         ->filter(function ($query) use ($request) {
             if ($request->has('consolidated')) {
-                $query->orWhere('number', 'like', "%{$request->consolidated}%");
+                $query->Where('number', 'like', "%{$request->consolidated}%");
             }
             if ($request->has('create_date')) {
-                $query->orWhere('created_at', 'like', "%{$request->create_date}%");
+                $query->Where('created_at', 'like', "%{$request->create_date}%");
             }
             if ($request->has('close_date')) {
-                $query->orWhere('closed_at', 'like', "%{$request->close_date}%");
+                $query->Where('closed_at', 'like', "%{$request->close_date}%");
             }
         })
         ->make(true); 
