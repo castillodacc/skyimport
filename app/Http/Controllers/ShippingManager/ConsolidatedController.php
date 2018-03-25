@@ -27,6 +27,7 @@ class ConsolidatedController extends Controller
         $request = request();
         $query = Consolidated::query()
         ->with(['user', 'Shippingstate'])
+        ->where('closed_at', '>', \Carbon::now())
         ->select(['id', 'closed_at', 'user_id', 'created_at', 'number', 'shippingstate_id']);
 
         return (new Datatables)->of($query)
@@ -79,7 +80,7 @@ class ConsolidatedController extends Controller
                 $test = Consolidated::where('number', '=', $num)->first();
             }while($test);
             $consolidado = Consolidated::create([
-                'number' => 'is' . rand(10000000000, 99999999999),
+                'number' => $num,
                 'user_id' => \Auth::user()->id,
                 'shippingstate_id' => 1,
                 'closed_at' => \Carbon::now()->addDay(3),
@@ -99,7 +100,10 @@ class ConsolidatedController extends Controller
      */
     public function show($id)
     {
-        //
+        $consolidated = Consolidated::findOrFail($id);
+        $consolidated->close = $consolidated->closed_at->diffForHumans();
+        $consolidated->open = $consolidated->created_at->diffForHumans();
+        return response()->json($consolidated);
     }
 
     /**
@@ -158,7 +162,21 @@ class ConsolidatedController extends Controller
     public function extend($id)
     {
         $consolidated = Consolidated::findOrFail($id);
-        $consolidated->close_at = $consolidated->close_at->addDay(1);
+        $consolidated->closed_at = $consolidated->closed_at->addDay(1);
+        $consolidated->save();
+        return response()->json($consolidated);
+    }
+
+    /**
+     * Formaliza un consolidado colocanco la fecha actual a la fecha de cierre.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function formalize($id)
+    {
+        $consolidated = Consolidated::findOrFail($id);
+        $consolidated->closed_at = \Carbon::now();
         $consolidated->save();
         return response()->json($consolidated);
     }

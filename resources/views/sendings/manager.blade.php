@@ -16,11 +16,11 @@
             <div class="btn-group">
                 <a class="btn bg-teal btn-xs btn-flat" href="" data-title="Update" data-toggle="modal" data-target="#modal-send-edit" data-placement="top" rel="tooltip" title="Actualizar"><span class="fa fa-edit"></span></a>
             </div>
-            @if(Auth::user()->rol_id == 2)
+            {{-- @if(Auth::user()->rol_id == 2) --}}
             <div class="btn-group">
                 <button id="editConsolidated" type="button" class="btn btn-primary btn-xs btn-flat" data-title="Update" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Actualizar"><span class="fa fa-edit"></span></button>
             </div>
-            @endif
+            {{-- @endif --}}
             <div class="btn-group">
                 <button id="deleteConsolidated" type="button" class="btn btn-danger btn-xs btn-flat" data-title="Delete" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Cancelar"><span class="fa fa-trash"></span></button>
             </div>
