@@ -13,11 +13,11 @@
             <div class="btn-group">
                 <button id="viewConsolidated" type="button" class="btn btn-info btn-xs btn-flat" data-title="Show" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Mostrar consolidado"><span class="fa fa-eye"></span></button>
             </div>
-            @if(Auth::user()->rol_id == 2)
+            {{-- @if(Auth::user()->rol_id == 2) --}}
             <div class="btn-group">
                 <button id="editConsolidated" type="button" class="btn btn-primary btn-xs btn-flat" data-title="Update" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Actualizar"><span class="fa fa-edit"></span></button>
             </div>
-            @endif
+            {{-- @endif --}}
             <div class="btn-group">
                 <button id="deleteConsolidated" type="button" class="btn btn-danger btn-xs btn-flat" data-title="Delete" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Cancelar"><span class="fa fa-trash"></span></button>
             </div>

@@ -24,6 +24,7 @@ class UsersController extends Controller
     public function index()
     {
         if (!request()->ajax()) return view('users.users');
+
         $query = User::query()->with(['role'])
         ->select(['id', 'name', 'last_name', 'num_id', 'email', 'phone', 'role_id', 'state_id']);
 
@@ -62,8 +63,8 @@ class UsersController extends Controller
     {
         $user = User::findOrFail($id);
         $user->state;
-        $user['consolidateda'] = $user->consolidated->where('closed_at', 'IS NULL')->count();
-        $user['consolidatedc'] = $user->consolidated->where('closed_at', 'IS NOT NULL')->count();
+        $user['consolidateda'] = $user->consolidated->where('closed_at', '>', \Carbon::now())->count();
+        $user['consolidatedc'] = $user->consolidated->where('closed_at', '<', \Carbon::now())->count();
         $countries = \DB::table('countries')->latest('id')->pluck('country', 'id');
         return response()->json(compact('user', 'countries'));
     }

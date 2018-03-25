@@ -23,6 +23,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::resource('consolidados', 'ConsolidatedController');
 		Route::post('data-for-consolidated', 'ConsolidatedController@dataForRegister');
 		Route::post('extend-consolidated/{consolidated}', 'ConsolidatedController@extend');
+		Route::post('formalize-consolidated/{consolidated}', 'ConsolidatedController@formalize');
 		Route::resource('tracking', 'TrackingController');
 	});
 
