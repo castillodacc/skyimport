@@ -67,7 +67,7 @@
             </div>
             <div class="modal-body">
                 <div class="box-body">
-                    <table id="tracking-table" class="table table-striped table-bordered table-hover table-condensed" cellspacing="0" width="100%">
+                    <table id="" class="table table-striped table-bordered table-hover table-condensed" cellspacing="0" width="100%">
                         <thead>
                             <tr>
                                 <th>Repartidor</th>

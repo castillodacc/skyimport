@@ -34,6 +34,10 @@ class ConsolidatedController extends Controller
             $object->where('closed_at', '<', \Carbon::now());
         }
 
+        if (\Auth::user()->role_id == 2) {
+            $object->where('user_id', '=', \Auth::user()->id);
+        }
+
         return (new Datatables)->of($object)
         ->addColumn('action', function ($consolidated) {
             return '<input type="radio" name="consolidated" value="'.$consolidated->id.'" style="margin:0 50%">';
@@ -80,7 +84,7 @@ class ConsolidatedController extends Controller
     {
         if ($request->index == 'create') {
             do {
-                $num = 'is' . rand(10000000000, 99999999999);
+                $num = 'IS' . rand(10000, 99999) . rand(100000, 999999);
                 $test = Consolidated::where('number', '=', $num)->first();
             }while($test);
             $consolidado = Consolidated::create([
@@ -105,6 +109,10 @@ class ConsolidatedController extends Controller
     public function show($id)
     {
         $consolidated = Consolidated::findOrFail($id);
+        $consolidated->user;
+        $consolidated->Shippingstate;
+        $consolidated->trackings;
+        $consolidated->sum_total = $consolidated->trackings->sum('price');
         $consolidated->close = $consolidated->closed_at->diffForHumans();
         $consolidated->open = $consolidated->created_at->diffForHumans();
         return response()->json($consolidated);
@@ -180,6 +188,7 @@ class ConsolidatedController extends Controller
     public function formalize($id)
     {
         $consolidated = Consolidated::findOrFail($id);
+        if (! $consolidated->trackings->count()) return response(['msg' => 'El consolidado debe tener al menos un tracking.'], 422);
         $consolidated->closed_at = \Carbon::now();
         $consolidated->save();
         return response()->json($consolidated);

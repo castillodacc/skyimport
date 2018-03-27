@@ -95,7 +95,7 @@
             <div class="modal-footer">
                 <button type="button" id="cancel-consolidated" class="btn btn-danger btn-flat" data-dismiss="modal"><span class="fa fa-close"></span> Cancelar</button>
                 <button type="button" class="btn btn-primary btn-flat" data-dismiss="modal"><span class="glyphicon glyphicon-saved"></span> Guardar</button>
-                <button type="button" id="consolidated-consolidated" class="btn btn-success btn-flat" data-dismiss="modal"><span class="fa fa-send"></span> Formalizar</button>
+                <button type="button" id="consolidated-consolidated" class="btn btn-success btn-flat"><span class="fa fa-send"></span> Formalizar</button>
             </div>
         </div>
     </div>

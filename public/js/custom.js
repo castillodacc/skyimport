@@ -429,54 +429,6 @@ if (location.href.indexOf('/consolidados') > 0) {
 		}
 		$('form#searchconsolidate select#status').html(option);
 	});
-	$('#addForm').click(function (e) {
-		e.preventDefault();
-		$(this).attr('disabled', '');
-		$.ajax({
-			url: path + 'consolidados',
-			type: 'POST',
-			dataType: 'json',
-			data: {
-				index: 'create'
-			}
-		})
-		.done(function(response) {
-			trackTable.draw();
-			$('.f-close').text(response.cierre);
-			$('.f-create').text(response.creacion);
-			$('form#tracking-form-register input#consolidated_id').val(response.id);
-			$('#modal-send-form').modal('toggle').find('.modal-title').html('<span class="fa fa-plus"></span> Crear Nuevo Consolidado.');
-			consTable.draw();
-			$('#addForm').removeAttr('disabled');
-			toastr.success('Nuevo Consolidado Abierto');
-		})
-		.fail(function(response) {
-			toastr.error('Opps al parecer a ocurrido un error');
-		});
-	});
-	$('form#tracking-form-register').submit(function (e) {
-		e.preventDefault();
-		let url = $(this).attr('action');
-		let data = $(this).serializeArray();
-		$.ajax({
-			url: url,
-			type: 'POST',
-			dataType: 'json',
-			data: data
-		})
-		.done(function(response) {
-			trackTable.draw();
-			if (response.msg) {
-				toastr.error(response.msg);
-				return;
-			}
-			$('form#tracking-form-register')[0].reset();
-			toastr.success('Tracking Registrado');
-		})
-		.fail(function(response) {
-			toastr.error('Opps al parecer a ocurrido un error');
-		});
-	});
 	var consTable = $('table#consolidated-a-table').DataTable({
 		lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "Todos"]],	
 		processing: true,
@@ -530,7 +482,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 		render: true,
 		language: translateTableCustom,
 		ajax: {
-			url: path + 'tracking',
+			url: path + 'tracking/',
 			data: function (d) {
 				d.consolidated_id = $('form#tracking-form-register input#consolidated_id').val();
 			},
@@ -564,12 +516,110 @@ if (location.href.indexOf('/consolidados') > 0) {
 				});
 			}
 		},
-		"columns": [
+		columns: [
 		{data: 'distributor.name', name: 'trackings.distributor_id'},
 		{data: 'tracking', name: 'trackings.id'},
 		{data: 'description', name: 'trackings.description'},
 		{data: 'action', searchable: false, sortable: false},
 		]
+	});
+	let consTable2 = $('table#consolidated-b-table').DataTable({
+		lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "Todos"]],	
+		processing: true,
+		serverSide: true,
+		responsive: true,
+		render: true,
+		language: translateTable,
+		ajax: {
+			url: path + 'consolidados',
+			data: function (d) {
+				d.consolidated = $('form#search-consolidate-formalized input[name="consolidated_formalized"]').val();
+				// d.user = $('form#search-consolidate-formalized input[name="user"]').val();
+				d.close_date = $('form#search-consolidate-formalized input[name="closed_at"]').val();
+				d.create_date = $('form#search-consolidate-formalized input[name="created_at"]').val();
+				d.c = 'cerrado';
+			},
+			complete: function () {
+			}
+		},
+		order: [[3, 'DESC']],
+		columns: [
+		{data: 'action', orderable: false, searchable: false},
+		{data: 'number', name: 'number'},
+		{data: 'fullname', name: 'user_id'},
+		{data: 'created_at', name: 'created_at'},
+		{data: 'num_trackings', orderable: false, searchable: false},
+		{data: 'closed_at', name: 'closed_at'},
+		]
+	});
+	let trackTableView = $('table#table-view-trackings').DataTable({
+		lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "Todos"]],	
+		processing: true,
+		serverSide: true,
+		responsive: true,
+		render: true,
+		language: translateTableCustom,
+		ajax: {
+			url: path + 'tracking/',
+			data: function (d) {
+				d.consolidated_id = $('button#viewConsolidated').attr('consolidated');
+			}
+		},
+		columns: [
+		{data: 'distributor.name', name: 'trackings.distributor_id'},
+		{data: 'tracking', name: 'trackings.id'},
+		{data: 'description', name: 'trackings.description'},
+		{data: 'price', name: 'trackings.price'},
+		{data: 'created_at', name: 'created_at'},
+		]
+	});
+	$('#addForm').click(function (e) {
+		e.preventDefault();
+		$(this).attr('disabled', '');
+		$.ajax({
+			url: path + 'consolidados',
+			type: 'POST',
+			dataType: 'json',
+			data: {
+				index: 'create'
+			}
+		})
+		.done(function(response) {
+			trackTable.draw();
+			$('.f-close').text(response.cierre);
+			$('.f-create').text(response.creacion);
+			$('form#tracking-form-register input#consolidated_id').val(response.id);
+			$('#modal-send-form').modal('toggle').find('.modal-title').html('<span class="fa fa-plus"></span> Crear Nuevo Consolidado.');
+			consTable.draw();
+			$('#addForm').removeAttr('disabled');
+			toastr.success('Nuevo Consolidado Abierto');
+		})
+		.fail(function(response) {
+			toastr.error('Opps al parecer a ocurrido un error');
+		});
+	});
+	$('form#tracking-form-register').submit(function (e) {
+		e.preventDefault();
+		let url = $(this).attr('action');
+		let data = $(this).serializeArray();
+		$.ajax({
+			url: url,
+			type: 'POST',
+			dataType: 'json',
+			data: data
+		})
+		.done(function(response) {
+			if (response.msg) {
+				toastr.error(response.msg);
+				return;
+			}
+			$('form#tracking-form-register')[0].reset();
+			trackTable.draw();
+			toastr.success('Tracking Registrado');
+		})
+		.fail(function(response) {
+			toastr.error('Opps al parecer a ocurrido un error');
+		});
 	});
 	$('form#searchconsolidate').submit(function (e) {
 		e.preventDefault();
@@ -648,9 +698,17 @@ if (location.href.indexOf('/consolidados') > 0) {
 	});
 	$('button#consolidated-consolidated').click(function () {
 		let id = $('form#tracking-form-register input#consolidated_id')[0].value;
-		$.post(path + 'formalize-consolidated/'+id, function (response) {
+		$.post(path + 'formalize-consolidated/' + id, function (response) {
 			consTable.draw();
+			setTimeout(function () {
+				consTable2.draw();
+			}, 500);
+			$('#modal-send-form').modal('toggle');
 			toastr.success('Consolidado Formalizado.');
+		})
+		.fail(function(response) {
+			toastr.warning(response.responseJSON.msg);
+			console.clear();
 		});
 	});
 	$('button#editConsolidated').click(function () {
@@ -668,35 +726,6 @@ if (location.href.indexOf('/consolidados') > 0) {
 			trackTable.draw();
 		});
 	});
-	var consTable2 = $('table#consolidated-b-table').DataTable({
-		lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "Todos"]],	
-		processing: true,
-		serverSide: true,
-		responsive: true,
-		render: true,
-		language: translateTable,
-		ajax: {
-			url: path + 'consolidados',
-			data: function (d) {
-				d.consolidated = $('form#search-consolidate-formalized input[name="consolidated_formalized"]').val();
-				d.user = $('form#search-consolidate-formalized input[name="user"]').val();
-				d.close_date = $('form#search-consolidate-formalized input[name="closed_at"]').val();
-				d.create_date = $('form#search-consolidate-formalized input[name="created_at"]').val();
-				d.c = 'cerrado';
-			},
-			complete: function () {
-			}
-		},
-		order: [[3, 'DESC']],
-		columns: [
-		{data: 'action', orderable: false, searchable: false},
-		{data: 'number', name: 'number'},
-		{data: 'fullname', name: 'user_id'},
-		{data: 'created_at', name: 'created_at'},
-		{data: 'num_trackings', orderable: false, searchable: false},
-		{data: 'closed_at', name: 'closed_at'},
-		]
-	});
 	$('div#header-search-b').hide();
 	$('#search-cons-b').click(function (e) {
 		e.preventDefault();
@@ -705,5 +734,26 @@ if (location.href.indexOf('/consolidados') > 0) {
 	$('form#search-consolidate-formalized').submit(function (e) {
 		e.preventDefault();
 		consTable2.draw();
+	});
+	$('button#viewConsolidated').click(function () {
+		let consolidated = $(this).attr('consolidated');
+		if (!consolidated) {
+			toastr.warning('Debe seleccionar un consolidado.');
+			return;
+		}
+		let url = path + 'consolidados/' + consolidated;
+		$.get(url, function (response) {
+			let modal = $('div#modal-send-show');
+			modal.find('.modal-title').html('<span class="fa fa-cube"></span> Consolidado n° ' + response.number + '.');
+			modal.find('td#number').text(response.number + '.');
+			modal.find('td#user').text(response.user.name + ' ' + response.user.last_name + '.');
+			modal.find('td#created_date').text(response.open + '.');
+			modal.find('td#closed_date').text(response.close + '.');
+			modal.find('td#state').text(response.shippingstate.state + '.');
+			modal.find('td#cant').text(response.trackings.length + '.');
+			modal.find('td#value').text(response.sum_total + '.');
+			trackTableView.draw();
+			modal.modal('toggle');
+		});
 	});
 }

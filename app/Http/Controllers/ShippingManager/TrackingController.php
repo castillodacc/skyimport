@@ -10,6 +10,11 @@ use Yajra\DataTables\Datatables;
 
 class TrackingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('ajax');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,15 +23,21 @@ class TrackingController extends Controller
     public function index()
     {
         $request = request();
+
         $query = Tracking::query()
         ->with(['distributor'])
-        ->select(['trackings.id','trackings.description','trackings.tracking','trackings.distributor_id']);
+        ->select(['trackings.id','trackings.description','trackings.tracking','trackings.distributor_id', 'price', 'created_at']);
         return (new Datatables)->of($query)
         ->addColumn('action', function ($tracking) {
             return '<a id="editTracking" tracking="'.$tracking->id.'" class="btn btn-primary btn-xs btn-flat" href="#" data-toggle="tooltip" title="Editar"><span class="fa fa-pencil"></span></a> <a id="deleteTracking" tracking="'.$tracking->id.'" class="btn btn-danger btn-xs btn-flat" href="#" data-toggle="tooltip" title="Eliminar"><span class="fa fa-close"></span></a>';
-        })->filter(function ($query) use ($request) {
+        })
+        ->editColumn('created_at', function ($tracking) {
+            return $tracking->created_at->diffForHumans().'.';
+        })
+        ->filter(function ($query) use ($request) {
             $query->where('consolidated_id', '=', $request->consolidated_id);
-        })->make(true);
+        })
+        ->make(true);
     }
 
     /**
