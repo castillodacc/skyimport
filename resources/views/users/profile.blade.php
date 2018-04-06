@@ -110,7 +110,7 @@
                 <div class="form-group col-md-6">
                   <div class="input-group">
                     <div class="input-group-addon">
-                      <span class="fa fa-globe"></span>
+                      <span class="fa fa-map-o"></span>
                     </div>
                     <select id="state_id" name="state_id" class="form-control">
                       <option value="">Seleccione primero un pais.</option>

@@ -11,10 +11,7 @@
                 <button id="extendConsolidated" type="button" class="btn btn-warning btn-xs btn-flat" data-title="Extend" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Extender consolidado"><span class="fa fa-calendar-plus-o"></span></button>
             </div>
             <div class="btn-group">
-                <button id="viewConsolidated" type="button" class="btn btn-default btn-xs btn-flat" data-title="Show" data-placement="top" rel="tooltip" title="Mostrar consolidado"><span class="fa fa-eye"></span></button>
-            </div>
-            <div class="btn-group">
-                <a class="btn bg-teal btn-xs btn-flat" href="" data-title="Update" data-toggle="modal" data-target="#modal-send-edit" data-placement="top" rel="tooltip" title="Actualizar"><span class="fa fa-edit"></span></a>
+                <button id="viewConsolidated" type="button" class="btn btn-info btn-xs btn-flat" data-title="Show" data-placement="top" rel="tooltip" title="Mostrar consolidado"><span class="fa fa-eye"></span></button>
             </div>
             {{-- @if(Auth::user()->role_id == 2) --}}
             <div class="btn-group">
@@ -64,10 +61,10 @@
     </div>
     <div class="box-body table-responsive">
         <div class="col-md-12">
-             <table id="consolidated-a-table" class="table table-sm table-striped table-bordered table-hover table-condensed" cellspacing="0" width="100%">
+             <table id="consolidated-a-table" class="table table-sm table-striped table-bordered table-hover table-condensed">
             <thead>
                 <tr>
-                    <th><span class="fa fa-check-circle-o"></span> Elegir</th>
+                    <th class="text-center"><span class="fa fa-check-circle-o"></span> Elegir</th>
                     <th><span class="fa fa-cube"></span> Consolidado</th>
                     <th><span class="fa fa-user"></span> Usuario</th>
                     <th><span class="fa fa-calendar-plus-o"></span> Creación</th>
@@ -76,19 +73,8 @@
                     <th><span class="fa fa-calendar-times-o"></span> Cierre</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr class="">
-                    <td class="text-center"><input type="radio" name=""></td>
-                    <td>is13758797380</td>
-                    <td>Emanuel Parra</td>
-                    <td>09/03/2018</td>
-                    <td><span class="label label-info">Pendiente formalizacion</span></td>
-                    <td>09/03/2018</td>
-                </tr>
-            </tbody>
         </table>
-        </div>
-       
+      </div> 
     </div>
     @if(Auth::user()->rol_id == 2 || 1)
     <div class="box-footer">
@@ -108,7 +94,8 @@
                 <a class="btn btn-info btn-xs btn-flat" href="" data-title="Show" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Mostrar consolidado"><span class="fa fa-eye"></span></a>
             </div>
             <div class="btn-group">
-                <a class="btn btn-primary btn-xs btn-flat" href="" data-title="Update" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Actualizar"><span class="fa fa-edit"></span></a>
+                <a class="btn btn-primary btn-xs btn-flat" href="" data-title="Update" data-toggle="modal" data-target="#modal-send_formalizated_edit" data-placement="top" rel="tooltip" title="Actualizar"><span class="fa fa-edit"></span></a>
+
             </div>
             <div class="btn-group">
                 <a class="btn btn-danger btn-xs btn-flat" href="" data-title="Delete" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Cancelar"><span class="fa fa-trash"></span></a>
@@ -153,7 +140,7 @@
     </div>
     <div class="box-body table-responsive">
         <div class="col-md-12">
-            <table id="consolidated-b-table" class="table table-striped table-bordered table-hover table-condensed" cellspacing="0" width="100%">
+            <table id="consolidated-b-table" class="table table-striped table-bordered table-hover table-condensed">
                 <thead>
                     <tr>
                         <th class="text-center"><span class="fa fa-check-circle-o"></span> Elegir</th>
@@ -164,20 +151,11 @@
                         <th><span class="fa fa-calendar-check-o"></span> Formalizado</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr class="success">
-                        <td class="text-center"><input type="radio" name=""></td>
-                        <td>is13758797380</td>
-                        <td>Emanuel Parra</td>
-                        <td>08/03/2018</td>
-                        <td>09/03/2018</td>
-                    </tr>
-                </tbody>
             </table>
         </div>
     </div>
 </div>
 @include('modals.send_form')
-@include('modals.send_edit_form')
 @include('modals.send_show')
+@include('modals.send_formalizated_edit')
 @endsection

@@ -33,10 +33,14 @@ class User extends Authenticatable
      */
     public function pathAvatar($id = null)
     {
+        if ($id == null) $id = \Auth::user()->id;
         $ext = ['.jpg','.jpeg','.png'];
         foreach ($ext as $e) {
-            if ($id) { $file = $id . $e;
-            } else {   $file = \Auth::user()->id . $e; }
+            if ($id) {
+                $file = $id . $e;
+            } else {
+                $file = \Auth::user()->id . $e;
+            }
             if (file_exists(public_path('/storage/app/').$file)) {
                 return asset('storage/app/'.$file);
             }

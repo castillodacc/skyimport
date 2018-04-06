@@ -20,9 +20,49 @@
                 <li><a href="{{ url('/register') }}">{{ trans('adminlte_lang::message.register') }}</a></li>
                 <li><a href="{{ url('/login') }}">{{ trans('adminlte_lang::message.login') }}</a></li>
                 @else
+                <li class="dropdown notifications-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-bell-o"></i>
+              <span class="label label-warning">6</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="header">5 usuarios han consolidado</li>
+              <li>
+                <!-- inner menu: contains the actual data -->
+                <ul class="menu">
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-cube text-primary"></i> Consolidado IS96891200658
+                    </a>
+                  </li>
+                   <li>
+                    <a href="#">
+                      <i class="fa fa-cube text-primary"></i> Consolidado IS96891200658
+                    </a>
+                  </li>
+                   <li>
+                    <a href="#">
+                      <i class="fa fa-cube text-primary"></i> Consolidado IS96891200658
+                    </a>
+                  </li>
+                   <li>
+                    <a href="#">
+                      <i class="fa fa-cube text-primary"></i> Consolidado IS96891200658
+                    </a>
+                  </li>
+                   <li>
+                    <a href="#">
+                      <i class="fa fa-cube text-primary"></i> Consolidado IS96891200658
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="footer"><a href="#">Ver todos</a></li>
+            </ul>
+          </li>
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <span class="fa fa-user"></span>
+                        <img src="{{ Auth::user()->pathAvatar() }}" class="user-image" alt="Imagen de usuario">
                         <span class="hidden-xs">{{ Auth::user()->fullName() }}</span>
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
