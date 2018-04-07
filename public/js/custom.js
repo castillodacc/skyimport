@@ -70,11 +70,11 @@ let messages = {
 	'password2_confirmation': 'Repita nueva contraseña.',
 };
 let path = $('meta[name=url]')[0].content;
-// $('.notifications-menu').click(function () {
-// 	$.post(path + 'notifications-view', function (response) {
-	
-// 	});
-// })
+$('.notifications-menu').click(function () {
+	$.post(path + 'notifications-view', function (response) {
+		$('#notifications_total').html('0')
+	});
+})
 $.ajax({
 	url: path + 'notifications',
 	type: 'POST',

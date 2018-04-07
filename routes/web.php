@@ -9,8 +9,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::post('/notifications', 'NotificationController@notifications');
-Route::post('/notifications-view', 'NotificationController@viewer');
 
 Route::get('/', 'HomeController@index');
 Route::group(['middleware' => 'auth'], function () {
@@ -30,6 +28,12 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::resource('tracking', 'TrackingController');
 	});
 
+	Route::post('/notifications', 'NotificationController@notifications');
+	Route::post('/notifications-view', 'NotificationController@viewer');
+
+	Route::get('/test', function () {
+		return \skyimport\Models\EventsUsers::where('tracking_id', '=', null)->limit(15)->get();
+	});
     //    Route::get('/link1', function ()    {
 	//        // Uses Auth Middleware
 	//    });

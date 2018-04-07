@@ -15,8 +15,8 @@ class NotificationController extends Controller
 			$num_cons_forma = Consolidated::where('closed_at', 'LIKE', '%'.$hoy.'%')->count();
 			$num_cons_forma = $num_cons_forma . ' Consolidados formalizados hoy.';
 
-			$notifications = EventsUsers::with(['events', 'consolidated'])->limit(20)->get();
-			$notifications_total = EventsUsers::with(['events', 'consolidated'])->limit(8)->count();
+			$notifications = EventsUsers::where('tracking_id', '=', null)->limit(15)->get();
+			$notifications_total = EventsUsers::where('viewed', '=', 0)->where('tracking_id', '=', null)->limit(15)->count();
 		} else {
 			$num_cons_forma = Consolidated::where('user_id', '=', \Auth::user()->id)->where('closed_at', '>', \Carbon::now())->count();
 			$num_cons_forma = $num_cons_forma . ' Consolidados Abiertos.';
@@ -46,5 +46,17 @@ class NotificationController extends Controller
 					</ul>";
 
 		return response()->json(compact('html', 'notifications_total'));
+	}
+
+	public function viewer()
+	{
+		if (\Auth::user()->role_id == 1) {
+			$events = EventsUsers::limit(15)->where('tracking_id', '=', null)->get();
+			$events->each(function ($event) {
+				return $event->update(['viewed' => '1']);
+			});
+		} else {
+			
+		}
 	}
 }

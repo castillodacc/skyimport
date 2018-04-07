@@ -26,6 +26,7 @@ class CreateEventsTable extends Migration
             $table->integer('tracking_id')->unsigned()->nullable()->default(null);
             $table->integer('consolidated_id')->unsigned()->nullable()->default(null);
             $table->integer('event_id')->unsigned();
+            $table->boolean('viewed')->default(0);
             $table->timestamps();
             $table->softDeletes();
 
