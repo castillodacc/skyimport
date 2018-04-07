@@ -18,9 +18,6 @@
                 <button id="editConsolidated" type="button" class="btn btn-primary btn-xs btn-flat" data-title="Update" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Actualizar"><span class="fa fa-edit"></span></button>
             </div>
             {{-- @endif --}}
-            <div class="btn-group">
-                <button id="deleteConsolidated" type="button" class="btn btn-danger btn-xs btn-flat" data-title="Delete" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Cancelar"><span class="fa fa-trash"></span></button>
-            </div>
         </div>
     </div>
     <div id="header-search-a" class="box-header">
