@@ -29,14 +29,23 @@ class UsersController extends Controller
         ->select(['id', 'name', 'last_name', 'num_id', 'email', 'phone', 'role_id', 'state_id']);
 
         return (new Datatables)->of($query)
-        ->addColumn('fullname', function ($user) {
-            return $user->name . ' ' . $user->last_name;
+        ->addColumn('role.rol', function ($user) {
+            if ($user->role->id == 1) {
+                $class = "bg-green";
+            } else {
+                $class = "bg-primary";
+            }
+            return '<span class="label ' . $class . '">' . $user->role->rol . '</span>';
         })->addColumn('pais', function ($user) {
             if ($user->state == null) return '-';
             return $user->state->state . ' / ' . $user->state->countrie->country;
         })->addColumn('action', function ($user) {
             return '<input type="radio" name="user" style="margin: 0 50%;" value='.$user->id.'>';
-        })->make(true);
+        })
+        ->editColumn('fullname', function ($user) {
+            return $user->name . ' ' . $user->last_name;
+        })
+        ->make(true);
     }
 
     /**

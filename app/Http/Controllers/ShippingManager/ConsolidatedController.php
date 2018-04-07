@@ -8,6 +8,8 @@ use skyimport\Models\Distributor;
 use skyimport\Models\Consolidated;
 use Yajra\DataTables\Datatables;
 use skyimport\Models\Shippingstate;
+use skyimport\Models\Events;
+use skyimport\Models\EventsUsers;
 
 class ConsolidatedController extends Controller
 {
@@ -15,6 +17,7 @@ class ConsolidatedController extends Controller
     {
         $this->middleware('ajax')->except(['index']);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -51,6 +54,9 @@ class ConsolidatedController extends Controller
         ->editColumn('shippingstate', function ($consolidated) {
             if ($consolidated->shippingstate->id == 1) {
                 $class = "info";
+            }
+            if ($consolidated->shippingstate->id == 2) {
+                $class = "warning";
             }
             return '<span class="label label-' . $class . '">'.$consolidated->shippingstate->state.'</span>';
         })
@@ -96,6 +102,10 @@ class ConsolidatedController extends Controller
             $cierre = $consolidado->closed_at->diffForHumans();
             $creacion = $consolidado->created_at->diffForHumans();
             $id = $consolidado->id;
+            EventsUsers::create([
+                'consolidated_id' => $id,
+                'event_id' => 1,
+            ]);
             return response()->json(compact('creacion', 'cierre', 'id'));
         }
     }
@@ -174,9 +184,13 @@ class ConsolidatedController extends Controller
     public function extend($id)
     {
         $consolidated = Consolidated::findOrFail($id);
-        $consolidated->closed_at = $consolidated->closed_at->addDay(1);
-        $consolidated->save();
-        return response()->json($consolidated);
+        if ($consolidated->shippingstate_id == 1 || \Auth::user()->role_id == 1) {
+            $consolidated->closed_at = $consolidated->closed_at->addDay(1);
+            $consolidated->shippingstate_id = 2;
+            $consolidated->save();
+            return response()->json($consolidated);
+        }
+        return response()->json(['msg' => 'Ya el consolidado fue extendido.']);
     }
 
     /**

@@ -20,7 +20,7 @@
 					<th><span class="fa fa-check-circle-o"></span> Elegir</th>
 					<th><span class="fa fa-user-circle"></span> Usuario</th>
 					<th><span class="fa fa-id-card"></span> Identificación</th>
-					<th><span class="fa fa-hand-stop-o"></span> Rol</th>
+					<th width="100px"><span class="fa fa-hand-stop-o"></span> Rol</th>
 					<th><span class="glyphicon glyphicon-envelope"></span> Correo</th>
 					<th><span class="fa fa-globe"></span> Pais</th>
 					<th><span class="fa fa-phone"></span> Telefono</th>

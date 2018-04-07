@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use skyimport\Models\Events;
 
 class DatabaseSeeder extends Seeder
 {
@@ -227,6 +228,14 @@ class DatabaseSeeder extends Seeder
             (89, 'West Virginia', 2, null, null, null),
             (90, 'Wisconsin', 2, null, null, null),
             (91, 'Wyoming', 2, null, null, null);");
+        
+        /**
+         * Eventos
+         **/
+        Events::create([
+            'type' => 1,
+            'description' => 'Nuevo Consolidado Creado.'
+        ]);
         // $this->call(UsersTableSeeder::class);
     }
 }

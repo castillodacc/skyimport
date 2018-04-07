@@ -54,4 +54,12 @@ class Consolidated extends Model
     {
         return $this->hasMany(Tracking::class);
     }
+
+    /**
+     * Get the EventsUsers that owns the consolidated.
+     */
+    public function eventsUsers()
+    {
+        return $this->hasMany(EventsUsers::class);
+    }
 }

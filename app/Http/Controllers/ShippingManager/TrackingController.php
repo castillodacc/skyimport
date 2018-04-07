@@ -25,8 +25,9 @@ class TrackingController extends Controller
         $request = request();
 
         $query = Tracking::query()
-        ->with(['distributor'])
-        ->select(['trackings.id','trackings.description','trackings.tracking','trackings.distributor_id', 'price', 'created_at']);
+        ->with(['distributor', 'shippingstate'])
+        ->select(['trackings.*', ]);
+
         return (new Datatables)->of($query)
         ->addColumn('action', function ($tracking) {
             return '<a id="editTracking" tracking="'.$tracking->id.'" class="btn btn-primary btn-xs btn-flat" href="#" data-toggle="tooltip" title="Editar"><span class="fa fa-pencil"></span></a> <a id="deleteTracking" tracking="'.$tracking->id.'" class="btn btn-danger btn-xs btn-flat" href="#" data-toggle="tooltip" title="Eliminar"><span class="fa fa-close"></span></a>';

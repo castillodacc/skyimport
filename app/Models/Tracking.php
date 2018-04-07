@@ -34,4 +34,12 @@ class Tracking extends Model
     {
         return $this->belongsTo(\skyimport\Models\Distributor::class);
     }
+
+    /**
+     * Get the distributor that owns the tracking.
+     */
+    public function shippingstate()
+    {
+        return $this->belongsTo(\skyimport\Models\Shippingstate::class);
+    }
 }

@@ -55,6 +55,8 @@ desired effect
 
     @include('modals.change_password_form')
 
+    @include('modals.send_show')
+
 </div><!-- ./wrapper -->
 </div>
 @section('scripts')

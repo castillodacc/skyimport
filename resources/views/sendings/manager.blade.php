@@ -61,20 +61,20 @@
     </div>
     <div class="box-body table-responsive">
         <div class="col-md-12">
-             <table id="consolidated-a-table" class="table table-sm table-striped table-bordered table-hover table-condensed">
-            <thead>
-                <tr>
-                    <th class="text-center"><span class="fa fa-check-circle-o"></span> Elegir</th>
-                    <th><span class="fa fa-cube"></span> Consolidado</th>
-                    <th><span class="fa fa-user"></span> Usuario</th>
-                    <th><span class="fa fa-calendar-plus-o"></span> Creación</th>
-                    <th width="15%"><span class="fa fa-check-square-o"></span> Estado</th>
-                    <th><span class="fa fa-location-arrow"></span> Trackings</th>
-                    <th><span class="fa fa-calendar-times-o"></span> Cierre</th>
-                </tr>
-            </thead>
-        </table>
-      </div> 
+            <table id="consolidated-a-table" class="table table-sm table-striped table-bordered table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th class="text-center"><span class="fa fa-check-circle-o"></span> Elegir</th>
+                        <th><span class="fa fa-cube"></span> Consolidado</th>
+                        <th><span class="fa fa-user"></span> Usuario</th>
+                        <th><span class="fa fa-calendar-plus-o"></span> Creación</th>
+                        <th width="15%"><span class="fa fa-check-square-o"></span> Estado</th>
+                        <th><span class="fa fa-location-arrow"></span> Trackings</th>
+                        <th><span class="fa fa-calendar-times-o"></span> Cierre</th>
+                    </tr>
+                </thead>
+            </table>
+        </div> 
     </div>
     @if(Auth::user()->rol_id == 2 || 1)
     <div class="box-footer">
@@ -84,8 +84,8 @@
 </div>
 
 <div class="box box-primary">
-     <div class="box-header with-border">
-        <h3 class="box-title">Consolidados formalizados</h3>
+    <div class="box-header with-border">
+        <h3 class="box-title">Consolidados formalizados:</h3>
         <div class="pull-right">
             <div class="btn-group">
                 <a id="search-cons-b" class="btn bg-green btn-xs btn-flat" href="" data-title="Search" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Buscar filtros"><span class="fa fa-search"></span></a>
@@ -100,9 +100,12 @@
             <div class="btn-group">
                 <a class="btn btn-danger btn-xs btn-flat" href="" data-title="Delete" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Cancelar"><span class="fa fa-trash"></span></a>
             </div>
+            <div class="btn-group">
+                <a class="btn btn-danger btn-xs btn-flat" href="" data-title="Delete" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Borrar vacios"><span class="glyphicon glyphicon-ban-circle"></span></a>
+            </div>
         </div>
     </div>
-  <div class="box-header" id="header-search-b">
+    <div class="box-header" id="header-search-b">
         <form id="search-consolidate-formalized" method="POST" role="form">
             <div class="row"> 
                 <div class="form-group col-md-2">
@@ -156,6 +159,6 @@
     </div>
 </div>
 @include('modals.send_form')
-@include('modals.send_show')
+{{-- @include('modals.send_show') --}}
 @include('modals.send_formalizated_edit')
 @endsection

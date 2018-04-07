@@ -55,6 +55,7 @@
                                         <th>Descripcion</th>
                                         <th>Valor declarado</th>
                                         <th>Agregado hace</th>
+                                        <th>Estado</th>
                                     </tr>
                                 </thead>
                                 <tbody>
