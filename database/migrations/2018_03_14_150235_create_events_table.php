@@ -16,15 +16,16 @@ class CreateEventsTable extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('type')->unsigned(); // 1) consolidateds - 2) trackings
-            $table->text('description');
+            $table->string('event');
+            $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
 
         Schema::create('events_users', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('tracking_id')->unsigned()->nullable()->default(null);
-            $table->integer('consolidated_id')->unsigned()->nullable()->default(null);
+            $table->integer('tracking_id')->unsigned()->nullable();
+            $table->integer('consolidated_id')->unsigned()->nullable();
             $table->integer('event_id')->unsigned();
             $table->boolean('viewed')->default(0);
             $table->timestamps();

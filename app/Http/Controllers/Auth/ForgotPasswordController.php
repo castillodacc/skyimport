@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
+use skyimport\Http\Requests\RecoverUserPassRequest;
 
 class ForgotPasswordController extends Controller
 {
@@ -41,8 +42,8 @@ class ForgotPasswordController extends Controller
         );
 
         return $response == Password::RESET_LINK_SENT
-            ? $this->sendResetLinkResponse($request, $response)
-            : $this->sendResetLinkFailedResponse($request, $response);
+        ? $this->sendResetLinkResponse($request, $response)
+        : $this->sendResetLinkFailedResponse($request, $response);
     }
 
     /**
@@ -96,5 +97,30 @@ class ForgotPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+
+    public function viewRecoverPass($id)
+    {
+        $user = \skyimport\User::where('id', '=', $id)
+        ->where('password', '=', '')->first();
+        if ($user) {
+            return view('users.recovery_user', ['user' => $user]);
+        }
+        return redirect()->to('/');
+    }
+
+    public function recoverPass($id, RecoverUserPassRequest $request)
+    {
+        $user = \skyimport\User::where('id', '=', $id)
+        ->where('password', '=', '')
+        ->where('num_id', '=', $request->number_id)
+        ->first();
+
+        if ($user) {
+            $user->update(['password' => bcrypt($request->password)]);
+            \Auth::loginUsingId($id);
+        }
+
+        return redirect()->to('/');
     }
 }

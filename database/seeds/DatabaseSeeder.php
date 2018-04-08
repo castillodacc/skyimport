@@ -62,7 +62,14 @@ class DatabaseSeeder extends Seeder
             'updated_at' => null,
         ]);
         DB::table('shippingstates')->insert([
-            'state' => 'formalizado',
+            'state' => 'Formalizado',
+            'ref_id' => 1,
+            'description' => null,
+            'created_at' => Carbon::now(),
+            'updated_at' => null,
+        ]);
+        DB::table('shippingstates')->insert([
+            'state' => 'Finalizado',
             'ref_id' => 1,
             'description' => null,
             'created_at' => Carbon::now(),
@@ -228,13 +235,42 @@ class DatabaseSeeder extends Seeder
             (89, 'West Virginia', 2, null, null, null),
             (90, 'Wisconsin', 2, null, null, null),
             (91, 'Wyoming', 2, null, null, null);");
-        
+
         /**
-         * Eventos
+         * Eventos 1) consolidateds - 2) trackings
          **/
         Events::create([
             'type' => 1,
-            'description' => 'Nuevo Consolidado Creado.'
+            'event' => 'Nuevo Consolidado Creado.'
+        ]);
+        Events::create([
+            'type' => 1,
+            'event' => 'Tiempo extendido.'
+        ]);
+        Events::create([
+            'type' => 1,
+            'event' => 'formalizado.'
+        ]);
+
+        Events::create([
+            'type' => 2,
+            'event' => 'Nuevo Tracking Creado.'
+        ]);
+        Events::create([
+            'type' => 2,
+            'event' => 'Recibido en bodega - Miami.'
+        ]);
+        Events::create([
+            'type' => 2,
+            'event' => 'Salida de Miami a Bogotá.'
+        ]);
+        Events::create([
+            'type' => 2,
+            'event' => 'En Aduana de Colombia.'
+        ]);
+        Events::create([
+            'type' => 2,
+            'event' => 'Recibido en bodega - Colombia.'
         ]);
         // $this->call(UsersTableSeeder::class);
     }

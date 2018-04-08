@@ -11,6 +11,9 @@
 */
 
 Route::get('/', 'HomeController@index');
+Route::get('recuperar-usuario/{id}', '\skyimport\Http\Controllers\Auth\ForgotPasswordController@viewRecoverPass')->middleware('guest');
+Route::post('recuperar-usuario/{id}', '\skyimport\Http\Controllers\Auth\ForgotPasswordController@recoverPass')->middleware('guest');
+
 Route::group(['middleware' => 'auth'], function () {
 	Route::group(['namespace' => 'Admin'], function () {
 		Route::resource('usuarios', 'UsersController');
@@ -28,11 +31,9 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::resource('tracking', 'TrackingController');
 		Route::post('formalized/{consolidated}', 'ConsolidatedController@events');
 	});
-
-	Route::post('/notifications', 'NotificationController@notifications');
-	Route::post('/notifications-view', 'NotificationController@viewer');
+	Route::post('notifications', 'NotificationController@notifications');
+	Route::post('notifications-view', 'NotificationController@viewer');
 	Route::delete('event/{event}', 'NotificationController@destroy');
-
 
     //    Route::get('/link1', function ()    {
 	//        // Uses Auth Middleware

@@ -25005,7 +25005,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         setTimeout(function () {
           component.redirect(response);
         }, 2500);
-      }).catch(function (error) {
+      }).catch(function (error) { // login modificado
         console.log(_this.trans('adminlte_lang_message.loginerror') + ':' + error);
       });
     },

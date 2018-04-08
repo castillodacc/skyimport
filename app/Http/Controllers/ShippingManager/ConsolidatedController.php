@@ -55,9 +55,10 @@ class ConsolidatedController extends Controller
         ->editColumn('shippingstate', function ($consolidated) {
             if ($consolidated->shippingstate->id == 1) {
                 $class = "info";
-            }
-            if ($consolidated->shippingstate->id == 2) {
+            } elseif ($consolidated->shippingstate->id == 2) {
                 $class = "warning";
+            } elseif ($consolidated->shippingstate->id == 3) {
+                $class = "success";
             }
             return '<span class="label label-' . $class . '">'.$consolidated->shippingstate->state.'</span>';
         })
@@ -194,6 +195,7 @@ class ConsolidatedController extends Controller
         $consolidated = Consolidated::findOrFail($id);
         if (! $consolidated->trackings->count()) return response(['msg' => 'El consolidado debe tener al menos un tracking.'], 422);
         $consolidated->closed_at = \Carbon::now();
+        $consolidated->shippingstate_id = 3;
         $consolidated->save();
         return response()->json($consolidated);
     }
