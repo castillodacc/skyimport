@@ -18,6 +18,9 @@
                 <button id="editConsolidated" type="button" class="btn btn-primary btn-xs btn-flat" data-title="Update" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Actualizar"><span class="fa fa-edit"></span></button>
             </div>
             {{-- @endif --}}
+            <div class="btn-group">
+                <button id="deleteConsolidated" class="btn btn-danger btn-xs btn-flat" href="" data-title="Delete" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Cancelar"><span class="fa fa-trash"></span></button>
+            </div>
         </div>
     </div>
     <div id="header-search-a" class="box-header">
@@ -85,20 +88,16 @@
         <h3 class="box-title">Consolidados formalizados:</h3>
         <div class="pull-right">
             <div class="btn-group">
-                <a id="search-cons-b" class="btn bg-green btn-xs btn-flat" href="" data-title="Search" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Buscar filtros"><span class="fa fa-search"></span></a>
+                <a id="search-cons-b" class="btn bg-green btn-xs btn-flat" href="#" data-title="Search" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Buscar filtros"><span class="fa fa-search"></span></a>
             </div>
             <div class="btn-group">
-                <a class="btn btn-info btn-xs btn-flat" href="" data-title="Show" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Mostrar consolidado"><span class="fa fa-eye"></span></a>
+                <a id="view-formalized" class="btn btn-info btn-xs btn-flat" href="#" data-title="Show" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Mostrar consolidado"><span class="fa fa-eye"></span></a>
             </div>
             <div class="btn-group">
-                <a class="btn btn-primary btn-xs btn-flat" href="" data-title="Update" data-toggle="modal" data-target="#modal-send_formalizated_edit" data-placement="top" rel="tooltip" title="Actualizar"><span class="fa fa-edit"></span></a>
-
+                <a id="edit-formalized" class="btn btn-primary btn-xs btn-flat" href="#" data-title="Update" data-placement="top" rel="tooltip" title="Actualizar"><span class="fa fa-edit"></span></a>
             </div>
             <div class="btn-group">
-                <a class="btn btn-danger btn-xs btn-flat" href="" data-title="Delete" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Cancelar"><span class="fa fa-trash"></span></a>
-            </div>
-            <div class="btn-group">
-                <a class="btn btn-danger btn-xs btn-flat" href="" data-title="Delete" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Borrar vacios"><span class="glyphicon glyphicon-ban-circle"></span></a>
+                <a id="delete-formalized" class="btn btn-danger btn-xs btn-flat" href="#" data-title="Delete" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Cancelar"><span class="fa fa-trash"></span></a>
             </div>
         </div>
     </div>

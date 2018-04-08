@@ -15,7 +15,7 @@ class ConsolidatedController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('ajax')->except(['index']);
+        $this->middleware('ajax')->except(['index', 'events']);
     }
 
     /**
@@ -43,7 +43,8 @@ class ConsolidatedController extends Controller
 
         return (new Datatables)->of($object)
         ->addColumn('action', function ($consolidated) {
-            return '<input type="radio" name="consolidated" value="'.$consolidated->id.'" style="margin:0 50%">';
+            $name = (request()->c === 'abierto') ? 'consolidated' : 'consolidated2';
+            return '<input type="radio" name="'.$name.'" value="'.$consolidated->id.'" style="margin:0 50%">';
         })
         ->editColumn('created_at', function ($consolidated) {
             return $consolidated->created_at->diffForHumans().'.';
@@ -129,17 +130,6 @@ class ConsolidatedController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -206,5 +196,22 @@ class ConsolidatedController extends Controller
         $consolidated->closed_at = \Carbon::now();
         $consolidated->save();
         return response()->json($consolidated);
+    }
+
+    public function events($id)
+    {
+        $consolidated = Consolidated::findOrFail($id);
+        $trackings = [];
+        foreach ($consolidated->trackings as $c) {
+            $trackings[] = $c->id;
+        }
+
+        $event = EventsUsers::whereIn('tracking_id', $trackings)->Orwhere('consolidated_id', '=', $id)->orderBy('created_at')->get();
+        $event->each(function ($e) {
+            $e->created = $e->created_at->format('d M. Y');
+            $e->hour = $e->created_at->format('h:m');
+            return $e->events;
+        });
+        return response()->json(compact('event', 'consolidated'));
     }
 }

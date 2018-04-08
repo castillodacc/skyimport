@@ -26,14 +26,14 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::post('extend-consolidated/{consolidated}', 'ConsolidatedController@extend');
 		Route::post('formalize-consolidated/{consolidated}', 'ConsolidatedController@formalize');
 		Route::resource('tracking', 'TrackingController');
+		Route::post('formalized/{consolidated}', 'ConsolidatedController@events');
 	});
 
 	Route::post('/notifications', 'NotificationController@notifications');
 	Route::post('/notifications-view', 'NotificationController@viewer');
+	Route::delete('event/{event}', 'NotificationController@destroy');
 
-	Route::get('/test', function () {
-		return \skyimport\Models\EventsUsers::where('tracking_id', '=', null)->limit(15)->get();
-	});
+
     //    Route::get('/link1', function ()    {
 	//        // Uses Auth Middleware
 	//    });

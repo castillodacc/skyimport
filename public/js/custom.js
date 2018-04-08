@@ -120,7 +120,7 @@ var trackTableView = $('table#table-view-trackings').DataTable({
 	ajax: {
 		url: path + 'tracking',
 		data: function (d) {
-			d.consolidated_id = $('button#viewConsolidated').attr('consolidated');
+			d.consolidated_id = $('a#view-formalized').attr('consolidated');
 		}
 	},
 	columns: [
@@ -129,7 +129,7 @@ var trackTableView = $('table#table-view-trackings').DataTable({
 	{data: 'description', name: 'trackings.description'},
 	{data: 'price', name: 'trackings.price'},
 	{data: 'created_at', name: 'created_at'},
-	{data: 'shippingstate.state', name: 'shippingstate.state'}, //shippingstate_id
+	{data: 'shippingstate.state', name: 'shippingstate.state'},
 	]
 });
 if (location.href.indexOf('/perfil') > 0) {
@@ -607,6 +607,11 @@ if (location.href.indexOf('/consolidados') > 0) {
 				d.c = 'cerrado';
 			},
 			complete: function () {
+				$('input[type="radio"][name="consolidated2"]').click(function () {
+					let consolidated = $(this).val();
+					$('a#view-formalized, a#edit-formalized, a#delete-formalized')
+					.attr('consolidated', consolidated);
+				});
 			}
 		},
 		order: [[3, 'DESC']],
@@ -785,7 +790,8 @@ if (location.href.indexOf('/consolidados') > 0) {
 		e.preventDefault();
 		consTable2.draw();
 	});
-	$('button#viewConsolidated').click(function () {
+	$('button#viewConsolidated, a#view-formalized').click(function (e) {
+		e.preventDefault();
 		let consolidated = $(this).attr('consolidated');
 		if (!consolidated) {
 			toastr.warning('Debe seleccionar un consolidado.');
@@ -808,5 +814,75 @@ if (location.href.indexOf('/consolidados') > 0) {
 	});
 	$('#consolidated-save').click(function () {
 		consTable.draw();
+	});
+	$('a#delete-formalized').click(function (e) {
+		e.preventDefault();
+		let consolidated = $(this).attr('consolidated');
+		if (consolidated === undefined) {
+			toastr.warning('Debe seleccionar un consolidado.')
+			return;
+		};
+		$.post(path + 'consolidados/' + consolidated, {'_method': 'DELETE'}, function () {
+			consTable2.draw();
+			toastr.success('Consolidado Eliminado.');
+		});
+	});
+	$('a#edit-formalized').click(function (e) {
+		e.preventDefault()
+		if ($(this).attr('consolidated') == undefined) {
+			toastr.warning('Debe seleccionar un consolidado.')
+			return;
+		};
+		trackTable2.draw();
+		cargarEventos($(this).attr('consolidated'));
+		$('#modal-send_formalizated_edit').modal('toggle');
+	});
+	function cargarEventos(id) {
+		$.post(path + 'formalized/' + id, function (response) {
+			$('div#modal-send_formalizated_edit').find('h4')
+			.html('<span class="fa fa-edit"></span> Editar Consolidado: ' + response.consolidated.number + '.');
+			let event = response.event;
+			let template, item;
+			$('ul#events-formalized').html('');
+			for(let e in event) {
+				template = $('#timeline-template').html();
+				item = $(template).clone();	
+				item.find(".bg-teal").text(event[e].created);
+				item.find(".time").html('<i class="fa fa-clock-o"></i> ' + event[e].hour);
+				item.find(".timeline-header a").text('Consolidado ' + response.consolidated.number);
+				item.find(".timeline-body").text(event[e].events.description);
+				item.find(".timeline-footer a").attr('evento', event[e].id);
+				$('ul#events-formalized').append(item);
+			}
+			$('a#delete-event').click(function (e) {
+				e.preventDefault();
+				let event = $(this).attr('evento');
+				$.post(path + 'event/' + event, {'_method': 'DELETE'}, function () {
+					cargarEventos(id)
+					toastr.success('Evento Eliminado.');
+				});
+			});
+		});
+	}
+	var trackTable2 = $('table#table-edit-formalized').DataTable({
+		lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "Todos"]],	
+		processing: true,
+		serverSide: true,
+		responsive: true,
+		render: true,
+		language: translateTableCustom,
+		ajax: {
+			url: path + 'tracking/',
+			data: function (d) {
+				d.consolidated_id = $('a#edit-formalized').attr('consolidated');
+			},
+		},
+		columns: [
+		{data: 'distributor.name', name: 'trackings.distributor_id'},
+		{data: 'tracking', name: 'trackings.id'},
+		{data: 'description', name: 'trackings.description'},
+		{data: 'price', name: 'trackings.description'},
+		{data: 'created_at', name: 'trackings.created_at'},
+		]
 	});
 }

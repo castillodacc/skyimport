@@ -13,97 +13,34 @@
                             <div class="btn-group"><button id="" type="button" data-title="Agregar" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Agregar evento" class="btn btn-primary btn-xs btn-flat"><span class="fa fa-plus"></span></button></div> 
                         </div>
                     </div>
-                     <div class="box-header with-border">
+                    <div class="box-header with-border">
                         <form action="">
-                            
+
                             <div class="form-group col-md-6">
-                            <div class="input-group">
-                                <div class="input-group-addon">
-                                    <span class="fa fa-globe"></span>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <span class="fa fa-globe"></span>
+                                    </div>
+                                    <select id="verguito1" name="" class="form-control input-sm"></select>
                                 </div>
-                                <select id="verguito1" name="" class="form-control input-sm"></select>
+                                <small id="" class="form-text text-muted">evento 1.</small>
                             </div>
-                            <small id="" class="form-text text-muted">evento 1.</small>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <div class="input-group">
-                                <div class="input-group-addon">
-                                    <span class="fa fa-globe"></span>
+                            <div class="form-group col-md-6">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <span class="fa fa-globe"></span>
+                                    </div>
+                                    <select id="verguito2" name="" class="form-control input-sm"></select>
                                 </div>
-                                <select id="verguito2" name="" class="form-control input-sm"></select>
+                                <small id="" class="form-text text-muted">evento 2.</small>
                             </div>
-                            <small id="" class="form-text text-muted">evento 2.</small>
-                        </div>
                         </form>
-                        
+
                     </div>
                     <div class="box-body">
                         <div style="max-height: 250px; overflow: auto;">
-                            <ul class="timeline">
-                            <li class="time-label">
-                                <span class="bg-teal">
-                                    10 Feb. 2014
-                                </span>
-                            </li>
-                            <li>
-                                <i class="fa fa-cube bg-blue"></i>
-                                <div class="timeline-item">
-                                    <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-
-                                    <h3 class="timeline-header"><a href="#">Consolidado IS96891200658</a> ...</h3>
-
-                                    <div class="timeline-body">
-                                       Consolidado preparado para envio.
-                                    </div>
-
-                                    <div class="timeline-footer">
-                                        <a class="btn btn-danger btn-xs"><span class="fa fa-trash"></span></a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="time-label">
-                                <span class="bg-teal">
-                                    10 Feb. 2014
-                                </span>
-                            </li>
-                            <li>
-                                <i class="fa fa-truck bg-orange"></i>
-                                <div class="timeline-item">
-                                    <span class="time"><i class="fa fa-clock-o"></i> 13:05</span>
-
-                                    <h3 class="timeline-header"><a href="#">Consolidado IS96891200658</a> ...</h3>
-
-                                    <div class="timeline-body">
-                                       Consolidado en ruta.
-                                    </div>
-
-                                    <div class="timeline-footer">
-                                        <a class="btn btn-danger btn-xs"><span class="fa fa-trash"></span></a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="time-label">
-                                <span class="bg-teal">
-                                    10 Feb. 2014
-                                </span>
-                            </li>
-                            <li>
-                                <i class="fa fa-check bg-green"></i>
-                                <div class="timeline-item">
-                                    <span class="time"><i class="fa fa-clock-o"></i> 14:05</span>
-
-                                    <h3 class="timeline-header"><a href="#">Consolidado IS96891200658</a> ...</h3>
-
-                                    <div class="timeline-body">
-                                       Consolidado despachado.
-                                    </div>
-
-                                    <div class="timeline-footer">
-                                        <a class="btn btn-danger btn-xs"><span class="fa fa-trash"></span></a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
+                            <ul id="events-formalized" class="timeline">
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -113,18 +50,17 @@
                     </div>
                     <div class="box-body">
                         <div class=" col-md-12 table-responsive">
-                            <table id="table-view-" class="table table-striped table-bordered table-hover table-condensed">
+                            <table id="table-edit-formalized" class="table table-striped table-bordered table-hover table-condensed">
                                 <thead>
                                     <tr>
                                         <th>Repartidor</th>
                                         <th>Tracking</th>
                                         <th>Descripcion</th>
                                         <th>Valor declarado</th>
-                                        <th>Agregado hace</th>
+                                        <th>Agregado</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
                                 </tbody>
                             </table>
                         </div>
@@ -138,4 +74,26 @@
     </div>
 </div>
 
+<script id="timeline-template" type="text/x-custom-template">
+    <li id="fecha" class="time-label">
+        <span class="bg-teal">
+            10 Feb. 2014
+        </span>
+    </li>
+    <li id="contenido">
+        <i class="fa fa-truck bg-orange"></i>
+        <div class="timeline-item">
+            <span class="time"><i class="fa fa-clock-o"></i> 13:05</span>
 
+            <h3 class="timeline-header"><a href="#">Consolidado IS96891200658</a> ...</h3>
+
+            <div class="timeline-body">
+                Consolidado en ruta.
+            </div>
+
+            <div class="timeline-footer">
+                <a id="delete-event" class="btn btn-danger btn-xs"><span class="fa fa-trash"></span></a>
+            </div>
+        </div>
+    </li>
+</script>

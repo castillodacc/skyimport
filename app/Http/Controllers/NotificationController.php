@@ -59,4 +59,10 @@ class NotificationController extends Controller
 			
 		}
 	}
+
+	public function destroy($id)
+	{
+        $event = EventsUsers::findOrFail($id)->delete();
+        return response()->json($event);
+	}
 }
