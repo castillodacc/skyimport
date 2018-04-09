@@ -36,10 +36,26 @@ class Tracking extends Model
     }
 
     /**
-     * Get the distributor that owns the tracking.
+     * Get the shippingstate that owns the tracking.
      */
     public function shippingstate()
     {
         return $this->belongsTo(\skyimport\Models\Shippingstate::class);
+    }
+
+    /**
+     * Get the consolidated that owns the consolidated.
+     */
+    public function consolidated()
+    {
+        return $this->belongsTo(Consolidated::class);
+    }
+
+    /**
+     * Get the eventsUsers that owns the consolidated.
+     */
+    public function eventsUsers()
+    {
+        return $this->hasMany(EventsUsers::class);
     }
 }

@@ -150,7 +150,11 @@ class ConsolidatedController extends Controller
      */
     public function destroy($id)
     {
-        $consolidated = Consolidated::findOrFail($id)->delete();
+        $consolidated = Consolidated::findOrFail($id);
+        $consolidated->trackings->each(function ($t) {
+            return $t->delete();
+        });
+        $consolidated->delete();
         return response()->json($consolidated);
     }
 

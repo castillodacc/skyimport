@@ -70,14 +70,14 @@ let messages = {
 	'password2_confirmation': 'Repita nueva contraseña.',
 };
 let path = $('meta[name=url]')[0].content;
-// $('.notifications-menu').click(function () {
-// 	let total = $('#notifications_total').text();
-// 	if (total != 0) {
-// 		$.post(path + 'notifications-view', function (response) {
-// 			$('#notifications_total').html('0');
-// 		});
-// 	}
-// });
+$('.notifications-menu').click(function () {
+	let total = $('#notifications_total').text();
+	if (total != 0) {
+		$.post(path + 'notifications-view', function (response) {
+			$('#notifications_total').html('0');
+		});
+	}
+});
 $.ajax({
 	url: path + 'notifications',
 	type: 'POST',
