@@ -3,7 +3,7 @@
   <!-- Logo -->
   <a href="{{ url('/home') }}" class="logo">
     <!-- mini logo for sidebar mini 50x50 pixels -->
-    <span class="logo-mini"><img src="/img/skynavsm2.png"></span>
+    <span class="logo-mini"><img src="/img/skynavsm.png"></span>
     <!-- logo for regular state and mobile devices -->
     <span class="logo-lg"><img src="/img/skynavlg.png"></span>
   </a>
@@ -34,9 +34,9 @@
             <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
               <li class="user-body">
-                <a href="#" id="btn-change-pass"><span class="fa fa-cogs text-primary"></span> Cambiar contraseña</a>
+                <a href="#" id="btn-change-pass"><span class="fa fa-cogs"></span> Cambiar contraseña</a>
                 <div class="divider"></div>
-                <a href="{{ url('/logout') }}"  id="logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><span class="fa fa-sign-out text-primary"></span> Cerrar sesion</a>
+                <a href="{{ url('/logout') }}"  id="logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><span class="fa fa-sign-out"></span> Cerrar sesion</a>
                 <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                   {{ csrf_field() }}
                   <input type="submit" value="logout" style="display: none;">
