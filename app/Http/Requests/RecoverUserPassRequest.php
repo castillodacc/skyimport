@@ -24,6 +24,7 @@ class RecoverUserPassRequest extends FormRequest
     public function rules()
     {
         return [
+            '_codigo' => 'required|string',
             'id' => 'required|numeric',
             'number_id' => 'required|numeric',
             'password' => 'required|confirmed|string|min:6',
@@ -39,10 +40,11 @@ class RecoverUserPassRequest extends FormRequest
     public function attributes()
     {
         return [
-            'id'          => 'identificador',
-            'number_id'     => 'número de identificación',
-            'password'         => 'contraseña',
-            'password_confirmation'         => 'confirmación de contraseña',
+            '_codigo'   => 'código',
+            'id'        => 'identificador',
+            'number_id' => 'número de identificación',
+            'password'  => 'contraseña',
+            'password_confirmation' => 'confirmación de contraseña',
         ];
     }
 }

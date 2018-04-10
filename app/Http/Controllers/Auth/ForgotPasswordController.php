@@ -101,8 +101,12 @@ class ForgotPasswordController extends Controller
 
     public function viewRecoverPass($id)
     {
-        $user = \skyimport\User::where('id', '=', $id)
-        ->where('password', '=', '')->first();
+        $user = \skyimport\User::where('id', '=', $id)->first();
+
+        $longitud = strlen($user->password);
+        if ($longitud < 5) {
+            $user->update(['password' => rand(1000, 9999)]);
+        }
         if ($user) {
             return view('users.recovery_user', ['user' => $user]);
         }
@@ -112,7 +116,7 @@ class ForgotPasswordController extends Controller
     public function recoverPass($id, RecoverUserPassRequest $request)
     {
         $user = \skyimport\User::where('id', '=', $id)
-        ->where('password', '=', '')
+        ->where('password', '=', $request->_codigo)
         ->where('num_id', '=', $request->number_id)
         ->first();
 

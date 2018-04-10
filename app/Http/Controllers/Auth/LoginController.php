@@ -116,9 +116,13 @@ class LoginController extends Controller
         // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
 
-        $user = \skyimport\User::where('email', '=', $request->email)
-                                ->where('password', '=', '')->first();
-        if ($user->id) return redirect()->to('recuperar-usuario/' . $user->id);
+        $user = \skyimport\User::where('email', '=', $request->email)->first();
+        if (isset($user->id)) {
+            $longitud = strlen($user->password);
+            if ($longitud < 5) {
+                return redirect()->to('recuperar-usuario/' . $user->id);
+            }
+        }
 
         return $this->sendFailedLoginResponse($request);
     }
