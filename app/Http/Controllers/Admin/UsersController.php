@@ -39,8 +39,20 @@ class UsersController extends Controller
         })->addColumn('pais', function ($user) {
             if ($user->state == null) return '-';
             return $user->state->state . ' / ' . $user->state->countrie->country;
+        // })->addColumn('action', function ($user) {
+        //     return '<input type="radio" name="user" style="margin: 0 50%;" value='.$user->id.'>';
+        // })
         })->addColumn('action', function ($user) {
-            return '<input type="radio" name="user" style="margin: 0 50%;" value='.$user->id.'>';
+            return '
+                    <div class="col-md-offset-1">
+                        <div class="btn-group">
+                         <button type="button" class="btn btn-primary btn-flat btn-xs"><span class="fa fa-edit"></span> Editar</button>
+                        </div>
+                        <div class="btn-group">
+                        <button type="button" class="btn btn-danger btn-flat btn-xs"><span class="fa fa-trash"></span> Eliminar</button>
+                        </div>
+                    </div>
+                ';
         })
         ->editColumn('fullname', function ($user) {
             return $user->name . ' ' . $user->last_name;

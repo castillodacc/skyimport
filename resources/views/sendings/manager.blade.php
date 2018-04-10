@@ -64,13 +64,13 @@
             <table id="consolidated-a-table" class="table table-sm table-striped table-bordered table-hover table-condensed">
                 <thead>
                     <tr>
-                        <th class="text-center"><span class="fa fa-check-circle-o"></span> Elegir</th>
                         <th><span class="fa fa-cube"></span> Consolidado</th>
                         <th><span class="fa fa-user"></span> Usuario</th>
                         <th><span class="fa fa-calendar-plus-o"></span> Creación</th>
                         <th width="15%"><span class="fa fa-check-square-o"></span> Estado</th>
                         <th><span class="fa fa-location-arrow"></span> Trackings</th>
                         <th><span class="fa fa-calendar-times-o"></span> Cierre</th>
+                        <th class="text-center"><span class="fa fa-check-circle-o"></span> Acciones</th>
                     </tr>
                 </thead>
             </table>
@@ -142,12 +142,12 @@
             <table id="consolidated-b-table" class="table table-striped table-bordered table-hover table-condensed">
                 <thead>
                     <tr>
-                        <th class="text-center"><span class="fa fa-check-circle-o"></span> Elegir</th>
                         <th><span class="fa fa-cube"></span> Consolidado</th>
                         <th><span class="fa fa-user"></span> Usuario</th>
                         <th><span class="fa fa-calendar-plus-o"></span> Fecha de creacion</th>
                         <th><span class="fa fa-location-arrow"></span> Trackings</th>
                         <th><span class="fa fa-calendar-check-o"></span> Formalizado</th>
+                        <th class="text-center"><span class="fa fa-check-circle-o"></span> Acciones</th>
                     </tr>
                 </thead>
             </table>

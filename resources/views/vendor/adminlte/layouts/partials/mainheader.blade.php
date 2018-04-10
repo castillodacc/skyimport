@@ -1,11 +1,11 @@
 <!-- Main Header -->
-<header class="main-header">
+<header class="main-header bg-primary">
   <!-- Logo -->
   <a href="{{ url('/home') }}" class="logo">
     <!-- mini logo for sidebar mini 50x50 pixels -->
-    <span class="logo-mini"><img src="/img/skyimportminiside.png"></span>
+    <span class="logo-mini"><img src="/img/skynavsm2.png"></span>
     <!-- logo for regular state and mobile devices -->
-    <span class="logo-lg"><img src="/img/skyimportlgside.png"></span>
+    <span class="logo-lg"><img src="/img/skynavlg.png"></span>
   </a>
   <!-- Header Navbar -->
   <nav class="navbar navbar-static-top" role="navigation">

@@ -42,9 +42,28 @@ class ConsolidatedController extends Controller
         }
 
         return (new Datatables)->of($object)
+        // ->addColumn('action', function ($consolidated) {
+        //     $name = (request()->c === 'abierto') ? 'consolidated' : 'consolidated2';
+        //     return '<input type="radio" name="'.$name.'" value="'.$consolidated->id.'" style="margin:0 50%">';
+        // })
         ->addColumn('action', function ($consolidated) {
             $name = (request()->c === 'abierto') ? 'consolidated' : 'consolidated2';
-            return '<input type="radio" name="'.$name.'" value="'.$consolidated->id.'" style="margin:0 50%">';
+            return '
+                    <div class="col-md-offset-1">
+                    <div class="btn-group">
+                    <button type="button" class="btn btn-warning btn-flat btn-xs"><span class="fa fa-calendar-plus-o"></span> Extender</button>
+                    </div>
+                    <div class="btn-group">
+                    <button type="button" class="btn btn-info btn-flat btn-xs"><span class="fa fa-eye"></span> Ver</button>
+                    </div>
+                    <div class="btn-group">
+                     <button type="button" class="btn btn-primary btn-flat btn-xs"><span class="fa fa-edit"></span> Editar</button>
+                    </div>
+                    <div class="btn-group">
+                    <button type="button" class="btn btn-danger btn-flat btn-xs"><span class="fa fa-trash"></span> Eliminar</button>
+                    </div>
+                    </div>
+                    ';
         })
         ->editColumn('created_at', function ($consolidated) {
             return $consolidated->created_at->diffForHumans().'.';

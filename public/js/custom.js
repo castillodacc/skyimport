@@ -354,13 +354,13 @@ if (location.href.indexOf('/usuarios') > 0) {
 		},
 		order: [[0, 'DESC']],
 		columns: [
-		{data: 'action', name: 'action', orderable: false, searchable: false},
 		{data: 'fullname', name: 'name'},
 		{data: 'num_id', name: 'num_id'},
 		{data: 'role.rol', name: 'role_id'},
 		{data: 'email', name: 'email'},
 		{data: 'pais', name: 'state_id'},
 		{data: 'phone', name: 'phone'},
+		{data: 'action', name: 'action', orderable: false, searchable: false}
 		]
 	});
 	$('a[data-title="Delete"]').click(function (e) {
@@ -533,13 +533,13 @@ if (location.href.indexOf('/consolidados') > 0) {
 		},
 		order: [[3, 'DESC']],
 		columns: [
-		{data: 'action', orderable: false, searchable: false},
 		{data: 'number', name: 'number'},
 		{data: 'fullname', name: 'user_id'},
 		{data: 'created_at', name: 'created_at'},
 		{data: 'shippingstate', name: 'shippingstate_id'},
 		{data: 'num_trackings', orderable: false, searchable: false},
 		{data: 'closed_at', name: 'closed_at'},
+		{data: 'action', orderable: false, searchable: false}
 		]
 	});
 	var trackTable = $('table#tracking-table').DataTable({
@@ -617,12 +617,12 @@ if (location.href.indexOf('/consolidados') > 0) {
 		},
 		order: [[3, 'DESC']],
 		columns: [
-		{data: 'action', orderable: false, searchable: false},
 		{data: 'number', name: 'number'},
 		{data: 'fullname', name: 'user_id'},
 		{data: 'created_at', name: 'created_at'},
 		{data: 'num_trackings', orderable: false, searchable: false},
 		{data: 'closed_at', name: 'closed_at'},
+		{data: 'action', orderable: false, searchable: false}
 		]
 	});
 	$('#addForm').click(function (e) {
