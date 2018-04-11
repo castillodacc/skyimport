@@ -7,7 +7,7 @@
     <div id="app">
         <div class="login-box">
         <div class="login-logo">
-            <a href="{{ url('/home') }}"><b>Admin</b>LTE</a>
+            <img class="center-block" src="/img/sky.png">
         </div><!-- /.login-logo -->
 
         @if (session('status'))
@@ -36,7 +36,7 @@
                 </div>
                  <div class="row">
                     <div class="col-xs-2"></div> 
-                    <div class="col-xs-8"><button type="submit" class="btn btn-primary btn-block btn-flat"> Enviar el enlace</button></div> 
+                    <div class="col-xs-6 col-xs-offset-1"><button type="submit" class="btn btn-block btn-flat btn-primary"><span class="fa fa-send"></span> Enviar enlace</button></div> 
                     <div class="col-xs-2"></div>
                 </div>
             </form>

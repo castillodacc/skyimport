@@ -29,7 +29,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="skin-black sidebar-mini">
+<body class="skin-skyimport sidebar-mini">
 <div id="app" v-cloak>
     <div class="wrapper">
 

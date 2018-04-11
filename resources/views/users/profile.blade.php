@@ -32,7 +32,7 @@
       <div class="tab-content">
         <div class="tab-pane active" id="profile">
           <div class="box-header with-border">
-            <button class="btn btn-primary btn-xs pull-right btn-flat" id="active_edit_profile"><span class="fa fa-edit"></span> Editar perfil</button>
+            <button class="btn btn-xs pull-right btn-flat btn-primary" id="active_edit_profile"><span class="fa fa-edit"></span> Editar perfil</button>
           </div>
           <form id="profile" enctype="multipart/form-data" action="{{ route('usuarios.update', $user->id) }}">
             {{ csrf_field() }} {{ method_field('PUT') }}

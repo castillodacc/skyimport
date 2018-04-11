@@ -44,7 +44,7 @@
                             </div>
                         </div><!-- /.col -->
                         <div class="col-xs-4">
-                            <button type="submit" class="btn btn-primary btn-block btn-flat">{{ trans('adminlte_lang::message.buttonsign') }}</button>
+                            <button type="submit" class="btn btn-block btn-flat btn-primary"><span class="fa fa-sign-in"></span> {{ trans('adminlte_lang::message.buttonsign') }}</button>
                         </div><!-- /.col <--></-->
                     </div>
                 </form>

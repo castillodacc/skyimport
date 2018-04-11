@@ -10,15 +10,19 @@
         </form>
         <ul class="sidebar-menu">
             <li class="header text-center">Menu de navegacion</li>
-            <li><a href="{{ url('/') }}"><i class='fa fa-dashboard text-aqua'></i><span>Inicio</span></a></li>
-            <li><a href="{{ route('profile') }}"><i class='fa fa-user-circle text-aqua'></i><span>Perfil</span></a></li>
+            <li><a href="{{ url('/') }}"><i class='fa fa-dashboard'></i><span>Inicio</span></a></li>
+            <hr>
+            <li><a href="{{ route('profile') }}"><i class='fa fa-user-circle'></i><span>Perfil</span></a></li>
+            <hr>
             @if(Auth::user()->role_id == 1)
-            <li><a href="{{ route('usuarios.index') }}"><i class='fa fa-users text-aqua'></i> <span>Usuarios</span></a></li>
+            <li><a href="{{ route('usuarios.index') }}"><i class='fa fa-users'></i> <span>Usuarios</span></a></li>
+            <hr>
             @endif
-            {{-- <li><a href="{{ url('') }}"><i class='fa fa-send text-aqua'></i> <span>Nuevo envio</span></a></li> --}}
-            <li><a href="{{ route('consolidados.index') }}"><i class='fa fa-arrows-h text-aqua'></i> <span>Administrar envios</span></a></li>
-            {{-- <li><a href="{{ url('') }}"><i class='fa fa-cubes text-aqua'></i> <span>Consolidados</span></a></li> --}}
-            {{-- <li><a href="{{ url('') }}"><i class='fa fa-cube text-aqua'></i> <span>Seguimiento</span></a></li> --}}
+            {{-- <li><a href="{{ url('') }}"><i class='fa fa-send'></i> <span>Nuevo envio</span></a></li> --}}
+            <li><a href="{{ route('consolidados.index') }}"><i class='fa fa-arrows-h'></i> <span>Administrar envios</span></a></li>
+            <hr>
+            {{-- <li><a href="{{ url('') }}"><i class='fa fa-cubes'></i> <span>Consolidados</span></a></li> --}}
+            {{-- <li><a href="{{ url('') }}"><i class='fa fa-cube'></i> <span>Seguimiento</span></a></li> --}}
             
             {{-- <li class="treeview">
                 <a href="#"><i class='fa fa-bar-chart text-red'></i> <span> Estadisticas</span> <i class="fa fa-angle-left pull-right"></i></a>
