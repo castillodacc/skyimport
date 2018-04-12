@@ -49,25 +49,30 @@ class ConsolidatedController extends Controller
             $nameView = 'view-formalized';
             $nameEdit = 'edit-formalized';
             $nameDelete = 'delete-formalized';
-            if ($consolidated->closed_at > \Carbon::now()) {
+            if (request()->c === 'abierto') {
                 $nameView = 'viewConsolidated';
                 $nameEdit = 'editConsolidated';
                 $nameDelete = 'deleteConsolidated';
-                if ($consolidated->shippingstate_id == 1) {
-                    $html .= '<div class="btn-group">
-                            <button id="extendConsolidated" type="button" class="btn btn-warning btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Extender un día el cierre" consolidated="' . $consolidated->id . '"><span class="fa fa-calendar-plus-o"></span></button>
-                        </div> ';
-                }
+            }
+            if (request()->c === 'abierto' &&
+                ($consolidated->shippingstate_id == 1 || \Auth::user()->role_id === 1)) {
+                $html .= ' <div class="btn-group">
+                        <button id="extendConsolidated" type="button" class="btn btn-warning btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Extender un día el cierre" consolidated="' . $consolidated->id . '"><span class="fa fa-calendar-plus-o"></span></button>
+                    </div> ';
             }
             $html .= ' <div class="btn-group">
                     <button id="'.$nameView.'" type="button" class="btn btn-info btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Ver" consolidated="' . $consolidated->id . '"><span class="fa fa-eye"></span></button>
-                </div>
-                <div class="btn-group">
-                    <button id="'.$nameEdit.'" type="button" class="btn btn-primary btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Editar" consolidated="' . $consolidated->id . '"><span class="fa fa-edit"></span></button>
-                </div>
-                <div class="btn-group">
-                    <button id="'.$nameDelete.'" type="button" class="btn btn-danger btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar" consolidated="' . $consolidated->id . '"><span class="fa fa-trash"></span></button>
                 </div>';
+            if (request()->c === 'abierto' || \Auth::user()->role_id === 1) {
+                $html .= ' <div class="btn-group">
+                    <button id="'.$nameEdit.'" type="button" class="btn btn-primary btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Editar" consolidated="' . $consolidated->id . '"><span class="fa fa-edit"></span></button>
+                </div> ';
+            }
+            if (\Auth::user()->role_id === 1 || request()->c === 'abierto') {
+                $html .= ' <div class="btn-group">
+                    <button id="'.$nameDelete.'" type="button" class="btn btn-danger btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar" consolidated="' . $consolidated->id . '"><span class="fa fa-trash"></span></button>
+                </div> ';
+            }
             $html .= '</div>';
             return $html;
         })
@@ -247,20 +252,10 @@ class ConsolidatedController extends Controller
         return response()->json($consolidated);
     }
 
-    public function events($id)
+    public function dataEvents($id)
     {
-        $consolidated = Consolidated::findOrFail($id);
-        $trackings = [];
-        foreach ($consolidated->trackings as $c) {
-            $trackings[] = $c->id;
-        }
-
-        $event = EventsUsers::whereIn('tracking_id', $trackings)->Orwhere('consolidated_id', '=', $id)->orderBy('created_at')->get();
-        $event->each(function ($e) {
-            $e->created = $e->created_at->format('d M. Y');
-            $e->hour = $e->created_at->format('h:m');
-            return $e->events;
-        });
-        return response()->json(compact('event', 'consolidated'));
+        $trackings = Consolidated::findOrFail($id)->trackings;
+        $events = Events::where('type', '=', 2)->pluck('event', 'id');
+        return response()->json(compact('trackings', 'events'));
     }
 }

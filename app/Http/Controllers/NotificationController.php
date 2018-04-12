@@ -105,4 +105,35 @@ class NotificationController extends Controller
         $event = EventsUsers::findOrFail($id)->delete();
         return response()->json($event);
 	}
+
+	public function store(Request $request)
+	{
+		return EventsUsers::create([
+			'tracking_id' => $request->tracking,
+			'event_id' => $request->event,
+			'viewed' => 0
+		]);
+	}
+
+    public function events($id)
+    {
+        $consolidated = Consolidated::findOrFail($id);
+        $trackings = [];
+        foreach ($consolidated->trackings as $c) {
+            $trackings[] = $c->id;
+        }
+        $event = EventsUsers::whereIn('tracking_id', $trackings)->Orwhere('consolidated_id', '=', $id)->orderBy('created_at')->get();
+        $event->each(function ($e) use ($consolidated) {
+            $e->created = $e->created_at->format('d M. Y');
+            $e->hour = $e->created_at->format('h:m');
+            if ($e->tracking_id != null) {
+	            $e->trackings = Tracking::find($e->tracking_id);
+            } else {
+	            $e->consolidated = $consolidated;
+            }
+            $e->events;
+        });
+        return response()->json(compact('event', 'consolidated'));
+    }
+
 }

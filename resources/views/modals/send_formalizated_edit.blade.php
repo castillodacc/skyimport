@@ -10,28 +10,30 @@
                     <div class="box-header with-border">
                         <h4 class="box-title">Historial del consolidado:</h4>
                         <div class="pull-right">
-                            <div class="btn-group"><button id="" type="button" data-title="Agregar" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Agregar evento" class="btn btn-primary btn-xs btn-flat"><span class="fa fa-plus"></span></button></div> 
+                            <div class="btn-group">
+                                <button id="agregar-event" type="button" data-title="Agregar" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Agregar evento" class="btn btn-primary btn-xs btn-flat"><span class="fa fa-plus"></span></button>
+                            </div> 
                         </div>
                     </div>
                     <div class="box-header with-border">
-                        <form action="">
+                        <form id="events" action="">
                             <div class="form-group col-md-6">
                                 <div class="input-group">
                                     <div class="input-group-addon">
                                         <span class="fa fa-globe"></span>
                                     </div>
-                                    <select id="verguito1" name="" class="form-control input-sm"></select>
+                                    <select name="tracking" class="form-control input-sm"></select>
                                 </div>
-                                <small id="" class="form-text text-muted">evento 1.</small>
+                                <small id="" class="form-text text-muted">N° de Tracking.</small>
                             </div>
                             <div class="form-group col-md-6">
                                 <div class="input-group">
                                     <div class="input-group-addon">
                                         <span class="fa fa-globe"></span>
                                     </div>
-                                    <select id="verguito2" name="" class="form-control input-sm"></select>
+                                    <select name="event" class="form-control input-sm"></select>
                                 </div>
-                                <small id="" class="form-text text-muted">evento 2.</small>
+                                <small id="" class="form-text text-muted">Evento.</small>
                             </div>
                         </form>
                     </div>

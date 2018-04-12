@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::group(['namespace' => 'ShippingManager'], function () {
 		Route::resource('consolidados', 'ConsolidatedController');
 		Route::post('consolidados/restore/{id}', 'ConsolidatedController@restore');
+		Route::post('consolidados/data-events/{id}', 'ConsolidatedController@dataEvents');
 		Route::post('data-for-consolidated', 'ConsolidatedController@dataForRegister');
 		Route::post('extend-consolidated/{consolidated}', 'ConsolidatedController@extend');
 		Route::post('formalize-consolidated/{consolidated}', 'ConsolidatedController@formalize');
@@ -34,9 +35,17 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::post('tracking/restore/{id}', 'TrackingController@restore');
 		Route::post('formalized/{consolidated}', 'ConsolidatedController@events');
 	});
+	Route::post('formalized/{consolidated}', 'NotificationController@events');
 	Route::post('notifications', 'NotificationController@notifications');
+	Route::post('notifications/create', 'NotificationController@store');
 	Route::post('notifications-view', 'NotificationController@viewer');
 	Route::delete('event/{event}', 'NotificationController@destroy');
+
+	Route::get('sendemail', function () {
+		$data = ['asd' => 'asd'];
+		// Mail::to('rennyarmando@gmail.com', 'asd')->send(new \skyimport\Mail\welcome($data));
+		return 'Email enviado con exito.';
+	});
 
     //    Route::get('/link1', function ()    {
 	//        // Uses Auth Middleware

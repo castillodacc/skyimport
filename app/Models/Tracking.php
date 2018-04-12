@@ -58,4 +58,5 @@ class Tracking extends Model
     {
         return $this->hasMany(EventsUsers::class);
     }
+
 }

@@ -30,7 +30,7 @@ class EventsUsers extends Model
     ];
 
     /**
-     * Get the events for the consolidated.
+     * Get the events for the EventsUsers.
      */
     public function events()
     {
@@ -40,8 +40,16 @@ class EventsUsers extends Model
     /**
      * Get the consolidated that owns the EventsUsers.
      */
-    public function consolidated()
-    {
-        return $this->belongsTo(Consolidated::class);
-    }
+    // public function consolidated()
+    // {
+    //     return $this->belongsTo(Consolidated::class);
+    // }
+
+    /**
+     * Get the tracking that owns the EventsUsers.
+     */
+    // public function trackings()
+    // {
+    //     return $this->belongsTo(\skyimport\Models\Trackings::class);
+    // }
 }
