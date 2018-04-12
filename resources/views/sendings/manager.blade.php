@@ -56,7 +56,7 @@
                         <th width="15%"><span class="fa fa-check-square-o"></span> Estado</th>
                         <th><span class="fa fa-location-arrow"></span> Trackings</th>
                         <th><span class="fa fa-calendar-times-o"></span> Cierre</th>
-                        <th class="text-center"><span class="fa fa-check-circle-o"></span> Acciones</th>
+                        <th class="text-center" width="10%"><span class="fa fa-check-circle-o"></span> Acciones</th>
                     </tr>
                 </thead>
             </table>
@@ -124,7 +124,7 @@
                         <th><span class="fa fa-calendar-plus-o"></span> Creacion</th>
                         <th><span class="fa fa-location-arrow"></span> Trackings</th>
                         <th><span class="fa fa-calendar-check-o"></span> Formalizado</th>
-                        <th class="text-center"><span class="fa fa-check-circle-o"></span> Acciones</th>
+                        <th class="text-center" width="10%"><span class="fa fa-check-circle-o"></span> Acciones</th>
                     </tr>
                 </thead>
             </table>

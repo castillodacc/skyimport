@@ -45,7 +45,7 @@ class ConsolidatedController extends Controller
         return (new Datatables)->of($object)
         ->addColumn('action', function ($consolidated) {
             $name = (request()->c === 'abierto') ? 'consolidated' : 'consolidated2';
-            $html = '<div class="col-md-offset-1">';
+            $html = '<div style="margin: 0 5%">';
             $nameView = 'view-formalized';
             $nameEdit = 'edit-formalized';
             $nameDelete = 'delete-formalized';

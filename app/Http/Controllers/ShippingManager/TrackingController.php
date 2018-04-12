@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use skyimport\Http\Controllers\Controller;
 use skyimport\Models\Tracking;
 use skyimport\Http\Requests\TrakingStoreRequest;
+use skyimport\Models\EventsUsers;
 use Yajra\DataTables\Datatables;
 
 class TrackingController extends Controller

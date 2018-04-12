@@ -109,7 +109,7 @@ class NotificationController extends Controller
 		if ($eventos) {
 			return response()->json(['msg' => 'Ya el tracking paso por ese evento.']);
 		}
-		if ($request->event == 5) {
+		if ($request->event >= 5 || $request->event <= 7) {
 			Tracking::find($request->tracking)->update(['shippingstate_id' => 6]);
 		} elseif ($request->event == 8) {
 			Tracking::find($request->tracking)->update(['shippingstate_id' => 7]);
