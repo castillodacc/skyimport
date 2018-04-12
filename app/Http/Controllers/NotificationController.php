@@ -80,10 +80,6 @@ class NotificationController extends Controller
 	public function viewer()
 	{
 		if (\Auth::user()->role_id == 1) {
-			// $events = EventsUsers::limit(15)->where('tracking_id', '=', null)->get();
-			// $events->each(function ($event) {
-			// 	return $event->update(['viewed' => '1']);
-			// });
 		} else {
 			$user = \Auth::user()->id;
 			$consolidados = Consolidated::where('user_id', '=', $user)->get();
@@ -108,6 +104,11 @@ class NotificationController extends Controller
 
 	public function store(Request $request)
 	{
+		$eventos = EventsUsers::where('tracking_id', '=', $request->tracking)
+		->where('event_id', '>=', $request->event)->get();
+		if ($eventos) {
+			return response()->json(['msg' => 'Ya el tracking paso por ese evento.']);
+		}
 		return EventsUsers::create([
 			'tracking_id' => $request->tracking,
 			'event_id' => $request->event,
