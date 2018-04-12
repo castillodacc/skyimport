@@ -7,20 +7,6 @@
             <div class="btn-group">
                 <button id="search-cons-a" type="button" class="btn bg-green btn-xs btn-flat" data-title="Search" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Buscar filtros"><span class="fa fa-search"></span></button>
             </div>
-            <div class="btn-group">
-                <button id="extendConsolidated" type="button" class="btn btn-warning btn-xs btn-flat" data-title="Extend" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Extender consolidado"><span class="fa fa-calendar-plus-o"></span></button>
-            </div>
-            <div class="btn-group">
-                <button id="viewConsolidated" type="button" class="btn btn-info btn-xs btn-flat" data-title="Show" data-placement="top" rel="tooltip" title="Mostrar consolidado"><span class="fa fa-eye"></span></button>
-            </div>
-            {{-- @if(Auth::user()->role_id == 2) --}}
-            <div class="btn-group">
-                <button id="editConsolidated" type="button" class="btn btn-primary btn-xs btn-flat" data-title="Update" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Actualizar"><span class="fa fa-edit"></span></button>
-            </div>
-            {{-- @endif --}}
-            <div class="btn-group">
-                <button id="deleteConsolidated" class="btn btn-danger btn-xs btn-flat" href="" data-title="Delete" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Cancelar"><span class="fa fa-trash"></span></button>
-            </div>
         </div>
     </div>
     <div id="header-search-a" class="box-header">
@@ -90,15 +76,6 @@
             <div class="btn-group">
                 <a id="search-cons-b" class="btn bg-green btn-xs btn-flat" href="#" data-title="Search" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Buscar filtros"><span class="fa fa-search"></span></a>
             </div>
-            <div class="btn-group">
-                <a id="view-formalized" class="btn btn-info btn-xs btn-flat" href="#" data-title="Show" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Mostrar consolidado"><span class="fa fa-eye"></span></a>
-            </div>
-            <div class="btn-group">
-                <a id="edit-formalized" class="btn btn-primary btn-xs btn-flat" href="#" data-title="Update" data-placement="top" rel="tooltip" title="Actualizar"><span class="fa fa-edit"></span></a>
-            </div>
-            <div class="btn-group">
-                <a id="delete-formalized" class="btn btn-danger btn-xs btn-flat" href="#" data-title="Delete" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Cancelar"><span class="fa fa-trash"></span></a>
-            </div>
         </div>
     </div>
     <div class="box-header" id="header-search-b">
@@ -144,7 +121,7 @@
                     <tr>
                         <th><span class="fa fa-cube"></span> Consolidado</th>
                         <th><span class="fa fa-user"></span> Usuario</th>
-                        <th><span class="fa fa-calendar-plus-o"></span> Fecha de creacion</th>
+                        <th><span class="fa fa-calendar-plus-o"></span> Creacion</th>
                         <th><span class="fa fa-location-arrow"></span> Trackings</th>
                         <th><span class="fa fa-calendar-check-o"></span> Formalizado</th>
                         <th class="text-center"><span class="fa fa-check-circle-o"></span> Acciones</th>

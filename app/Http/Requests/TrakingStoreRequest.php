@@ -31,4 +31,20 @@ class TrakingStoreRequest extends FormRequest
             'price' => 'numeric',
         ];
     }
+
+    /**
+     * Cambio de nombres de los atributos.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'tracking'   => 'tracking',
+            'description'        => 'descripción',
+            'consolidated_id' => 'consolidado',
+            'distributor_id'  => 'distribuidor',
+            'price' => 'precio',
+        ];
+    }
 }

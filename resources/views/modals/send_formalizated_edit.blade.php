@@ -15,7 +15,6 @@
                     </div>
                     <div class="box-header with-border">
                         <form action="">
-
                             <div class="form-group col-md-6">
                                 <div class="input-group">
                                     <div class="input-group-addon">
@@ -35,7 +34,6 @@
                                 <small id="" class="form-text text-muted">evento 2.</small>
                             </div>
                         </form>
-
                     </div>
                     <div class="box-body">
                         <div style="max-height: 250px; overflow: auto;">

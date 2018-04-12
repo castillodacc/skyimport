@@ -3,14 +3,6 @@
 <div class="box box-primary">
 	<div class="box-header with-border">
 		<h3 class="box-title">Usuarios registrados</h3>
-		<div class="pull-right">
-			<div class="btn-group">
-				<a class="btn btn-primary btn-xs" href="#" data-title="Edit" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Editar usuario"><span class="fa fa-edit"></span></a>
-			</div>
-			<div class="btn-group">
-				<a class="btn btn-danger btn-xs" href="#" data-title="Delete" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Borrar usuario"><span class="glyphicon glyphicon-trash"></span></a>
-			</div>
-		</div>
 	</div>
 	<div id="users_table" class="box-body table-responsive">
 		<div class="col-md-12">

@@ -38,18 +38,15 @@ class UsersController extends Controller
             return '<span class="label ' . $class . '">' . $user->role->rol . '</span>';
         })->addColumn('pais', function ($user) {
             if ($user->state == null) return '-';
-            return $user->state->state . ' / ' . $user->state->countrie->country;
-        // })->addColumn('action', function ($user) {
-        //     return '<input type="radio" name="user" style="margin: 0 50%;" value='.$user->id.'>';
-        // })
+            return $user->state->countrie->country;
         })->addColumn('action', function ($user) {
             return '
                     <div class="col-md-offset-1">
                         <div class="btn-group">
-                         <button type="button" class="btn btn-primary btn-flat btn-xs"><span class="fa fa-edit"></span> Editar</button>
+                         <button id="edit-user" type="button" class="btn btn-primary btn-flat btn-xs" user="'.$user->id.'" data-toggle="tooltip" data-placement="top" title="Editar"><span class="fa fa-edit"></span></button>
                         </div>
                         <div class="btn-group">
-                        <button type="button" class="btn btn-danger btn-flat btn-xs"><span class="fa fa-trash"></span> Eliminar</button>
+                        <button id="delete-user" type="button" class="btn btn-danger btn-flat btn-xs" user="'.$user->id.'" data-toggle="tooltip" data-placement="top" title="Eliminar"><span class="fa fa-trash"></span></button>
                         </div>
                     </div>
                 ';
@@ -194,5 +191,19 @@ class UsersController extends Controller
         ->orderBy('state', 'ASC')
         ->pluck('state', 'id');
         return response()->json($states);
+    }
+
+    /**
+     * restaura el recurso especificado desde el almacenamiento.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        if ($id == 1) return response(['error' => 'Error al modificar usuario'], 422);
+        /* Indicamos que la busqueda se haga en los registros eliminados con withTrashed y restauramos el recurso */
+        $user = User::withTrashed()->findOrFail($id)->restore();
+        return response()->json($user);
     }
 }

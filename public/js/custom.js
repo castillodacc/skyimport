@@ -89,8 +89,6 @@ $.ajax({
 	$('li#notification').click(function () {
 		let consolidated = $(this).attr('consolidated');
 		$('table#table-view-trackings').attr('consolidated', consolidated);
-		$('button#deleteConsolidated, button#viewConsolidated, button#editConsolidated, button#extendConsolidated')
-		.attr('consolidated', consolidated);
 		let url = path + 'consolidados/' + consolidated;
 		$.get(url, function (response) {
 			let modal = $('div#modal-send-show');
@@ -134,122 +132,120 @@ var trackTableView = $('table#table-view-trackings').DataTable({
 	]
 });
 if (location.href.indexOf('/perfil') > 0) {
-	// al cargar la pagina se colocan los inputs con readonly
-	let inputs = $('form#profile').find('input, textarea, select');
-	inputs.attr('disabled', '');
-	$('#buttons_edit_perfil').hide();
-	// se altera el estado de los inputs con este boton
-	$('button#active_edit_profile, button#cancel').click(function (e) {
-		e.preventDefault();
-		restoreSmallInputs(messages)
-		if ($(inputs[0]).attr('disabled') == undefined) {
-			inputs.attr('disabled', '');
-			$('#buttons_edit_perfil').fadeOut();
-			UserProfile();
-		} else {
-			$('#buttons_edit_perfil').fadeIn();
-			inputs.removeAttr('disabled');
+// al cargar la pagina se colocan los inputs con readonly
+let inputs = $('form#profile').find('input, textarea, select');
+inputs.attr('disabled', '');
+$('#buttons_edit_perfil').hide();
+// se altera el estado de los inputs con este boton
+$('button#active_edit_profile, button#cancel').click(function (e) {
+	e.preventDefault();
+	restoreSmallInputs(messages)
+	if ($(inputs[0]).attr('disabled') == undefined) {
+		inputs.attr('disabled', '');
+		$('#buttons_edit_perfil').fadeOut();
+		UserProfile();
+	} else {
+		$('#buttons_edit_perfil').fadeIn();
+		inputs.removeAttr('disabled');
+	}
+});
+UserProfile();
+function UserProfile() {
+	let id = $('form#profile')[0].action.split('/')[4];
+	$.get(path + 'usuarios/'+id, function (response) {
+		let option = '<option value="" selected disabled>Seleccione un pais.</option>';
+		let countries = response.countries;
+		for (let i in countries) {
+			option += '<option value="'+i+'">'+countries[i]+'</option>';
 		}
-	});
-	UserProfile();
-	function UserProfile() {
-		let id = $('form#profile')[0].action.split('/')[4];
-		$.get(path + 'usuarios/'+id, function (response) {
-			let option = '<option value="" selected disabled>Seleccione un pais.</option>';
-			let countries = response.countries;
-			for (let i in countries) {
-				option += '<option value="'+i+'">'+countries[i]+'</option>';
-			}
-			let user = response.user;
-			$('select#country_id').html(option)
-			$('a#sin-form').text(user.consolidateda);
-			$('a#form').text(user.consolidatedc);
-			if (user.state) {
-				$('select#country_id').val(user.state.countrie_id);
-				$.get(path + 'get-data-states/' + user.state.countrie_id, function (response) {
-					if (user.country_id == 1) {
-						option = '<option value="">Seleccione un Departamento</option>';
-					} else {
-						option = '<option value="">Seleccione un Estado</option>';
-					}
-					for (let i in response) {
-						option += '<option value="'+i+'">'+response[i]+'</option>';
-					}
-					$('select#state_id').html(option);
-					for(let i in inputs) {
-						if (inputs[i].id && inputs[i].id != 'country_id') {
-							let value = user[inputs[i].name];
-							$(inputs[i]).val(value);
-						}
-					}
-				});
-			} else {
+		let user = response.user;
+		$('select#country_id').html(option)
+		$('a#sin-form').text(user.consolidateda);
+		$('a#form').text(user.consolidatedc);
+		if (user.state) {
+			$('select#country_id').val(user.state.countrie_id);
+			$.get(path + 'get-data-states/' + user.state.countrie_id, function (response) {
+				if (user.country_id == 1) {
+					option = '<option value="">Seleccione un Departamento</option>';
+				} else {
+					option = '<option value="">Seleccione un Estado</option>';
+				}
+				for (let i in response) {
+					option += '<option value="'+i+'">'+response[i]+'</option>';
+				}
+				$('select#state_id').html(option);
 				for(let i in inputs) {
 					if (inputs[i].id && inputs[i].id != 'country_id') {
 						let value = user[inputs[i].name];
 						$(inputs[i]).val(value);
 					}
 				}
-			}
-		});
-	}
-	// eventos al enviar el formulario del perfil
-	$('form#profile').submit(function (e) {
-		e.preventDefault();
-		if ($(inputs[0]).attr('disabled') !== undefined) {
-			toastr.warning("Debe activar la edición en el boton Editar Perfil!")
-			return;
-		}
-
-		let url  = $(this).attr('action');
-		let data = $(this).serializeArray();
-		restoreSmallInputs(messages)
-		$.ajax({
-			url: url,
-			type: 'POST',
-			dataType: 'json',
-			data: data,
-		})
-		.done(function(response) {
-			toastr.success('Usuario editado exitosamente!');
-			inputs.attr('disabled', '');
-			$('#buttons_edit_perfil').hide();
-			restoreSmallInputs(messages)
-			UserProfile();
-		})
-		.fail(function(response) {
-			mgs_errors(response.responseJSON)
-		});
-		if ($('input[name="avatar"]')[0].files[0]) {	
-			$('#country_id').removeClass('text-danger')
-			.text('Imagen Personal');
-			let form = new FormData();
-			let file = $('input[name="avatar"]')[0].files[0];
-			form.append('avatar', file);
-			let id = $('form#profile')[0].action.split('/')[4];
-			axios
-			.post(path+'save-image/'+id, form)
-			.then(function (response) {
-				toastr.success('Imagen editada con exito');
-			})
-			.catch(function (error) {
-				$('#country_id').addClass('text-danger')
-				.text(error.response.data.avatar[0])
 			});
-		}
-	});
-	// coloca un preview de la imagen subida
-	$('input[name="avatar"]').change(function (e) {
-		if (this.files && this.files[0]) {
-			var reader = new FileReader();
-			reader.readAsDataURL(this.files[0]);
-			reader.onload = function (e) {
-				$('div#avatar_profile img').attr({'src': e.target.result})
+		} else {
+			for(let i in inputs) {
+				if (inputs[i].id && inputs[i].id != 'country_id') {
+					let value = user[inputs[i].name];
+					$(inputs[i]).val(value);
+				}
 			}
 		}
 	});
 }
-
+// eventos al enviar el formulario del perfil
+$('form#profile').submit(function (e) {
+	e.preventDefault();
+	if ($(inputs[0]).attr('disabled') !== undefined) {
+		toastr.warning("Debe activar la edición en el boton Editar Perfil!")
+		return;
+	}
+	let url  = $(this).attr('action');
+	let data = $(this).serializeArray();
+	restoreSmallInputs(messages)
+	$.ajax({
+		url: url,
+		type: 'POST',
+		dataType: 'json',
+		data: data,
+	})
+	.done(function(response) {
+		toastr.success('Usuario editado exitosamente!');
+		inputs.attr('disabled', '');
+		$('#buttons_edit_perfil').hide();
+		restoreSmallInputs(messages)
+		UserProfile();
+	})
+	.fail(function(response) {
+		mgs_errors(response.responseJSON)
+	});
+	if ($('input[name="avatar"]')[0].files[0]) {	
+		$('#country_id').removeClass('text-danger')
+		.text('Imagen Personal');
+		let form = new FormData();
+		let file = $('input[name="avatar"]')[0].files[0];
+		form.append('avatar', file);
+		let id = $('form#profile')[0].action.split('/')[4];
+		axios
+		.post(path+'save-image/'+id, form)
+		.then(function (response) {
+			toastr.success('Imagen editada con exito');
+		})
+		.catch(function (error) {
+			$('#country_id').addClass('text-danger')
+			.text(error.response.data.avatar[0])
+		});
+	}
+});
+// coloca un preview de la imagen subida
+$('input[name="avatar"]').change(function (e) {
+	if (this.files && this.files[0]) {
+		var reader = new FileReader();
+		reader.readAsDataURL(this.files[0]);
+		reader.onload = function (e) {
+			$('div#avatar_profile img').attr({'src': e.target.result})
+		}
+	}
+});
+}
 if (location.href.indexOf('/usuarios') > 0 || location.href.indexOf('/perfil') > 0) {
 	$('select#country_id').change(function (e) {
 		let num = $(this).val();
@@ -298,7 +294,6 @@ $('form#change_password_form').submit(function (e) {
 		mgs_errors(response.responseJSON)
 	});
 });
-
 function restoreSmallInputs(msg) {
 	for (var i in msg) {
 		$('small#'+i)
@@ -316,7 +311,6 @@ function mgs_errors(msg) {
 	toastr.error('Ups, Al parecer ah ocurrido un error!');
 	console.clear();
 }
-
 if (location.href.indexOf('/usuarios') > 0) {
 	$.get('get-data-user/', function (response) {
 		let option = '<option value="" selected disabled>Seleccione un pais.</option>';
@@ -339,17 +333,90 @@ if (location.href.indexOf('/usuarios') > 0) {
 		ajax: {
 			url: path + 'usuarios',
 			complete: function () {
-				$('input[type="radio"][name="user"]').click(function (){
-					$('a[data-title="Edit"]').attr('id', $(this).val());
-					$('a[data-title="Delete"]').attr('id', $(this).val());
-				});
 				let tr = $('tr');
 				for (var i = 0; i <= tr.length; i++) {
 					let t = tr[i];
-					let td = $(t).children('td')[3];
+					let td = $(t).children('td')[2];
 					let text = $(td).text();
 					$(td).html(text);
 				}
+				$('button#edit-user').click(function (e) {
+					e.preventDefault();
+					let id = $(this).attr('user');
+					let url = path + 'usuarios/' + id;
+					restoreSmallInputs(messages);
+					$('form#user_form')[0].reset();
+					$('#modal_user_form form')
+					.attr('action', url)
+					.find('input[name="_method"]')
+					.attr('value', 'PUT');
+					$.ajax({
+						url: url,
+						type: 'GET',
+						dataType: 'json',
+					})
+					.done(function(response) {
+						if (response.user.state) {
+							let countrie = response.user.state.countrie_id;
+							let state = response.user.state.id;
+							let option;
+							$('select#country_id').val(countrie);
+							$.get(path + 'get-data-states/' + countrie, function (response) {
+								if (countrie == 1) {
+									option = '<option value="">Seleccione un Departamento</option>';
+								} else {
+									option = '<option value="">Seleccione un Estado</option>';
+								}
+								for (let i in response) {
+									option += '<option value="'+i+'">'+response[i]+'</option>';
+								}
+								$('select#state_id').html(option).val(state);
+							});
+						}
+						for (var i in response.user) {
+							$('form#user_form')
+							.find('#'+i)
+							.val(response.user[i]);
+						}
+						$('#modal_user_form')
+						.modal('toggle')
+						.find('h4.modal-title')
+						.text('Editar Usuario: ' + response.user.name + ' ' + response.user.last_name + ' Sky.');
+					})
+					.fail(function(){
+						toastr.success('Error al buscar usuario!');
+					});
+				});
+				$('button#delete-user').click(function (e) {
+					let id = $(this).attr('user');
+					let tr = $(this).parent().parent().parent().parent();
+					let url = path + 'usuarios/' + id;
+					$.ajax({
+						url: url,
+						type: 'POST',
+						dataType: 'json',
+						data: {'_method': 'DELETE'}
+					})
+					.done(function(response) {
+						toastr.success('Usuario Borrado exitosamente!');
+						tr.html('<td colspan="7" class="text-center"> Usuario Eliminado con exito. <a href="#" id="restore-user" user="'+id+'">Restaurar</a> | <a href="#" id="no-restore">Continuar</a></td>');
+						$('a#restore-user').click(function (e) {
+							e.preventDefault();
+							let user = $(this).attr('user');
+							$.post(path + 'usuarios/restore/' + user, function () {
+								toastr.success('usuario restaurado');
+								oTable.draw();
+							});
+						});
+						$('a#no-restore').click(function (e) {
+							e.preventDefault();
+							oTable.draw();
+						});
+					})
+					.fail(function(){
+						toastr.success('Error al borrar usuario!');
+					});
+				});
 			}
 		},
 		order: [[0, 'DESC']],
@@ -363,79 +430,6 @@ if (location.href.indexOf('/usuarios') > 0) {
 		{data: 'action', name: 'action', orderable: false, searchable: false}
 		]
 	});
-	$('a[data-title="Delete"]').click(function (e) {
-		e.preventDefault();
-		if (!$(this).attr('id')) {
-			toastr.warning('Debe seleccionar un usuario.');
-			return;
-		}
-		let id = $(this).attr('id');
-		let url = path + 'usuarios/' + id;
-		$.ajax({
-			url: url,
-			type: 'POST',
-			dataType: 'json',
-			data: {'_method': 'DELETE'}
-		})
-		.done(function(response) {
-			toastr.success('Usuario Borrado exitosamente!');
-			oTable.draw();
-		})
-		.fail(function(){
-			toastr.success('Error al borrar usuario!');
-		});
-	});
-	$('a[data-title="Edit"]').click(function (e) {
-		e.preventDefault();
-		if (!$(this).attr('id')) {
-			toastr.warning('Debe seleccionar un usuario.');
-			return;
-		}
-		let id = $(this).attr('id');
-		let url = path + 'usuarios/' + id;
-		restoreSmallInputs(messages);
-		$('form#user_form')[0].reset();
-		$('#modal_user_form form')
-		.attr('action', url)
-		.find('input[name="_method"]')
-		.attr('value', 'PUT');
-		$.ajax({
-			url: url,
-			type: 'GET',
-			dataType: 'json',
-		})
-		.done(function(response) {
-			if (response.user.state) {
-				let countrie = response.user.state.countrie_id;
-				let state = response.user.state.id;
-				let option;
-				$('select#country_id').val(countrie);
-				$.get(path + 'get-data-states/' + countrie, function (response) {
-					if (countrie == 1) {
-						option = '<option value="">Seleccione un Departamento</option>';
-					} else {
-						option = '<option value="">Seleccione un Estado</option>';
-					}
-					for (let i in response) {
-						option += '<option value="'+i+'">'+response[i]+'</option>';
-					}
-					$('select#state_id').html(option).val(state);
-				});
-			}
-			for (var i in response.user) {
-				$('form#user_form')
-				.find('#'+i)
-				.val(response.user[i]);
-			}
-			$('#modal_user_form')
-			.modal('toggle')
-			.find('h4.modal-title')
-			.text('Editar Usuario: ' + response.user.name + ' ' + response.user.last_name + ' Sky.');
-		})
-		.fail(function(){
-			toastr.success('Error al buscar usuario!');
-		});
-	})
 	$('a#register_user').click(function () {
 		$('#modal_user_form')
 		.modal('toggle')
@@ -478,7 +472,6 @@ if (location.href.indexOf('/usuarios') > 0) {
 		});
 	})
 }
-
 if (location.href.indexOf('/consolidados') > 0) {
 	$('div#header-search-a').hide();
 	$('#search-cons-a').click(function (e) {
@@ -515,20 +508,98 @@ if (location.href.indexOf('/consolidados') > 0) {
 				d.c = 'abierto';
 			},
 			complete: function () {
-				$('input[type="radio"][name="consolidated"]').click(function () {
-					let consolidated = $(this).val();
-					$('button#deleteConsolidated, button#viewConsolidated, button#editConsolidated, button#extendConsolidated')
-					.attr('consolidated', consolidated);
-				});
+				$('[data-toggle="tooltip"]').tooltip();
 				let tr = $('tr');
 				for (var i = 0; i <= tr.length; i++) {
 					let t = tr[i];
 					let td = $(t).children('td');
-					let text = $(td[4]).text();
-					$(td[4]).html(text);
-					text = $(td[5]).text();
-					$(td[5]).html(text);
+					let text = $(td[3]).text();
+					$(td[3]).html(text);
 				}
+				$('button#extendConsolidated').click(function () {
+					let consolidated = $(this).attr('consolidated');
+					let url = path + 'extend-consolidated/' + consolidated;
+					$.ajax({
+						url: url,
+						type: 'POST',
+						dataType: 'json',
+					})
+					.done(function(response) {
+						if (response.msg) {
+							toastr.info(response.msg);
+							return;
+						}
+						consTable.draw();
+						toastr.success('Consolidado Extendido un día.');
+					})
+					.fail(function(response) {
+						toastr.error('Opps al parecer a ocurrido un error');
+					});
+				});
+				$('button#viewConsolidated').click(function (e) {
+					e.preventDefault();
+					let consolidated = $(this).attr('consolidated');
+					$('table#table-view-trackings').attr('consolidated', consolidated);
+					let url = path + 'consolidados/' + consolidated;
+					$.get(url, function (response) {
+						let modal = $('div#modal-send-show');
+						modal.find('.modal-title').html('<span class="fa fa-cube"></span> Consolidado n° ' + response.number + '.');
+						modal.find('td#number').text(response.number + '.');
+						modal.find('td#user').text(response.user.name + ' ' + response.user.last_name + '.');
+						modal.find('td#created_date').text(response.open + '.');
+						modal.find('td#closed_date').text(response.close + '.');
+						modal.find('td#state').text(response.shippingstate.state + '.');
+						modal.find('td#cant').text(response.trackings.length + '.');
+						modal.find('td#value').text(response.sum_total + '.');
+						trackTableView.draw();
+						modal.modal('toggle');
+					});
+				});
+				$('button#editConsolidated').click(function () {
+					let consolidated = $(this).attr('consolidated');
+					if (!consolidated) {
+						toastr.warning('Debe seleccionar un consolidado.');
+						return;
+					}
+					let url = path + 'consolidados/' + consolidated;
+					$.get(url, function (response) {
+						$('.f-close').text(response.close);
+						$('.f-create').text(response.open);
+						$('form#tracking-form-register input#consolidated_id').val(response.id);
+						$('#modal-send-form').modal('toggle').find('.modal-title').html('<span class="fa fa-edit"></span> Editar Consolidado ' + response.number + '.');
+						trackTable.draw();
+					});
+				});
+				$('button#deleteConsolidated').click(function () {
+					let id = $(this).attr('consolidated');
+					let tr = $(this).parent().parent().parent().parent();
+					let url = path + 'consolidados/' + id;
+					$.ajax({
+						url: url,
+						type: 'POST',
+						dataType: 'json',
+						data: {'_method': 'DELETE'}
+					})
+					.done(function(response) {
+						toastr.success('Consolidado Borrado exitosamente!');
+						tr.html('<td colspan="7" class="text-center"> Consolidado Eliminado con exito. <a href="#" id="restore-consolidated" consolidated="'+id+'">Restaurar</a> | <a href="#" id="no-restore">Continuar</a></td>');
+						$('a#restore-consolidated').click(function (e) {
+							e.preventDefault();
+							let consolidated = $(this).attr('consolidated');
+							$.post(path + 'consolidados/restore/' + consolidated, function () {
+								toastr.success('Consolidado restaurado');
+								consTable.draw();
+							});
+						});
+						$('a#no-restore').click(function (e) {
+							e.preventDefault();
+							consTable.draw();
+						});
+					})
+					.fail(function(){
+						toastr.success('Error al borrar usuario!');
+					});
+				});
 			}
 		},
 		order: [[3, 'DESC']],
@@ -566,7 +637,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 						trackTable.draw();
 						toastr.success('Tracking Eliminado.');
 					});
-				});	
+				});
 				$('a#editTracking').click(function () {
 					let tracking = $(this).attr('tracking');
 					$(this).parent().parent().addClass('info');
@@ -608,10 +679,53 @@ if (location.href.indexOf('/consolidados') > 0) {
 				d.c = 'cerrado';
 			},
 			complete: function () {
-				$('input[type="radio"][name="consolidated2"]').click(function () {
-					let consolidated = $(this).val();
-					$('a#view-formalized, a#edit-formalized, a#delete-formalized')
-					.attr('consolidated', consolidated);
+				$('button#view-formalized').click(function (e) {
+					e.preventDefault();
+					let consolidated = $(this).attr('consolidated');
+					$('table#table-view-trackings').attr('consolidated', consolidated);
+					let url = path + 'consolidados/' + consolidated;
+					$.get(url, function (response) {
+						let modal = $('div#modal-send-show');
+						modal.find('.modal-title').html('<span class="fa fa-cube"></span> Consolidado n° ' + response.number + '.');
+						modal.find('td#number').text(response.number + '.');
+						modal.find('td#user').text(response.user.name + ' ' + response.user.last_name + '.');
+						modal.find('td#created_date').text(response.open + '.');
+						modal.find('td#closed_date').text(response.close + '.');
+						modal.find('td#state').text(response.shippingstate.state + '.');
+						modal.find('td#cant').text(response.trackings.length + '.');
+						modal.find('td#value').text(response.sum_total + '.');
+						trackTableView.draw();
+						modal.modal('toggle');
+					});
+				});
+				$('button#edit-formalized').click(function (e) {
+					e.preventDefault();
+					let consolidated = $(this).attr('consolidated');
+					$('table#table-edit-formalized').attr('consolidated', consolidated);
+					cargarEventos(consolidated);
+					trackTable2.draw();
+					$('#modal-send_formalizated_edit').modal('toggle');
+				});
+				$('button#delete-formalized').click(function (e) {
+					e.preventDefault();
+					let consolidated = $(this).attr('consolidated');
+					let tr = $(this).parent().parent().parent().parent();
+					$.post(path + 'consolidados/' + consolidated, {'_method': 'DELETE'}, function () {
+						toastr.success('Consolidado Borrado!');
+						tr.html('<td colspan="7" class="text-center"> Consolidado Eliminado con exito. <a href="#" id="restore-consolidated" consolidated="'+consolidated+'">Restaurar</a> | <a href="#" id="no-restore">Continuar</a></td>');
+						$('a#restore-consolidated').click(function (e) {
+							e.preventDefault();
+							let consolidated = $(this).attr('consolidated');
+							$.post(path + 'consolidados/restore/' + consolidated, function () {
+								toastr.success('Consolidado restaurado');
+								consTable2.draw();
+							});
+						});
+						$('a#no-restore').click(function (e) {
+							e.preventDefault();
+							consTable2.draw();
+						});
+					});
 				});
 			}
 		},
@@ -670,23 +784,20 @@ if (location.href.indexOf('/consolidados') > 0) {
 			toastr.success('Tracking Registrado');
 		})
 		.fail(function(response) {
+			response = response.responseJSON;
 			toastr.error('Opps al parecer a ocurrido un error');
+			for(let i in response) {
+				let html = '<ul>';
+				html += '<li>'+response[i][0]+'</li>';
+				html += '</ul>';
+				toastr.error(html);
+			}
+			console.clear();
 		});
 	});
 	$('form#searchconsolidate').submit(function (e) {
 		e.preventDefault();
 		consTable.draw();
-	});
-	$('button#deleteConsolidated').click(function () {
-		let consolidated = $(this).attr('consolidated');
-		if (consolidated === undefined) {
-			toastr.warning('Debe seleccionar un consolidado.')
-			return;
-		};
-		$.post(path + 'consolidados/' + consolidated, {'_method': 'DELETE'}, function () {
-			consTable.draw();
-			toastr.success('Consolidado Eliminado.');
-		});
 	});
 	$('button#btn-cancel-tracking, button#btn-edit-tracking').click(function () {
 		if ($(this)[0].id == 'btn-edit-tracking') {
@@ -721,30 +832,6 @@ if (location.href.indexOf('/consolidados') > 0) {
 			toastr.info('Edición Cancelada.');
 		}
 	});
-	$('button#extendConsolidated').click(function () {
-		let consolidated = $(this).attr('consolidated');
-		if (!consolidated) {
-			toastr.warning('Debe seleccionar un consolidado.');
-			return;
-		}
-		let url = path + 'extend-consolidated/' + consolidated;
-		$.ajax({
-			url: url,
-			type: 'POST',
-			dataType: 'json',
-		})
-		.done(function(response) {
-			if (response.msg) {
-				toastr.info(response.msg);
-				return;
-			}
-			consTable.draw();
-			toastr.success('Consolidado Extendido un día.');
-		})
-		.fail(function(response) {
-			toastr.error('Opps al parecer a ocurrido un error');
-		});
-	});
 	$('button#cancel-consolidated').click(function () {
 		let id = $('form#tracking-form-register input#consolidated_id')[0].value;
 		$.post(path + 'consolidados/'+id, {'_method':'DELETE'}, function (response) {
@@ -759,25 +846,17 @@ if (location.href.indexOf('/consolidados') > 0) {
 			$('#modal-send-form').modal('toggle');
 			toastr.success('Consolidado Formalizado.');
 			setTimeout(function () {consTable2.draw();}, 500);
+			$('#tracking-form-register').attr('action', path + 'tracking');
+			$('#tracking-form-register')[0].reset();
+			$('#btn-create-tracking').show();
+			$('#btns-edit-tracking').hide();
+			$('#tracking-form-register input[name=_method]').val('POST');
+			$('tr').removeClass('info');
+			$('form#tracking-form-register input#consolidated_id').val('');
 		})
 		.fail(function(response) {
 			toastr.warning(response.responseJSON.msg);
 			console.clear();
-		});
-	});
-	$('button#editConsolidated').click(function () {
-		let consolidated = $(this).attr('consolidated');
-		if (!consolidated) {
-			toastr.warning('Debe seleccionar un consolidado.');
-			return;
-		}
-		let url = path + 'consolidados/' + consolidated;
-		$.get(url, function (response) {
-			$('.f-close').text(response.close);
-			$('.f-create').text(response.open);
-			$('form#tracking-form-register input#consolidated_id').val(response.id);
-			$('#modal-send-form').modal('toggle').find('.modal-title').html('<span class="fa fa-edit"></span> Editar Consolidado ' + response.number + '.');
-			trackTable.draw();
 		});
 	});
 	$('div#header-search-b').hide();
@@ -789,53 +868,8 @@ if (location.href.indexOf('/consolidados') > 0) {
 		e.preventDefault();
 		consTable2.draw();
 	});
-	$('button#viewConsolidated, a#view-formalized').click(function (e) {
-		e.preventDefault();
-		let consolidated = $(this).attr('consolidated');
-		$('table#table-view-trackings').attr('consolidated', consolidated);
-		if (!consolidated) {
-			toastr.warning('Debe seleccionar un consolidado.');
-			return;
-		}
-		let url = path + 'consolidados/' + consolidated;
-		$.get(url, function (response) {
-			let modal = $('div#modal-send-show');
-			modal.find('.modal-title').html('<span class="fa fa-cube"></span> Consolidado n° ' + response.number + '.');
-			modal.find('td#number').text(response.number + '.');
-			modal.find('td#user').text(response.user.name + ' ' + response.user.last_name + '.');
-			modal.find('td#created_date').text(response.open + '.');
-			modal.find('td#closed_date').text(response.close + '.');
-			modal.find('td#state').text(response.shippingstate.state + '.');
-			modal.find('td#cant').text(response.trackings.length + '.');
-			modal.find('td#value').text(response.sum_total + '.');
-			trackTableView.draw();
-			modal.modal('toggle');
-		});
-	});
 	$('#consolidated-save').click(function () {
 		consTable.draw();
-	});
-	$('a#delete-formalized').click(function (e) {
-		e.preventDefault();
-		let consolidated = $(this).attr('consolidated');
-		if (consolidated === undefined) {
-			toastr.warning('Debe seleccionar un consolidado.')
-			return;
-		};
-		$.post(path + 'consolidados/' + consolidated, {'_method': 'DELETE'}, function () {
-			consTable2.draw();
-			toastr.success('Consolidado Eliminado.');
-		});
-	});
-	$('a#edit-formalized').click(function (e) {
-		e.preventDefault()
-		if ($(this).attr('consolidated') == undefined) {
-			toastr.warning('Debe seleccionar un consolidado.')
-			return;
-		};
-		trackTable2.draw();
-		cargarEventos($(this).attr('consolidated'));
-		$('#modal-send_formalizated_edit').modal('toggle');
 	});
 	function cargarEventos(id) {
 		$.post(path + 'formalized/' + id, function (response) {
@@ -874,7 +908,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 		ajax: {
 			url: path + 'tracking/',
 			data: function (d) {
-				d.consolidated_id = $('a#edit-formalized').attr('consolidated');
+				d.consolidated_id = $('table#table-edit-formalized').attr('consolidated');
 			},
 		},
 		columns: [

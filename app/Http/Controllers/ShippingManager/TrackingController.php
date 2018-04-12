@@ -116,4 +116,16 @@ class TrackingController extends Controller
         $tracking = Tracking::findOrFail($id)->delete();
         return response()->json($tracking);
     }
+
+    /**
+     * restaura el recurso especificado desde el almacenamiento.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        $tracking = Tracking::withTrashed()->findOrFail($id)->restore();
+        return response()->json($consolidated);
+    }
 }

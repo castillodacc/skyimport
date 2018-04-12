@@ -24,7 +24,7 @@ Recuperar usuario.
             @endif
 
             <div class="login-box-body">
-                <p class="login-box-msg">Hola, {{ $user->name }} {{ $user->last_name }},<br> Por cambios en nuestra plataforma, debes confirmar su número de identificación para acceder a su recuperar tu cuenta, y registrar tu nueva contraseña</p>
+                <p class="login-box-msg">Hola, {{ $user->name }} {{ $user->last_name }},<br> Por cambios en nuestra plataforma, debes confirmar su número de identificación para acceder a su recuperar tu cuenta, validando el código que se envio a tu correo, y registrar tu nueva contraseña.</p>
                 <form id="form-recovery" action="{{ url('/recuperar-usuario', $user->id) }}" method="POST">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="id" value="{{ $user->id }}">

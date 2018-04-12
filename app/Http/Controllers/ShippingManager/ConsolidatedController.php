@@ -8,6 +8,7 @@ use skyimport\Models\Distributor;
 use skyimport\Models\Consolidated;
 use Yajra\DataTables\Datatables;
 use skyimport\Models\Shippingstate;
+use skyimport\Models\Tracking;
 use skyimport\Models\Events;
 use skyimport\Models\EventsUsers;
 
@@ -42,34 +43,39 @@ class ConsolidatedController extends Controller
         }
 
         return (new Datatables)->of($object)
-        // ->addColumn('action', function ($consolidated) {
-        //     $name = (request()->c === 'abierto') ? 'consolidated' : 'consolidated2';
-        //     return '<input type="radio" name="'.$name.'" value="'.$consolidated->id.'" style="margin:0 50%">';
-        // })
         ->addColumn('action', function ($consolidated) {
             $name = (request()->c === 'abierto') ? 'consolidated' : 'consolidated2';
-            return '
-                    <div class="col-md-offset-1">
-                    <div class="btn-group">
-                    <button type="button" class="btn btn-warning btn-flat btn-xs"><span class="fa fa-calendar-plus-o"></span> Extender</button>
-                    </div>
-                    <div class="btn-group">
-                    <button type="button" class="btn btn-info btn-flat btn-xs"><span class="fa fa-eye"></span> Ver</button>
-                    </div>
-                    <div class="btn-group">
-                     <button type="button" class="btn btn-primary btn-flat btn-xs"><span class="fa fa-edit"></span> Editar</button>
-                    </div>
-                    <div class="btn-group">
-                    <button type="button" class="btn btn-danger btn-flat btn-xs"><span class="fa fa-trash"></span> Eliminar</button>
-                    </div>
-                    </div>
-                    ';
+            $html = '<div class="col-md-offset-1">';
+            $nameView = 'view-formalized';
+            $nameEdit = 'edit-formalized';
+            $nameDelete = 'delete-formalized';
+            if ($consolidated->closed_at > \Carbon::now()) {
+                $nameView = 'viewConsolidated';
+                $nameEdit = 'editConsolidated';
+                $nameDelete = 'deleteConsolidated';
+                if ($consolidated->shippingstate_id == 1) {
+                    $html .= '<div class="btn-group">
+                            <button id="extendConsolidated" type="button" class="btn btn-warning btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Extender un día el cierre" consolidated="' . $consolidated->id . '"><span class="fa fa-calendar-plus-o"></span></button>
+                        </div> ';
+                }
+            }
+            $html .= ' <div class="btn-group">
+                    <button id="'.$nameView.'" type="button" class="btn btn-info btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Ver" consolidated="' . $consolidated->id . '"><span class="fa fa-eye"></span></button>
+                </div>
+                <div class="btn-group">
+                    <button id="'.$nameEdit.'" type="button" class="btn btn-primary btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Editar" consolidated="' . $consolidated->id . '"><span class="fa fa-edit"></span></button>
+                </div>
+                <div class="btn-group">
+                    <button id="'.$nameDelete.'" type="button" class="btn btn-danger btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar" consolidated="' . $consolidated->id . '"><span class="fa fa-trash"></span></button>
+                </div>';
+            $html .= '</div>';
+            return $html;
         })
         ->editColumn('created_at', function ($consolidated) {
-            return $consolidated->created_at->diffForHumans().'.';
+            return ucfirst($consolidated->created_at->diffForHumans().'.');
         })
         ->editColumn('closed_at', function ($consolidated) {
-            return $consolidated->closed_at->diffForHumans().'.';
+            return ucfirst($consolidated->closed_at->diffForHumans().'.');
         })
         ->editColumn('shippingstate', function ($consolidated) {
             if ($consolidated->shippingstate->id == 1) {
@@ -85,7 +91,7 @@ class ConsolidatedController extends Controller
             return $consolidated->trackings->count();
         })
         ->addColumn('fullname', function ($consolidated) {
-            return $consolidated->user->name . ' ' . $consolidated->user->last_name;
+            return ucfirst($consolidated->user->name) . ' ' . ucfirst($consolidated->user->last_name);
         })
         ->filter(function ($query) use ($request) {
             if ($request->has('consolidated')) {
@@ -174,6 +180,24 @@ class ConsolidatedController extends Controller
             return $t->delete();
         });
         $consolidated->delete();
+        return response()->json($consolidated);
+    }
+
+    /**
+     * restaura el recurso especificado desde el almacenamiento.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        $consolidated = Consolidated::withTrashed()->findOrFail($id);
+        $tracking = Tracking::where('consolidated_id', '=', $consolidated->id)
+        ->withTrashed();
+        $tracking->each(function ($t) {
+            return $t->restore();
+        });
+        $consolidated->restore();
         return response()->json($consolidated);
     }
 

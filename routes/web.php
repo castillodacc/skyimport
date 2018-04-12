@@ -17,6 +17,7 @@ Route::post('recuperar-usuario/{id}', '\skyimport\Http\Controllers\Auth\ForgotPa
 Route::group(['middleware' => 'auth'], function () {
 	Route::group(['namespace' => 'Admin'], function () {
 		Route::resource('usuarios', 'UsersController');
+		Route::post('usuarios/restore/{id}', 'UsersController@restore');
 		Route::get('perfil/{id?}', 'UsersController@profile')->name('profile');
 		Route::get('get-data-user', 'UsersController@dataForRegister');
 		Route::get('get-data-states/{state}', 'UsersController@dataStates');
@@ -25,10 +26,12 @@ Route::group(['middleware' => 'auth'], function () {
 	});
 	Route::group(['namespace' => 'ShippingManager'], function () {
 		Route::resource('consolidados', 'ConsolidatedController');
+		Route::post('consolidados/restore/{id}', 'ConsolidatedController@restore');
 		Route::post('data-for-consolidated', 'ConsolidatedController@dataForRegister');
 		Route::post('extend-consolidated/{consolidated}', 'ConsolidatedController@extend');
 		Route::post('formalize-consolidated/{consolidated}', 'ConsolidatedController@formalize');
 		Route::resource('tracking', 'TrackingController');
+		Route::post('tracking/restore/{id}', 'TrackingController@restore');
 		Route::post('formalized/{consolidated}', 'ConsolidatedController@events');
 	});
 	Route::post('notifications', 'NotificationController@notifications');
