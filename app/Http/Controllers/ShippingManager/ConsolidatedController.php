@@ -169,7 +169,7 @@ class ConsolidatedController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return redirect()->to('/');
     }
 
     /**

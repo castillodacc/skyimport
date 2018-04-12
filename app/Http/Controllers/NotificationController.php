@@ -105,14 +105,18 @@ class NotificationController extends Controller
 	public function store(Request $request)
 	{
 		$eventos = EventsUsers::where('tracking_id', '=', $request->tracking)
-		->where('event_id', '>=', $request->event)->get();
+		->where('event_id', '>=', $request->event)->count();
 		if ($eventos) {
 			return response()->json(['msg' => 'Ya el tracking paso por ese evento.']);
+		}
+		if ($request->event == 5) {
+			Tracking::find($request->tracking)->update(['shippingstate_id' => 6]);
+		} elseif ($request->event == 8) {
+			Tracking::find($request->tracking)->update(['shippingstate_id' => 7]);
 		}
 		return EventsUsers::create([
 			'tracking_id' => $request->tracking,
 			'event_id' => $request->event,
-			'viewed' => 0
 		]);
 	}
 

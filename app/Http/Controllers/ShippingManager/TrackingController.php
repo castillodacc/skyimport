@@ -48,7 +48,7 @@ class TrackingController extends Controller
      */
     public function create()
     {
-        //
+        return redirect()->to('/');
     }
 
     /**
@@ -64,8 +64,11 @@ class TrackingController extends Controller
         ->where('consolidated_id', '=', $request->consolidated_id)
         ->value('id');
         if ($existe) return response()->json(['msg' => 'El Tracking Ya fue registrado.']);
-
         $tracking = Tracking::create($request->all());
+        EventsUsers::create([
+            'tracking_id' => $tracking->id,
+            'event_id' => 4,
+        ]);
         return response()->json($tracking);
     }
 
@@ -89,7 +92,7 @@ class TrackingController extends Controller
      */
     public function edit($id)
     {
-        //
+        return redirect()->to('/');
     }
 
     /**
