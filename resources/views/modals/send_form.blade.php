@@ -58,9 +58,9 @@
                         <div id="btn-create-tracking" class="form-group col-md-1">
                             <button type="submit" class="btn btn-primary btn-sm btn-flat" data-toggle="tooltip" data-placement="top" title="Agregar tracking"><span class="fa fa-plus"></span></button>
                         </div>
-                        <div id="btns-edit-tracking" class="form-group col-md-1 hidden" style="padding: 0;">
-                            <button id="btn-cancel-tracking" type="reset" class="btn btn-danger btn-xs btn-flat" data-toggle="tooltip" data-placement="top" title="Cancelar Edición"><span class="fa fa-close"></span></button>
+                        <div id="btns-edit-tracking" class="btn-group btn-group-xs hidden" role="toolbar">
                             <button id="btn-edit-tracking" type="button" class="btn btn-warning btn-xs btn-flat" data-toggle="tooltip" data-placement="top" title="Editar Tracking"><span class="fa fa-edit"></span></button>
+                            <button id="btn-cancel-tracking" type="reset" class="btn btn-danger btn-xs btn-flat" data-toggle="tooltip" data-placement="top" title="Cancelar Edición"><span class="fa fa-close"></span></button>
                         </div>
                     </form>
                 </div>
@@ -93,7 +93,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" id="cancel-consolidated" class="btn btn-danger btn-flat" data-dismiss="modal"><span class="fa fa-close"></span> Cancelar</button>
+                <button type="button" data-dismiss="modal" class="btn btn-flat btn-default"><span class="fa fa-close"></span> Cerrar</button>
                 <button type="button" id="consolidated-save" class="btn btn-primary btn-flat" data-dismiss="modal"><span class="glyphicon glyphicon-saved"></span> Guardar</button>
                 <button type="button" id="consolidated-consolidated" class="btn btn-success btn-flat"><span class="fa fa-send"></span> Formalizar</button>
             </div>

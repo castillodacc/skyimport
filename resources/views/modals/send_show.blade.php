@@ -1,7 +1,7 @@
 <div class="modal fade" id="modal-send-show" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" aria-labelledby="ModalLabel">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-aqua">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title text-center" id="exampleModalLabel"></h4>
             </div>
@@ -35,6 +35,12 @@
                                     <tr>
                                         <th>Valor total declarado:</th>
                                         <td class="" id="value">$ 999</td>
+                                        <th>Peso total:</th>
+                                        <td class="" id="weight"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Precio total facturado:</th>
+                                        <td class="" id="bill"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -73,7 +79,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-close"></span> Cerrar</button>
+                <button type="button" class="btn btn-default btn-flat" data-dismiss="modal"><span class="fa fa-close"></span> Cerrar</button>
             </div>
         </div>
     </div>

@@ -70,7 +70,6 @@
     </div>
     @endif
 </div>
-
 <div class="box box-primary">
     <div class="box-header with-border">
         <i class="box-title">Consolidados formalizados:</i>
@@ -135,7 +134,11 @@
         </div>
     </div>
 </div>
+
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal-bill-form">
+  Facturar
+</button>
 @include('modals.send_form')
-{{-- @include('modals.send_show') --}}
 @include('modals.send_formalizated_edit')
+@include('modals.bill_form')
 @endsection
