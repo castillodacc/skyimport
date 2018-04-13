@@ -2,10 +2,12 @@
 @section('main-content')
 <div class="box box-primary">  
     <div class="box-header with-border">
-        <h3 class="box-title">Consolidados abiertos:</h3>
-        <div class="pull-right">
-            <div class="btn-group">
-                <button id="search-cons-a" type="button" class="btn bg-green btn-xs btn-flat" data-title="Search" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Buscar filtros"><span class="fa fa-search"></span></button>
+        <i class="box-title">Consolidados abiertos:</i>
+        <div class="pull-right box-tools">
+            <div class="btn-group btn-group-xs">
+                <button id="search-cons-a" type="button" class="btn bg-green btn-flat" data-title="Search" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Buscar filtros"><span class="fa fa-search"></span></button>
+                <button type="button" class="btn btn-box-tool btn-flat" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button> 
             </div>
         </div>
     </div>
@@ -71,10 +73,12 @@
 
 <div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title">Consolidados formalizados:</h3>
+        <i class="box-title">Consolidados formalizados:</i>
         <div class="pull-right">
-            <div class="btn-group">
-                <a id="search-cons-b" class="btn bg-green btn-xs btn-flat" href="#" data-title="Search" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Buscar filtros"><span class="fa fa-search"></span></a>
+            <div class="btn-group btn-group-xs">
+                <a id="search-cons-b" class="btn bg-green btn-flat" href="#" data-title="Search" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Buscar filtros"><span class="fa fa-search"></span></a>
+                <button type="button" class="btn btn-box-tool btn-flat" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button> 
             </div>
         </div>
     </div>

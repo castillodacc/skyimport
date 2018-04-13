@@ -2,7 +2,13 @@
 @section('main-content')
 <div class="box box-primary">
 	<div class="box-header with-border">
-		<h3 class="box-title">Usuarios registrados</h3>
+		<i class="box-title">Usuarios registrados</i>
+		 <div class="pull-right">
+            <div class="btn-group btn-group-xs">
+                <button type="button" class="btn btn-box-tool btn-flat" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button> 
+            </div>
+        </div>
 	</div>
 	<div id="users_table" class="box-body table-responsive">
 		<div class="col-md-12">

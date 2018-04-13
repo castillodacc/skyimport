@@ -1,5 +1,5 @@
 .skin-skyimport .main-header .navbar {
-  background-color: #20356e;
+  background-image: linear-gradient(to right, #2574ab 0%, #259dab 100%);
 }
 .skin-skyimport .main-header .navbar .nav > li > a {
   color: #ffffff;
@@ -57,8 +57,8 @@
   color: #fff;
 }
 .skin-skyimport .sidebar-menu > li.header {
-  color: #4b646f;
-  background: #259cab;
+  color: white;
+  background-image: linear-gradient(to right, #2574ab 0%, #259dab 100%);
 }
 .skin-skyimport .sidebar-menu > li > a {
   border-left: 3px solid transparent;
@@ -66,7 +66,7 @@
 .skin-skyimport .sidebar-menu > li:hover > a,
 .skin-skyimport .sidebar-menu > li.active > a {
   color: white;
-  background: #259cab;
+  background-image: linear-gradient(to right, #2574ab 0%, #259dab 100%);
   border-left-color: #20356e;
 }
 .skin-skyimport .sidebar-menu > hr {
@@ -138,7 +138,7 @@
 	color: white;
 }
 .skyimport-element-alt{
-	background-color: #20356e;
+	background-image: linear-gradient(to right, #2574ab 0%, #259dab 100%);
 	color: white;
 }
 .bg-skyimport{

@@ -45,7 +45,7 @@ class ConsolidatedController extends Controller
         return (new Datatables)->of($object)
         ->addColumn('action', function ($consolidated) {
             $name = (request()->c === 'abierto') ? 'consolidated' : 'consolidated2';
-            $html = '<div style="margin: 0 5%">';
+            $html = '<div class="btn-group btn-group-xs col-md-offset-1" role="toolbar">';
             $nameView = 'view-formalized';
             $nameEdit = 'edit-formalized';
             $nameDelete = 'delete-formalized';
@@ -56,22 +56,22 @@ class ConsolidatedController extends Controller
             }
             if (request()->c === 'abierto' &&
                 ($consolidated->shippingstate_id == 1 || \Auth::user()->role_id === 1)) {
-                $html .= ' <div class="btn-group">
-                        <button id="extendConsolidated" type="button" class="btn btn-warning btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Extender un día el cierre" consolidated="' . $consolidated->id . '"><span class="fa fa-calendar-plus-o"></span></button>
-                    </div> ';
+                $html .= '
+                        <button id="extendConsolidated" type="button" class="btn btn-warning btn-flat" data-toggle="tooltip" data-placement="top" title="Extender un día el cierre" consolidated="' . $consolidated->id . '"><span class="fa fa-calendar-plus-o"></span></button>
+                    ';
             }
-            $html .= ' <div class="btn-group">
-                    <button id="'.$nameView.'" type="button" class="btn btn-info btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Ver" consolidated="' . $consolidated->id . '"><span class="fa fa-eye"></span></button>
-                </div>';
+            $html .= '
+                    <button id="'.$nameView.'" type="button" class="btn btn-info btn-flat" data-toggle="tooltip" data-placement="top" title="Ver" consolidated="' . $consolidated->id . '"><span class="fa fa-eye"></span></button>
+                ';
             if (request()->c === 'abierto' || \Auth::user()->role_id === 1) {
-                $html .= ' <div class="btn-group">
-                    <button id="'.$nameEdit.'" type="button" class="btn btn-primary btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Editar" consolidated="' . $consolidated->id . '"><span class="fa fa-edit"></span></button>
-                </div> ';
+                $html .= '
+                    <button id="'.$nameEdit.'" type="button" class="btn btn-primary btn-flat" data-toggle="tooltip" data-placement="top" title="Editar" consolidated="' . $consolidated->id . '"><span class="fa fa-edit"></span></button>
+                ';
             }
             if (\Auth::user()->role_id === 1 || request()->c === 'abierto') {
-                $html .= ' <div class="btn-group">
-                    <button id="'.$nameDelete.'" type="button" class="btn btn-danger btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar" consolidated="' . $consolidated->id . '"><span class="fa fa-trash"></span></button>
-                </div> ';
+                $html .= '
+                    <button id="'.$nameDelete.'" type="button" class="btn btn-danger btn-flat" data-toggle="tooltip" data-placement="top" title="Eliminar" consolidated="' . $consolidated->id . '"><span class="fa fa-trash"></span></button>
+                ';
             }
             $html .= '</div>';
             return $html;

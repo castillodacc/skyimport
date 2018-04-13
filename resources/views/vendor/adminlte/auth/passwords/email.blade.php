@@ -8,8 +8,7 @@
         <div class="login-box">
         <div class="login-logo">
             <img class="center-block" src="/img/sky.png">
-        </div><!-- /.login-logo -->
-
+        </div>
         @if (session('status'))
             <div class="alert alert-success">
                 {{ session('status') }}

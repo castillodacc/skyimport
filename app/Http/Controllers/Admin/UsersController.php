@@ -41,13 +41,13 @@ class UsersController extends Controller
             return $user->state->countrie->country;
         })->addColumn('action', function ($user) {
             return '
-                    <div class="col-md-offset-1">
-                        <div class="btn-group">
+                    <div class="btn-group btn-group-xs col-md-offset-3" role="toolbar">
+                       
                          <button id="edit-user" type="button" class="btn btn-primary btn-flat btn-xs" user="'.$user->id.'" data-toggle="tooltip" data-placement="top" title="Editar"><span class="fa fa-edit"></span></button>
-                        </div>
-                        <div class="btn-group">
+                       
+                        
                         <button id="delete-user" type="button" class="btn btn-danger btn-flat btn-xs" user="'.$user->id.'" data-toggle="tooltip" data-placement="top" title="Eliminar"><span class="fa fa-trash"></span></button>
-                        </div>
+                        
                     </div>
                 ';
         })

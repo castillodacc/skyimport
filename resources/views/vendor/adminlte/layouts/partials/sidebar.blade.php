@@ -8,7 +8,7 @@
               </span>
             </div>
         </form> --}}
-        <ul class="sidebar-menu">
+        <ul class="sidebar-menu tree" data-widget="tree">
             <li class="header text-center">Menu de navegacion</li>
             <li><a href="{{ url('/') }}"><i class='fa fa-dashboard'></i><span>Inicio</span></a></li>
             <hr>
