@@ -6,18 +6,12 @@ Restablecer Contraseña
 <body class="login-page">
     <div id="app">
         <div class="login-box">
-<<<<<<< HEAD
-        <div class="login-logo">
-            <img class="center-block" src="/img/sky.png">
-        </div>
-        @if (session('status'))
-=======
+
             <div class="login-logo">
                 <img class="center-block" src="/img/sky.png">
             </div><!-- /.login-logo -->
 
             @if (session('status'))
->>>>>>> db224aa77e33994a7fb7a9474a5b0be074544785
             <div class="alert alert-success">
                 {{ session('status') }}
             </div>
