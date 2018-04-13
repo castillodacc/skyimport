@@ -8,19 +8,19 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use skyimport\Models\Country;
 
-class welcome extends Mailable
+class Welcome extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $var;
+    public $data;
 
-    public function __construct($var = null)
+    public function __construct($data = null)
     {
-        $this->var = $var;
+        $this->data = $data;
     }
 
     public function build()
     {
-        return $this->view('emails.welcome');
+        return $this->view('emails.welcome', ['data' => $this->data]);
     }
 }

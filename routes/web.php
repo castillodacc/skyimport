@@ -41,12 +41,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('notifications-view', 'NotificationController@viewer');
 	Route::delete('event/{event}', 'NotificationController@destroy');
 
-	Route::get('sendemail', function () {
-		$data = ['asd' => 'asd'];
-		// Mail::to('rennyarmando@gmail.com', 'asd')->send(new \skyimport\Mail\welcome($data));
-		return 'Email enviado con exito.';
-	});
-
     //    Route::get('/link1', function ()    {
 	//        // Uses Auth Middleware
 	//    });
@@ -55,3 +49,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Auth::routes();
+// $this->get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+// $this->post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+// $this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+// $this->post('password/reset', 'Auth\ResetPasswordController@reset');

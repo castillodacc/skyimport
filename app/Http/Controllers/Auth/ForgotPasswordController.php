@@ -105,7 +105,9 @@ class ForgotPasswordController extends Controller
 
         $longitud = strlen($user->password);
         if ($longitud < 5) {
-            $user->update(['password' => rand(1000, 9999)]);
+            $num = rand(1000, 9999);
+            $user->update(['password' => $num]);
+            \Mail::to($user->email)->send(new \skyimport\Mail\Recovery($num));
         }
         if ($user) {
             return view('users.recovery_user', ['user' => $user]);

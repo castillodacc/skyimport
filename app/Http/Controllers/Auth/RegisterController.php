@@ -41,7 +41,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -71,7 +71,7 @@ class RegisterController extends Controller
         ],[], [
             'name' => 'nombre',
             // 'username' => '',
-            'num_id'    => 'Identificación',
+            'num_id'    => 'identificación',
             'email'    => 'correo',
             'password' => 'contraseña',
             'terms'    => 'terminos',
@@ -97,6 +97,7 @@ class RegisterController extends Controller
         if (config('auth.providers.users.field','email') === 'username' && isset($data['username'])) {
             $fields['username'] = $data['username'];
         }
+        \Mail::to($data['email'])->send(new \skyimport\Mail\Welcome($fields));
         return User::create($fields);
     }
 }
