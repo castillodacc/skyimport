@@ -568,7 +568,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 				});
 				$('button#deleteConsolidated').click(function () {
 					let id = $(this).attr('consolidated');
-					let tr = $(this).parent().parent().parent().parent();
+					let tr = $(this).parent().parent().parent();
 					let url = path + 'consolidados/' + id;
 					$.ajax({
 						url: url,
@@ -724,7 +724,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 				$('button#delete-formalized').click(function (e) {
 					e.preventDefault();
 					let consolidated = $(this).attr('consolidated');
-					let tr = $(this).parent().parent().parent().parent();
+					let tr = $(this).parent().parent().parent();
 					$.post(path + 'consolidados/' + consolidated, {'_method': 'DELETE'}, function () {
 						toastr.success('Consolidado Borrado!');
 						tr.html('<td colspan="7" class="text-center"> Consolidado Eliminado con exito. <a href="#" id="restore-consolidated" consolidated="'+consolidated+'">Restaurar</a> | <a href="#" id="no-restore">Continuar</a></td>');

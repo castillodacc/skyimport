@@ -6,15 +6,12 @@
 @if ($level == 'error')
 # Whoops!
 @else
-# Hello!
+# Hola!
 @endif
 @endif
 
 {{-- Intro Lines --}}
-@foreach ($introLines as $line)
-{{ $line }}
-
-@endforeach
+<p>Usted está recibiendo este correo electrónico porque recibimos una solicitud de restablecimiento de contraseña para su cuenta.</p>
 
 {{-- Action Button --}}
 @isset($actionText)
@@ -31,28 +28,23 @@
     }
 ?>
 @component('mail::button', ['url' => $actionUrl, 'color' => $color])
-{{ $actionText }}
+Restaurar Contraseña
 @endcomponent
 @endisset
 
-{{-- Outro Lines --}}
-@foreach ($outroLines as $line)
-{{ $line }}
-
-@endforeach
+<p>Si no solicitó restablecer la contraseña, no se requieren más acciones.</p>
 
 {{-- Salutation --}}
 @if (! empty($salutation))
 {{ $salutation }}
 @else
-Regards,<br>{{ config('app.name') }}
+Saludos,<br>{{ config('app.name') }}
 @endif
 
 {{-- Subcopy --}}
 @isset($actionText)
 @component('mail::subcopy')
-If you’re having trouble clicking the "{{ $actionText }}" button, copy and paste the URL below
-into your web browser: [{{ $actionUrl }}]({{ $actionUrl }})
+Si tiene problemas para hacer clic en "Restaurar Contraseña" botón, copiar y pegar la URL a continuación en su navegador web : [{{ $actionUrl }}]({{ $actionUrl }})
 @endcomponent
 @endisset
 @endcomponent
