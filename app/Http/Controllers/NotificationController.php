@@ -17,7 +17,7 @@ class NotificationController extends Controller
 							->where('shippingstate_id', '=', 3)->get();
 			$notifications_total = $notifications->count();
 
-			$html = "<li class='header'>$notifications_total  Consolidados formalizados hoy.</li>";
+			$html = "<li class='header text-center'>$notifications_total  Consolidados formalizados hoy.</li>";
 			foreach ($notifications as $notification) {
 				$consolidated = $notification->number;
 				$hace = $notification->created_at->diffForHumans();
@@ -26,11 +26,9 @@ class NotificationController extends Controller
 	              <ul class='menu'>
 	                <li id='notification' consolidated='$notification->id'>
 	                  <a href='#'>
-	                    <h4>
 	                      <i class='fa fa-cube text-primary'></i>
 	                      $consolidated
 	                      <small><i class='fa fa-clock-o'></i> $hace</small>
-	                    </h4>
 	                    <p>$event</p>
 	                  </a>
 	                </li>

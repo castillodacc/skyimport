@@ -47,7 +47,7 @@
     </div>
     <div class="box-body table-responsive">
         <div class="col-md-12">
-            <table id="consolidated-a-table" class="table table-sm table-striped table-bordered table-hover table-condensed">
+            <table id="consolidated-a-table" class="table table-striped table-bordered table-hover table-condensed" cellspacing="0" width="100%">
                 <thead>
                     <tr>
                         <th><span class="fa fa-cube"></span> Consolidado</th>
@@ -116,7 +116,7 @@
     </div>
     <div class="box-body table-responsive">
         <div class="col-md-12">
-            <table id="consolidated-b-table" class="table table-striped table-bordered table-hover table-condensed">
+            <table id="consolidated-b-table" class="table table-striped table-bordered table-hover table-condensed" cellspacing="0" width="100%">
                 <thead>
                     <tr>
                         <th><span class="fa fa-cube"></span> Consolidado</th>
