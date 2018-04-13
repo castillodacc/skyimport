@@ -52,7 +52,7 @@ class UsersController extends Controller
                 ';
         })
         ->editColumn('fullname', function ($user) {
-            return $user->name . ' ' . $user->last_name;
+            return $user->fullname();
         })
         ->make(true);
     }

@@ -53,7 +53,9 @@ class User extends Authenticatable
      */
     public function fullName()
     {
-        return $this->name . ' ' . $this->last_name . ' Sky';
+        $name = explode(' ', $this->name);
+        $last_name = explode(' ', $this->last_name);
+        return ucfirst($name[0]) . ' ' . ucfirst($last_name[0]) . ' Sky';
     }
 
     /**

@@ -20,40 +20,21 @@
 							<table border="0" cellpadding="0" cellspacing="0" width="100%">
 								<tr>
 									<td style="color: #153643; font-family: Arial, sans-serif; font-size: 24px; text-align: center;">
-										<b>Bienvenido a U.S Cargo el Servicio Courier de Importadora Sky.</b>
+										<b>U.S Cargo el Servicio Courier de Importadora Sky.</b>
 									</td>
 								</tr>
 								<tr>
 									<td style="padding: 5px 0 5px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px; text-align: justify;">
 										<p>
-											Usted ha creado un casillero el día de Hoy, esto le permitirá tener una dirección en Miami, FL. donde van a llegar los artículos o mercancía que compre en los Estados Unidos o que sus proveedores le envíen; permítanos asesorarle en cualquier proceso logístico y de compras en el exterior, nosotros podemos guiarlo en como usted debe hacer sus compras en línea, recuerde que nosotros le haremos llegar sus envíos hasta la puerta de su casa o negocio en Colombia, y recuerde que tanto el CASILLERO como la ZONA DE ALMACENAJE para consolidar sus compras son completamente gratis, siempre buscamos que nuestros clientes ahorren en sus envíos.
+											Su clave de recuperación de cuenta es: <b style="font-size: 25px">"{{ $numero }}"</b>.
 										</p>
 									</td>
 								</tr>
 								<tr>
 									<td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px; text-align: justify;">
-										<p>
-											Cuando su proveedor o la página web donde realiza la compra le pide la direccián de envio o SHIPPING ADDRESS usted deberá escribirla de la siguiente manera:
-										</p>
-										<li><b>Name:</b> {{ $data['name'] }} {{ $data['last_name'] }} Sky.</li>
-										<li><b>Address:</b> 6511 NW 87th Ave.</li>
-										<li><b>City:</b> MIAMI.</li>
-										<li><b>State:</b> FLORIDA.</li>
-										<li><b>ZIP CODE:</b> 33178.</li>
-										<li><b>Phone number:</b> 512 2347692.</li>
-									</td>
-								</tr>
-								<tr>
-									<td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px; text-align: justify;">
-										<b>El link para entrar desde su cuenta es:</b>
+								<hr />
 										<p>
 											<li><b><a href="{{ url('/') }}">{{ url('/') }}</a></b></li>
-										</p>
-										<p>
-											Tener en cuenta que si requiere que le consolidemos sus paquetes para realizar un solo envío, debe notificarnos en la plataforma web de su casillero los números de guía / Tracking number que debemos juntar.
-										</p>
-										<p>
-											Cuando estén llegando estos paquetes, nuestro sistema le notificara la fecha de entrega, tipo de paquete y contenido, cuando toda su carga este consolidada procederemos con el envio hacia el destino final que usted indique en Colombia.
 										</p>
 										<p>Gracias y cualquier inquietud no dude en contactarnos.</p>
 									</td>
@@ -120,31 +101,31 @@
 											Room #522.
 											Foshan, Guangdong Province.
 										</p>
-										</td>
-										<td align="right" width="25%">
-											<table border="0" cellpadding="0" cellspacing="0">
-												<tr>
-													<td style="font-family: Arial, sans-serif; font-size: 12px; font-weight: bold;">
-														<a href="https://twitter.com/importadorasky" style="color: #ffffff;">
-															<img src="{{ asset('img/tw.gif') }}" alt="Twitter" width="38" height="38" style="display: block;" border="0" />
-														</a>
-													</td>
-													<td style="font-size: 0; line-height: 0;" width="20">&nbsp;</td>
-													<td style="font-family: Arial, sans-serif; font-size: 12px; font-weight: bold;">
-														<a href="https://www.facebook.com/importadorasky/" style="color: #ffffff;">
-															<img src="{{ asset('img/fb.gif') }}" alt="Facebook" width="38" height="38" style="display: block;" border="0" />
-														</a>
-													</td>
-												</tr>
-											</table>
-										</td>
-									</tr>
-								</table>
-							</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-		</table>
-	</body>
-	</html>
+									</td>
+									<td align="right" width="25%">
+										<table border="0" cellpadding="0" cellspacing="0">
+											<tr>
+												<td style="font-family: Arial, sans-serif; font-size: 12px; font-weight: bold;">
+													<a href="https://twitter.com/importadorasky" style="color: #ffffff;">
+														<img src="{{ asset('img/tw.gif') }}" alt="Twitter" width="38" height="38" style="display: block;" border="0" />
+													</a>
+												</td>
+												<td style="font-size: 0; line-height: 0;" width="20">&nbsp;</td>
+												<td style="font-family: Arial, sans-serif; font-size: 12px; font-weight: bold;">
+													<a href="https://www.facebook.com/importadorasky/" style="color: #ffffff;">
+														<img src="{{ asset('img/fb.gif') }}" alt="Facebook" width="38" height="38" style="display: block;" border="0" />
+													</a>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>
