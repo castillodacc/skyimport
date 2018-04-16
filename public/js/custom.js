@@ -624,7 +624,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 		render: true,
 		language: translateTableCustom,
 		ajax: {
-			url: path + 'tracking/',
+			url: path + 'tracking',
 			data: function (d) {
 				d.consolidated_id = $('form#tracking-form-register input#consolidated_id').val();
 			},
@@ -807,7 +807,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 		e.preventDefault();
 		$(this).attr('disabled', '');
 		$.ajax({
-			url: path + 'consolidados/',
+			url: path + 'consolidados',
 			type: 'POST',
 			dataType: 'json',
 			data: {
@@ -974,7 +974,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 		render: true,
 		language: translateTableCustom,
 		ajax: {
-			url: path + 'tracking/',
+			url: path + 'tracking',
 			data: function (d) {
 				d.consolidated_id = $('table#table-edit-formalized').attr('consolidated');
 			},

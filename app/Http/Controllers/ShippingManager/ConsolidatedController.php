@@ -137,7 +137,7 @@ class ConsolidatedController extends Controller
             do {
                 $num = 'IS' . rand(10000, 99999) . rand(100000, 999999);
                 $test = Consolidated::where('number', '=', $num)->first();
-            }while($test);
+            } while($test);
             $consolidado = Consolidated::create([
                 'number' => $num,
                 'user_id' => \Auth::user()->id,
