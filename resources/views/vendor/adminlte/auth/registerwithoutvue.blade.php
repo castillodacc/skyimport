@@ -9,9 +9,9 @@
 <body class="hold-transition register-page">
     <div id="app" v-cloak>
         <div class="register-box">
-            <div class="register-logo">
-                <a href="{{ url('/home') }}"><b>Admin</b>LTE</a>
-            </div>
+            <div class="login-logo">
+                <img class="center-block" src="/img/sky.png">
+            </div><!-- /.login-logo -->
 
             @if (count($errors) > 0)
                 <div class="alert alert-danger">
@@ -31,13 +31,13 @@
                     <div class="form-group has-feedback">
                         <input type="text" class="form-control" placeholder="Nombre y apellido" name="name" value="{{ old('name') }}" autofocus/>
                         {{-- <input type="text" class="form-control" placeholder="{{ trans('adminlte_lang::message.fullname') }}" name="name" value="{{ old('name') }}" autofocus/> --}}
-                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                        <span class="fa fa-user form-control-feedback"></span>
                     </div>
 
                     @if (config('auth.providers.users.field','email') === 'username')
                         <div class="form-group has-feedback">
                             <input type="text" class="form-control" placeholder="{{ trans('adminlte_lang::message.username') }}" name="username" autofocus/>
-                            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                            <span class="fa fa-user form-control-feedback"></span>
                         </div>
                     @endif
 
@@ -47,15 +47,15 @@
                     </div>
                     <div class="form-group has-feedback">
                         <input type="num_id" class="form-control" placeholder="Numero de identificación" name="num_id" value="{{ old('num_id') }}"/>
-                        <span class="glyphicon glyphicon-credit-card form-control-feedback"></span>
+                        <span class="fa fa-id-card form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback">
                         <input type="password" class="form-control" placeholder="{{ trans('adminlte_lang::message.password') }}" name="password"/>
-                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                        <span class="fa fa-lock form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback">
                         <input type="password" class="form-control" placeholder="{{ trans('adminlte_lang::message.retrypepassword') }}" name="password_confirmation"/>
-                        <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                        <span class="fa fa-unlock form-control-feedback"></span>
                     </div>
                     <div class="row">
                         <div class="col-xs-1">
@@ -71,14 +71,15 @@
                             </div>
                         </div><!-- /.col -->
                         <div class="col-xs-4 col-xs-push-1">
-                            <button type="submit" class="btn btn-primary btn-block btn-flat">{{ trans('adminlte_lang::message.register') }}</button>
+                            <button type="submit" class="btn btn-primary btn-block btn-flat"><span class="fa fa-send"></span> {{ trans('adminlte_lang::message.register') }}</button>
                         </div><!-- /.col -->
                     </div>
                 </form>
-
                 {{-- @include('adminlte::auth.partials.social_login') --}}
                 <div class="row">
-                    <a href="{{ url('/login') }}" class="text-center">{{ trans('adminlte_lang::message.membreship') }}</a>
+                    <div class="col-xs-6">
+                         <a href="{{ url('/login') }}" class="text-center">{{ trans('adminlte_lang::message.membreship') }}</a>
+                    </div>
                 </div>
             </div><!-- /.form-box -->
         </div><!-- /.register-box -->

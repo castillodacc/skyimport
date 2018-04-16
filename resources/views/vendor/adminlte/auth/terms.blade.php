@@ -3,10 +3,11 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title text-center">Terminos y condiciones</h3>
+            	<img class="center-block" src="/img/skyterms.png">
+                <h4 class="modal-title text-center">Terminos y condiciones</h4>
             </div>
 
-            <div class="modal-body text-justify" style="overflow-y: auto; max-height: calc(100vh - 212px);">
+            <div class="modal-body text-justify" style="overflow-y: auto; max-height: calc(90vh - 212px);">
 <cite>
 <li><strong>CONTRATO DE PRESTACION DE SERVICIOS DE CASILLERO INTERNACIONAL - U.S CARGO SKY:</strong>
 <br>

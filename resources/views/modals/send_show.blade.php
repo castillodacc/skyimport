@@ -16,25 +16,25 @@
                                 <tbody>
                                     <tr>
                                         <th class="col-md-3">Consolidado:</th>
-                                        <td class="col-md-3" id="number">	is36304981185</td>
+                                        <td class="col-md-3" id="number"></td>
                                         <th class="col-md-3">Usuario:</th>
-                                        <td class="col-md-3" id="user">Emanuel Parra</td>
+                                        <td class="col-md-3" id="user"></td>
                                     </tr>
                                     <tr>
                                         <th>Fecha de creacion:</th>
-                                        <td class="" id="created_date">08/03/2018</td>
+                                        <td class="" id="created_date"></td>
                                         <th>Fecha de cierre:</th>
-                                        <td class="" id="closed_date">11/03/2018</td>
+                                        <td class="" id="closed_date"></td>
                                     </tr>
                                     <tr>
                                         <th>Estado:</th>
-                                        <td id="state" class="">Pendiente de formalización</td>
+                                        <td id="state" class=""></td>
                                         <th>Cantidad de trackings:</th>
-                                        <td class="" id="cant">10</td>
+                                        <td class="" id="cant"></td>
                                     </tr>
                                     <tr>
                                         <th>Valor total declarado:</th>
-                                        <td class="" id="value">$ 999</td>
+                                        <td class="" id="value"></td>
                                         <th>Peso total:</th>
                                         <td class="" id="weight"></td>
                                     </tr>
@@ -64,15 +64,6 @@
                                         <th>Estado</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Amazon</td>
-                                        <td>is13758797380</td>
-                                        <td>Tarjeta madre</td>
-                                        <td>333</td>
-                                        <td>30 minutos</td>
-                                    </tr>
-                                </tbody>
                             </table>
                         </div>
                     </div>

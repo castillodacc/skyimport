@@ -60,8 +60,6 @@
                                         <th>Agregado</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -77,18 +75,16 @@
 <script id="timeline-template" type="text/x-custom-template">
     <li id="fecha" class="time-label">
         <span class="bg-teal">
-            10 Feb. 2014
         </span>
     </li>
     <li id="contenido">
         <i class="fa fa-truck bg-orange"></i>
         <div class="timeline-item">
-            <span class="time"><i class="fa fa-clock-o"></i> 13:05</span>
+            <span class="time"><i class="fa fa-clock-o"></i></span>
 
-            <h3 class="timeline-header"><a href="#">Consolidado IS96891200658</a> ...</h3>
+            <h3 class="timeline-header"><a href="#"></a> ...</h3>
 
             <div class="timeline-body">
-                Consolidado en ruta.
             </div>
 
             <div class="timeline-footer">

@@ -31,7 +31,7 @@ class TrackingController extends Controller
 
         return (new Datatables)->of($query)
         ->addColumn('action', function ($tracking) {
-            return '<a id="editTracking" tracking="'.$tracking->id.'" class="btn btn-primary btn-xs btn-flat col-xs-offset-4" href="#" data-toggle="tooltip" title="Editar"><span class="fa fa-pencil"></span></a><a id="deleteTracking" tracking="'.$tracking->id.'" class="btn btn-danger btn-xs btn-flat" href="#" data-toggle="tooltip" title="Eliminar"><span class="fa fa-close"></span></a>';
+            return '<a id="editTracking" tracking="'.$tracking->id.'" class="btn btn-primary btn-xs btn-flat col-xs-offset-4" href="#" data-toggle="tooltip" title="Editar"><span class="fa fa-edit"></span></a><a id="deleteTracking" tracking="'.$tracking->id.'" class="btn btn-danger btn-xs btn-flat" href="#" data-toggle="tooltip" title="Eliminar"><span class="fa fa-close"></span></a>';
         })
         ->editColumn('created_at', function ($tracking) {
             return $tracking->created_at->diffForHumans().'.';

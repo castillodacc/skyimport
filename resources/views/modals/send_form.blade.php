@@ -76,19 +76,6 @@
                                 <th>Accion</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>Amazon</td>
-                                <td>5151515151</td>
-                                <td>Phone</td>
-                                <td class="text-center">
-                                    <a class="btn btn-primary btn-xs btn-flat" data-toggle="tooltip"
-                                    title="Editar"><span class="fa fa-pencil"></span></a>
-                                    <a class="btn btn-danger btn-xs btn-flat" data-toggle="tooltip"
-                                    title="Cancelar"><span class="fa fa-close"></span></a>
-                                </td>
-                            </tr>
-                        </tbody>
                     </table>
                 </div>
             </div>

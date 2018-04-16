@@ -12,11 +12,11 @@
         <ul class="list-group list-group-unbordered">
           <li class="list-group-item">
             <b>Consolidados sin formalizar:</b>
-            <a id="sin-form" class="pull-right">10</a>
+            <a id="sin-form" class="pull-right"></a>
           </li>
           <li class="list-group-item">
             <b>Consolidados formalizados:</b>
-            <a id="form" class="pull-right">10</a>
+            <a id="form" class="pull-right"></a>
           </li>
         </ul>
       </div>
@@ -70,7 +70,7 @@
                 <div class="form-group col-md-6">
                   <div class="input-group">
                     <div class="input-group-addon">
-                      <span class="fa fa-envelope"></span>
+                      <span class="glyphicon glyphicon-envelope"></span>
                     </div>
                     <input type="email" id="email" name="email" class="form-control" placeholder="ejemplo@ejemplo.com">
                   </div>
