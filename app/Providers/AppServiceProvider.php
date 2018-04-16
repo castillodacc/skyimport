@@ -16,6 +16,8 @@ class AppServiceProvider extends ServiceProvider
     {
         \Schema::defaultStringLength(191);
         \Carbon::setLocale(config('app.locale'));
+        \Carbon::setUtf8(true);
+        setlocale(LC_TIME, 'Spanish');
     }
 
     /**

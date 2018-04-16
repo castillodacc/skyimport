@@ -93,7 +93,6 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn btn-flat btn-default"><span class="fa fa-close"></span> Cerrar</button>
                 <button type="button" id="consolidated-save" class="btn btn-primary btn-flat" data-dismiss="modal"><span class="glyphicon glyphicon-saved"></span> Guardar</button>
                 <button type="button" id="consolidated-consolidated" class="btn btn-success btn-flat"><span class="fa fa-send"></span> Formalizar</button>
             </div>

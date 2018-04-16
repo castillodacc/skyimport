@@ -15,7 +15,7 @@ class Tracking extends Model
      * @var array
      */
     protected $fillable = [
-    	'tracking', 'description', 'distributor_id', 'price', 'tstate_id', 'consolidated_id', 'shippingstate_id'
+    	'tracking', 'description', 'distributor_id', 'price', 'consolidated_id', 'shippingstate_id'
     ];
 
     /**

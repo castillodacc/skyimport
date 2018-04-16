@@ -97,7 +97,14 @@ $.ajax({
 			modal.find('td#user').text(response.user.name + ' ' + response.user.last_name + '.');
 			modal.find('td#created_date').text(response.open + '.');
 			modal.find('td#closed_date').text(response.close + '.');
-			modal.find('td#state').text(response.shippingstate.state + '.');
+			if (response.bill > 0) {
+				modal.find('td#bill').addClass('success').text(response.bill);
+				modal.find('td#weight').addClass('success').text(response.weight);
+			} else {
+				modal.find('td#bill').removeClass('success').text(response.bill);
+				modal.find('td#weight').removeClass('success').text(response.weight);
+			}
+			modal.find('td#state').html(response.event);
 			modal.find('td#cant').text(response.trackings.length + '.');
 			modal.find('td#value').text(response.sum_total + '.');
 			trackTableView.draw();
@@ -509,7 +516,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 			},
 			complete: function () {
 				$('[data-toggle="tooltip"]').tooltip();
-				let tr = $('tr');
+				let tr = $('table#consolidated-a-table tr');
 				for (var i = 0; i <= tr.length; i++) {
 					let t = tr[i];
 					let td = $(t).children('td');
@@ -548,7 +555,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 						modal.find('td#user').text(response.user.name + ' ' + response.user.last_name + '.');
 						modal.find('td#created_date').text(response.open + '.');
 						modal.find('td#closed_date').text(response.close + '.');
-						modal.find('td#state').text(response.shippingstate.state + '.');
+						modal.find('td#state').text(response.event);
 						modal.find('td#cant').text(response.trackings.length + '.');
 						modal.find('td#value').text(response.sum_total + '.');
 						trackTableView.draw();
@@ -598,7 +605,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 				});
 			}
 		},
-		order: [[3, 'DESC']],
+		order: [[2, 'DESC']],
 		columns: [
 		{data: 'number', name: 'number'},
 		{data: 'fullname', name: 'user_id'},
@@ -675,6 +682,13 @@ if (location.href.indexOf('/consolidados') > 0) {
 				d.c = 'cerrado';
 			},
 			complete: function () {
+				let tr = $('#consolidated-b-table tr');
+				for (var i = 0; i <= tr.length; i++) {
+					let t = tr[i];
+					let td = $(t).children('td');
+					let text = $(td[3]).text();
+					$(td[3]).html(text);
+				}
 				$('button#view-formalized').click(function (e) {
 					e.preventDefault();
 					let consolidated = $(this).attr('consolidated');
@@ -687,7 +701,14 @@ if (location.href.indexOf('/consolidados') > 0) {
 						modal.find('td#user').text(response.user.name + ' ' + response.user.last_name + '.');
 						modal.find('td#created_date').text(response.open + '.');
 						modal.find('td#closed_date').text(response.close + '.');
-						modal.find('td#state').text(response.shippingstate.state + '.');
+						modal.find('td#state').html(response.event);
+						if (response.bill > 0) {
+							modal.find('td#bill').text(response.bill).addClass('bg-success');
+							modal.find('td#weight').text(response.weight).addClass('bg-success');
+						} else {
+							modal.find('td#bill').text(response.bill).removeClass('bg-success');
+							modal.find('td#weight').text(response.weight).removeClass('bg-success');
+						}
 						modal.find('td#cant').text(response.trackings.length + '.');
 						modal.find('td#value').text(response.sum_total + '.');
 						trackTableView.draw();
@@ -742,6 +763,12 @@ if (location.href.indexOf('/consolidados') > 0) {
 						});
 					});
 				});
+				$('button#factureConsolidated').click(function () {
+					let consolidated = $(this).attr('consolidated');
+					let modal = $('#modal-bill-form');
+					modal.modal('toggle')
+					modal.find('input[name="consolidated"]').val(consolidated);
+				});
 			}
 		},
 		order: [[3, 'DESC']],
@@ -749,6 +776,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 		{data: 'number', name: 'number'},
 		{data: 'fullname', name: 'user_id'},
 		{data: 'created_at', name: 'created_at'},
+		{data: 'shippingstate', name: 'shippingstate_id'},
 		{data: 'num_trackings', orderable: false, searchable: false},
 		{data: 'closed_at', name: 'closed_at'},
 		{data: 'action', orderable: false, searchable: false}
@@ -787,11 +815,11 @@ if (location.href.indexOf('/consolidados') > 0) {
 			}
 		})
 		.done(function(response) {
-			trackTable.draw();
 			$('.f-close').text(response.cierre);
 			$('.f-create').text(response.creacion);
 			$('form#tracking-form-register input#consolidated_id').val(response.id);
 			$('#modal-send-form').modal('toggle').find('.modal-title').html('<span class="fa fa-plus"></span> Crear Nuevo Consolidado.');
+			trackTable.draw();
 			consTable.draw();
 			$('#addForm').removeAttr('disabled');
 			toastr.success('Nuevo Consolidado Abierto');
@@ -924,7 +952,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 				} else {
 					item.find(".timeline-header a").text('Tracking ' + event[e].trackings.tracking);
 				}
-				item.find(".timeline-body").text(event[e].events.event);
+				item.find(".timeline-body").html(event[e].events.event);
 				item.find(".timeline-footer a").attr('evento', event[e].id);
 				$('ul#events-formalized').append(item);
 			}
@@ -958,5 +986,13 @@ if (location.href.indexOf('/consolidados') > 0) {
 		{data: 'price', name: 'trackings.description'},
 		{data: 'created_at', name: 'trackings.created_at'},
 		]
+	});
+	$('#price_form').submit(function (e) {
+		e.preventDefault();
+		let data = $(this).serializeArray();
+		$.post(path + 'bill/', data, function (response) {
+			consTable2.draw();
+			$('#modal-bill-form').modal('toggle')
+		});
 	});
 }

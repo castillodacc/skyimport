@@ -56,9 +56,9 @@
                         <th><span class="fa fa-user"></span> Usuario</th>
                         <th><span class="fa fa-calendar-plus-o"></span> Creación</th>
                         <th width="15%"><span class="fa fa-check-square-o"></span> Estado</th>
-                        <th><span class="fa fa-location-arrow"></span> Trackings</th>
+                        <th width="85px"><span class="fa fa-location-arrow"></span> Trackings</th>
                         <th><span class="fa fa-calendar-times-o"></span> Cierre</th>
-                        <th class="text-center" width="10%"><span class="fa fa-check-circle-o"></span> Acciones</th>
+                        <th class="text-center" width="88px"><span class="fa fa-check-circle-o"></span> Acciones</th>
                     </tr>
                 </thead>
             </table>
@@ -125,9 +125,10 @@
                         <th><span class="fa fa-cube"></span> Consolidado</th>
                         <th><span class="fa fa-user"></span> Usuario</th>
                         <th><span class="fa fa-calendar-plus-o"></span> Creacion</th>
-                        <th><span class="fa fa-location-arrow"></span> Trackings</th>
+                        <th width="15%"><span class="fa fa-check-square-o"></span> Estado</th>
+                        <th width="85px"><span class="fa fa-location-arrow"></span> Trackings</th>
                         <th><span class="fa fa-calendar-check-o"></span> Formalizado</th>
-                        <th class="text-center" width="10%"><span class="fa fa-check-circle-o"></span> Acciones</th>
+                        <th class="text-center" width="80px"><span class="fa fa-check-circle-o"></span> Acciones</th>
                     </tr>
                 </thead>
             </table>
@@ -135,9 +136,6 @@
     </div>
 </div>
 
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal-bill-form">
-  Facturar
-</button>
 @include('modals.send_form')
 @include('modals.send_formalizated_edit')
 @include('modals.bill_form')

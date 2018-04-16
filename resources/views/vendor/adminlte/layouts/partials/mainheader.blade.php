@@ -25,7 +25,7 @@
             <i class="fa fa-bell-o"></i>
             <span id="notifications_total" class="label label-warning"></span>
           </a>
-          <ul id="notifications" class="dropdown-menu" style='max-height: 200px; overflow-y: auto;'></ul>
+          <ul id="notifications" class="dropdown-menu"></ul>
         </li>
         <li class="dropdown user user-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">

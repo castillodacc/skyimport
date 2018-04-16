@@ -31,7 +31,7 @@ class ConsolidatedController extends Controller
         $request = request();
         $object = Consolidated::query()
         ->with(['user', 'Shippingstate'])
-        ->select(['id', 'closed_at', 'user_id', 'created_at', 'number', 'shippingstate_id']);
+        ->select(['id', 'closed_at', 'user_id', 'created_at', 'number', 'bill']);
         if ($request->c === 'abierto') {
             $object->where('closed_at', '>', \Carbon::now());
         } else {
@@ -53,6 +53,14 @@ class ConsolidatedController extends Controller
                 $nameView = 'viewConsolidated';
                 $nameEdit = 'editConsolidated';
                 $nameDelete = 'deleteConsolidated';
+            }
+            if (request()->c !== 'abierto' && \Auth::user()->role_id === 1) {
+                $event = $consolidated->eventsUsers->last()->events->id;
+                if ($event == 5 && $consolidated->bill == 0) {
+                    $html .= '
+                        <button id="factureConsolidated" type="button" class="btn btn-danger btn-flat" data-toggle="tooltip" data-placement="top" title="Facturar" consolidated="' . $consolidated->id . '"><span class="fa fa-dollar"></span></button>
+                    ';
+                }
             }
             if (request()->c === 'abierto' &&
                 ($consolidated->shippingstate_id == 1 || \Auth::user()->role_id === 1)) {
@@ -83,20 +91,25 @@ class ConsolidatedController extends Controller
             return ucfirst($consolidated->closed_at->diffForHumans().'.');
         })
         ->editColumn('shippingstate', function ($consolidated) {
-            if ($consolidated->shippingstate->id == 1) {
+            $event = $consolidated->eventsUsers->last()->events;
+            if ($event->id == 1) {
                 $class = "info";
-            } elseif ($consolidated->shippingstate->id == 2) {
+            } elseif ($event->id == 2) {
                 $class = "warning";
-            } elseif ($consolidated->shippingstate->id == 3) {
+            } elseif ($event->id == 3) {
                 $class = "success";
+            } elseif ($event->id == 4) {
+                $class = "primary";
+            } else {
+                $class = "danger";
             }
-            return '<span class="label label-' . $class . '">'.$consolidated->shippingstate->state.'</span>';
+            return '<span class="label label-' . $class . '">' . $event->event . '</span>';
         })
         ->addColumn('num_trackings', function ($consolidated) {
             return $consolidated->trackings->count();
         })
         ->addColumn('fullname', function ($consolidated) {
-            return ucfirst($consolidated->user->name) . ' ' . ucfirst($consolidated->user->last_name);
+            return $consolidated->user->fullname();
         })
         ->filter(function ($query) use ($request) {
             if ($request->has('consolidated')) {
@@ -152,7 +165,7 @@ class ConsolidatedController extends Controller
     {
         $consolidated = Consolidated::findOrFail($id);
         $consolidated->user;
-        $consolidated->Shippingstate;
+        $consolidated->event = $consolidated->eventsUsers->last()->events->event;
         $consolidated->trackings;
         $consolidated->sum_total = $consolidated->trackings->sum('price');
         $consolidated->close = $consolidated->closed_at->diffForHumans();
@@ -230,6 +243,10 @@ class ConsolidatedController extends Controller
         if ($consolidated->shippingstate_id == 1 || \Auth::user()->role_id == 1) {
             $consolidated->closed_at = $consolidated->closed_at->addDay(1);
             $consolidated->shippingstate_id = 2;
+            EventsUsers::create([
+                'consolidated_id' => $consolidated->id,
+                'event_id' => 2,
+            ]);
             $consolidated->save();
             return response()->json($consolidated);
         }
@@ -246,8 +263,13 @@ class ConsolidatedController extends Controller
     {
         $consolidated = Consolidated::findOrFail($id);
         if (! $consolidated->trackings->count()) return response(['msg' => 'El consolidado debe tener al menos un tracking.'], 422);
+        if (\Auth::user()->id != $consolidated->user_id) return response(['msg' => 'El consolidado lo debe cerrar quien lo aperturó.'], 422);
         $consolidated->closed_at = \Carbon::now();
         $consolidated->shippingstate_id = 3;
+        EventsUsers::create([
+            'consolidated_id' => $consolidated->id,
+            'event_id' => 3,
+        ]);
         $consolidated->save();
         return response()->json($consolidated);
     }
@@ -257,5 +279,16 @@ class ConsolidatedController extends Controller
         $trackings = Consolidated::findOrFail($id)->trackings;
         $events = Events::where('type', '=', 2)->pluck('event', 'id');
         return response()->json(compact('trackings', 'events'));
+    }
+
+    public function bill(Request $request)
+    {
+        $id = $request->consolidated;
+        $consolidated = Consolidated::findOrFail($id)->fill($request->all());
+        EventsUsers::create([
+            'consolidated_id' => $id,
+            'event_id' => 6,
+        ]);
+        return response()->json($consolidated->save());
     }
 }

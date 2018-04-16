@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::resource('tracking', 'TrackingController');
 		Route::post('tracking/restore/{id}', 'TrackingController@restore');
 		Route::post('formalized/{consolidated}', 'ConsolidatedController@events');
+		Route::post('bill/', 'ConsolidatedController@bill');
 	});
 	Route::post('formalized/{consolidated}', 'NotificationController@events');
 	Route::post('notifications', 'NotificationController@notifications');
@@ -47,5 +48,4 @@ Route::group(['middleware' => 'auth'], function () {
     //Please do not remove this if you want adminlte:route and adminlte:link commands to works correctly.
     #adminlte_routes
 });
-
 Auth::routes();

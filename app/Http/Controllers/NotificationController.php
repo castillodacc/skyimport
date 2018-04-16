@@ -14,63 +14,109 @@ class NotificationController extends Controller
 		if (\Auth::user()->role_id == 1) {
 			$hoy = \Carbon::now()->format('Y-m-d');
 			$notifications = Consolidated::where('closed_at', 'LIKE', '%'.$hoy.'%')
-							->where('shippingstate_id', '=', 3)->get();
+							->where('shippingstate_id', '=', 3)
+							->orderBy('created_at', 'DESC')->get();
 			$notifications_total = $notifications->count();
 
-			$html = "<li class='header text-center'>$notifications_total  Consolidados formalizados hoy.</li>";
+			$html = "<li class='header text-center'>$notifications_total  Consolidados formalizados hoy.</li>
+						<li>
+			              <ul class='menu'>";
 			foreach ($notifications as $notification) {
 				$consolidated = $notification->number;
 				$hace = $notification->created_at->diffForHumans();
 				$event = $notification->Shippingstate->state;
-				$html .= "<li>
-	              <ul class='menu'>
-	                <li id='notification' consolidated='$notification->id'>
+				$html .= "<li id='notification' consolidated='$notification->id'>
 	                  <a href='#'>
 	                      <i class='fa fa-cube text-primary'></i>
 	                      $consolidated
 	                      <small><i class='fa fa-clock-o'></i> $hace</small>
 	                    <p>$event</p>
 	                  </a>
-	                </li>
-	              </ul>
-	            </li>";
+	                </li>";
 			}
-			$html .= "<li class='footer'><a href='/consolidados'>Ver todos</a></li>
-						</ul>";
+			$html .= "</ul>
+		            </li>
+	            <li class='footer'><a href='/consolidados'>Ver todos</a></li>";
 		} else {
 			$user = \Auth::user()->id;
-			$consolidados = Consolidated::where('user_id', '=', $user)->get();
+			$consolidados = Consolidated::where('user_id', '=', $user)->limit(10)->get();
 			$notifications_total = 0;
-
-			$html = "<li class='header'> Eventos en Trackings.</li>";
+			$html = "<li class='header'> Eventos en Trackings.</li>
+						<li>
+			              <ul class='menu'>";
+			if (\Auth::user()->city == null) {
+				$notifications_total++;
+				$html .= "<li>
+	                <li>
+	                  <a href='/perfil'>
+	                    <h4>
+	                      <i class='fa fa-user text-primary'></i>
+	                      Perfil del usuario
+	                      <small><i class='fa fa-clock-o'></i> ".\Carbon::now()->diffForHumans()."</small>
+	                    </h4>
+	                    <p>Completa tu Perfil</p>
+	                  </a>
+	                </li>
+	            </li>";
+			}
+			$id = [];
 			foreach ($consolidados as $c) {
+				foreach ($c->eventsUsers as $e) {
+					$id[] = $e->id;
+				}
 				foreach ($c->trackings as $t) {
 					foreach ($t->eventsUsers as $e) {
-						if ($e->consolidated_id == null) {
-							if ($e->viewed == 0) {
-								$notifications_total++;
-							}
-							$fecha = $e->created_at->diffForHumans();
-							$evento = $e->events;
-							$html .= "<li>
-				              <ul class='menu'>
-				                <li id='notification' consolidated='$c->id'>
-				                  <a href='#'>
-				                    <h4>
-				                      <i class='fa fa-cube text-primary'></i>
-				                      $t->tracking
-				                      <small><i class='fa fa-clock-o'></i> $fecha</small>
-				                    </h4>
-				                    <p>$evento->event</p>
-				                  </a>
-				                </li>
-				              </ul>
-				            </li>";
-						}
+						$id[] = $e->id;
 					}
 				}
 			}
-			$html .= "<li class='footer'><a href='/consolidados'>Ver todos los consolidados</a></li>";
+			$id = array_unique($id);
+			$event = EventsUsers::whereIn('id', $id)->orderBy('created_at', 'DESC')->limit(30)->get();
+			foreach ($event as $e) {
+				if ($e->viewed == 0) {
+					$notifications_total++;
+				}
+				if ($e->consolidated_id == null) {
+					$tracking = $e->tracking->tracking;
+					$consolidated = $e->tracking->consolidated;
+					$fecha = $e->created_at->diffForHumans();
+					$evento = $e->events;
+					$html .= "<li>
+		                <li id='notification' consolidated='$consolidated->id'>
+		                  <a href='#'>
+		                    <h4>
+		                      <i class='fa fa-cubes text-primary'></i>
+		                      $tracking
+		                      <small><i class='fa fa-clock-o'></i> $fecha</small>
+		                    </h4>
+		                    <p>$evento->event</p>
+		                  </a>
+		                </li>
+		            </li>";
+				} elseif ($e->tracking_id == null) {
+					if ($e->event_id == 4 || $e->event_id == 6) {
+						// $tracking = $e->tracking->tracking;
+						$consolidated = $e->consolidated;
+						$fecha = $e->created_at->diffForHumans();
+						$evento = $e->events;
+						$html .= "<li>
+			                <li id='notification' consolidated='$consolidated->id'>
+			                  <a href='#'>
+			                    <h4>
+			                      <i class='fa fa-cube text-primary'></i>
+			                      $consolidated->number
+			                      <small><i class='fa fa-clock-o'></i> $fecha</small>
+			                    </h4>
+			                    <p>$evento->event</p>
+			                  </a>
+			                </li>
+			            </li>";
+					}
+				}
+			}
+			$html .= "</ul>
+		            </li>
+	            <li class='footer'><a href='/consolidados'>Ver todos los consolidados</a></li>";
 		}
 		return response()->json(compact('html', 'notifications_total'));
 	}
@@ -80,17 +126,19 @@ class NotificationController extends Controller
 		if (\Auth::user()->role_id == 1) {
 		} else {
 			$user = \Auth::user()->id;
-			$consolidados = Consolidated::where('user_id', '=', $user)->get();
-
+			$consolidados = Consolidated::where('user_id', '=', $user)->limit(10)->get();
+			$id = [];
 			foreach ($consolidados as $c) {
+				foreach ($c->eventsUsers as $e) {$id[] = $e->id; }
 				foreach ($c->trackings as $t) {
-					foreach ($t->eventsUsers as $e) {
-						if ($e->consolidated_id == null) {
-							$e->update(['viewed' => '1']);
-						}
-					}
+					foreach ($t->eventsUsers as $e) {$id[] = $e->id; }
 				}
 			}
+			$id = array_unique($id);
+			$event = EventsUsers::whereIn('id', $id)->orderBy('created_at', 'DESC')->limit(30)->get();
+			$event->each(function ($e) {
+				$e->update(['viewed' => 1]);
+			});
 		}
 	}
 
@@ -105,17 +153,78 @@ class NotificationController extends Controller
 		$eventos = EventsUsers::where('tracking_id', '=', $request->tracking)
 		->where('event_id', '>=', $request->event)->count();
 		if ($eventos) {
-			return response()->json(['msg' => 'Ya el tracking paso por ese evento.']);
+			return response()->json(['msg' => 'Ya el tracking paso por este evento.']);
 		}
-		if ($request->event >= 5 || $request->event <= 7) {
-			Tracking::find($request->tracking)->update(['shippingstate_id' => 6]);
-		} elseif ($request->event == 8) {
-			Tracking::find($request->tracking)->update(['shippingstate_id' => 7]);
-		}
+		$id = Tracking::findOrFail($request->tracking)->consolidated->id;
+		$this->changeStateOfConsolidated($id, $request->event);
 		return EventsUsers::create([
 			'tracking_id' => $request->tracking,
 			'event_id' => $request->event,
 		]);
+	}
+
+	public function changeStateOfConsolidated($id, $event)
+	{
+		if ($event == 11) {
+			$event_current = Consolidated::findOrFail($id)->eventsUsers->last()->event_id;
+			if ($event_current < 4) {$this->allStatusInMiami($id); }
+			if ($event_current < 5) {$this->allStatusInColombia($id); }
+		}
+	}
+
+	public function allStatusInColombia($id)
+	{
+		$consolidated = Consolidated::findOrFail($id);
+		$num = 1;
+		$consolidated->trackings->each(function ($t) use ($num) {
+			$event = $t->eventsUsers->last()->event_id;
+			if ($event < 10) {
+				$num = 0;
+			}
+		});
+		if ($num) {
+			EventsUsers::create([
+				'consolidated_id' => $consolidated->id,
+				'event_id' => 5,
+			]);
+			$consolidated->weight = 0;
+			$consolidated->bill = 0;
+			$consolidated->save();
+		}
+	}
+
+
+	public function allStatusInMiami($id)
+	{
+		$consolidated = Consolidated::findOrFail($id);
+		$num = 1;
+		$consolidated->trackings->each(function ($t) use ($num) {
+			$event = $t->eventsUsers->last()->event_id;
+			if ($event < 8) {
+				$num = 0;
+			}
+		});
+		if ($num) {
+			EventsUsers::create([
+				'consolidated_id' => $consolidated->id,
+				'event_id' => 4,
+			]);
+		}
+	}
+
+	public function trackingEnaduanaColombia()
+	{
+		// 10 En Aduana de Colombia.
+		// Un día hábil después de que se dio notificación de vuelo, llegan a Colombia y entran en aduana que ese es otro estado de consolidado y también se notifica.
+		// - Un día hábil después de que se dio notificación de vuelo, llegan a Colombia y entran en aduana que ese es otro estado de consolidado y también se notifica.
+		// - salida miami - bogota un dia habil de la anterior se coloca en estado "colombia - aduana" 
+		// $dia = \Carbon::now()->formatLocalized('%A');
+		// if ($dia != 'sábado' && $dia != 'domingo') {
+		// 	EventsUsers::create([
+		// 		'consolidated_id' => $consolidated->id,
+		// 		'event_id' => 10,
+		// 	]);
+		// }
 	}
 
     public function events($id)

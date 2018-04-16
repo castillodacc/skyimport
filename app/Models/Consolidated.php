@@ -15,7 +15,7 @@ class Consolidated extends Model
      * @var array
      */
     protected $fillable = [
-        'number', 'user_id', 'shippingstate_id', 'closed_at', 'created_at'
+        'number', 'user_id', 'shippingstate_id', 'closed_at', 'created_at', 'bill', 'weight'
     ];
 
     protected $dates = [

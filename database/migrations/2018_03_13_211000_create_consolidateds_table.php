@@ -18,6 +18,8 @@ class CreateConsolidatedsTable extends Migration
             $table->string('number'); // is4124124124214
             $table->integer('user_id')->unsigned(); // usuario
             $table->integer('shippingstate_id')->unsigned()->default(1); // estado del consolidado
+            $table->string('weight')->nullable()->default(null); // peso
+            $table->integer('bill')->nullable()->default(null); // factura
             $table->timestamp('closed_at')->nullable(); // fecha de cierre
             $table->timestamps();
             $table->softDeletes();

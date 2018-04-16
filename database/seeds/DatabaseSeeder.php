@@ -69,6 +69,13 @@ class DatabaseSeeder extends Seeder
             'updated_at' => null,
         ]);
         DB::table('shippingstates')->insert([
+            'state' => 'Miami a BOG',
+            'ref_id' => 1,
+            'description' => null,
+            'created_at' => Carbon::now(),
+            'updated_at' => null,
+        ]);
+        DB::table('shippingstates')->insert([
             'state' => 'Finalizado',
             'ref_id' => 1,
             'description' => null,
@@ -122,7 +129,7 @@ class DatabaseSeeder extends Seeder
         DB::table('shippingstates')->insert([
             'state' => 'Creado',
             'ref_id' => 2,
-            'description' => 'Cuando el consolidado acaba de ser creado y no hemos notificado del recibido aun.',
+            'description' => 'Cuando acaba de ser creado y no se ha notificado del recibido aun.',
             'created_at' => Carbon::now(),
             'updated_at' => null,
         ]);
@@ -250,6 +257,18 @@ class DatabaseSeeder extends Seeder
         Events::create([
             'type' => 1,
             'event' => 'formalizado.'
+        ]);
+        Events::create([
+            'type' => 1,
+            'event' => 'Salida de Miami a Bogotá.'
+        ]);
+        Events::create([
+            'type' => 1,
+            'event' => 'Facturar.'
+        ]);
+        Events::create([
+            'type' => 1,
+            'event' => '<span class="fa fa-check-square-o cye-lm-tag"></span> Facturado.'
         ]);
 
         Events::create([

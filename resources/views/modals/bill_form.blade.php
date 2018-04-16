@@ -3,11 +3,12 @@
         <div class="modal-content">
             <div class="modal-header bg-primary">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title text-center" id="exampleModalLabel">Facturacion</h4>
+                <h4 class="modal-title text-center" id="exampleModalLabel"><span class="fa fa-dollar"></span> Facturación</h4>
             </div>
             <div class="modal-body">
                 <form id="price_form" method="POST" action="">
                     {{ csrf_field() }} {{ method_field('POST') }}
+                    <input type="hidden" name="consolidated" >
                     <div class="row">
                         <div class="form-group col-md-6">
                             <div class="input-group">
