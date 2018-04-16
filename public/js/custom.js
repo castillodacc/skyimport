@@ -909,7 +909,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 			consTable.draw();
 			$('#modal-send-form').modal('toggle');
 			toastr.success('Consolidado Formalizado.');
-			setTimeout(function () {consTable2.draw();}, 500);
+			setTimeout(function () {consTable2.draw();}, 1000);
 			$('#tracking-form-register').attr('action', path + 'tracking');
 			$('#tracking-form-register')[0].reset();
 			$('#btn-create-tracking').show();
@@ -990,9 +990,13 @@ if (location.href.indexOf('/consolidados') > 0) {
 	$('#price_form').submit(function (e) {
 		e.preventDefault();
 		let data = $(this).serializeArray();
-		$.post(path + 'bill/', data, function (response) {
+		$.post(path + 'bill', data, function (response) {
 			consTable2.draw();
 			$('#modal-bill-form').modal('toggle')
 		});
+	});
+	$('button#show-closed').click(function () {
+		consTable.draw();
+		consTable2.draw();
 	});
 }

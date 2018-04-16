@@ -73,10 +73,10 @@ class NotificationController extends Controller
 			$id = array_unique($id);
 			$event = EventsUsers::whereIn('id', $id)->orderBy('created_at', 'DESC')->limit(30)->get();
 			foreach ($event as $e) {
-				if ($e->viewed == 0) {
-					$notifications_total++;
-				}
 				if ($e->consolidated_id == null) {
+					if ($e->viewed == 0) {
+						$notifications_total++;
+					}
 					$tracking = $e->tracking->tracking;
 					$consolidated = $e->tracking->consolidated;
 					$fecha = $e->created_at->diffForHumans();
@@ -93,8 +93,11 @@ class NotificationController extends Controller
 		                  </a>
 		                </li>
 		            </li>";
-				} elseif ($e->tracking_id == null) {
-					if ($e->event_id == 4 || $e->event_id == 6) {
+		        } elseif ($e->tracking_id == null) {
+		        	if ($e->viewed == 0) {
+		        		$notifications_total++;
+		        	}
+		        	if ($e->event_id == 4 || $e->event_id == 6) {
 						// $tracking = $e->tracking->tracking;
 						$consolidated = $e->consolidated;
 						$fecha = $e->created_at->diffForHumans();

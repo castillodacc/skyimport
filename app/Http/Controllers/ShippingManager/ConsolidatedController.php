@@ -58,7 +58,7 @@ class ConsolidatedController extends Controller
                 $event = $consolidated->eventsUsers->last()->events->id;
                 if ($event == 5 && $consolidated->bill == 0) {
                     $html .= '
-                        <button id="factureConsolidated" type="button" class="btn btn-danger btn-flat" data-toggle="tooltip" data-placement="top" title="Facturar" consolidated="' . $consolidated->id . '"><span class="fa fa-dollar"></span></button>
+                        <button id="factureConsolidated" type="button" class="btn btn-default btn-flat" data-toggle="tooltip" data-placement="top" title="Facturar" consolidated="' . $consolidated->id . '"><span class="fa fa-dollar text-green"></span></button>
                     ';
                 }
             }
