@@ -225,7 +225,7 @@ $('form#profile').submit(function (e) {
 		mgs_errors(response.responseJSON)
 	});
 	if ($('input[name="avatar"]')[0].files[0]) {	
-		$('#country_id').removeClass('text-danger')
+		$('#avatar').removeClass('text-danger')
 		.text('Imagen Personal');
 		let form = new FormData();
 		let file = $('input[name="avatar"]')[0].files[0];
@@ -237,7 +237,7 @@ $('form#profile').submit(function (e) {
 			toastr.success('Imagen editada con exito');
 		})
 		.catch(function (error) {
-			$('#country_id').addClass('text-danger')
+			$('#avatar').addClass('text-danger')
 			.text(error.response.data.avatar[0])
 		});
 	}

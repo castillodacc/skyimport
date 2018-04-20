@@ -171,11 +171,11 @@ class NotificationController extends Controller
 		if ($event == 11) {
 			$event_current = Consolidated::findOrFail($id)->eventsUsers->last()->event_id;
 			if ($event_current < 4) {$this->allStatusInMiami($id); }
-			if ($event_current < 5) {$this->allStatusInColombia($id); }
+			if ($event_current < 5) {$this->allTrackingsInColombia($id); }
 		}
 	}
 
-	public function allStatusInColombia($id)
+	public function allTrackingsInColombia($id)
 	{
 		$consolidated = Consolidated::findOrFail($id);
 		$num = 1;
@@ -213,21 +213,6 @@ class NotificationController extends Controller
 				'event_id' => 4,
 			]);
 		}
-	}
-
-	public function trackingEnaduanaColombia()
-	{
-		// 10 En Aduana de Colombia.
-		// Un día hábil después de que se dio notificación de vuelo, llegan a Colombia y entran en aduana que ese es otro estado de consolidado y también se notifica.
-		// - Un día hábil después de que se dio notificación de vuelo, llegan a Colombia y entran en aduana que ese es otro estado de consolidado y también se notifica.
-		// - salida miami - bogota un dia habil de la anterior se coloca en estado "colombia - aduana" 
-		// $dia = \Carbon::now()->formatLocalized('%A');
-		// if ($dia != 'sábado' && $dia != 'domingo') {
-		// 	EventsUsers::create([
-		// 		'consolidated_id' => $consolidated->id,
-		// 		'event_id' => 10,
-		// 	]);
-		// }
 	}
 
     public function events($id)

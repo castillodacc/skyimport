@@ -19,7 +19,7 @@ class CreateTrackingsTable extends Migration
             $table->text('description'); // descripción
             $table->integer('distributor_id')->unsigned(); // repartidor
             $table->integer('price')->unsigned()->default(0); // price($)
-            $table->integer('shippingstate_id')->unsigned()->default(5); // estado del consolidado
+            $table->integer('shippingstate_id')->unsigned()->default(6); // estado del consolidado
             $table->integer('consolidated_id')->unsigned(); // estado del consolidado
             $table->timestamps();
             $table->softDeletes();
