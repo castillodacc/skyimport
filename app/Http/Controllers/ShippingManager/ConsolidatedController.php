@@ -283,12 +283,24 @@ class ConsolidatedController extends Controller
 
     public function bill(Request $request)
     {
+        $this->validate($request, [
+            'weight' => 'numeric|required',
+            'bill' => 'numeric|required',
+        ],[],[
+            'weight' => 'peso',
+            'bill' => 'precio',
+        ]);
         $id = $request->consolidated;
-        $consolidated = Consolidated::findOrFail($id)->fill($request->all());
+        $consolidated = Consolidated::findOrFail($id);
+        $consolidated->update($request->all());
+        $mail = $consolidated->user->email;
+        if ($mail) {
+            \Mail::to($mail)->send(new \skyimport\Mail\Factura($id));
+        }
         EventsUsers::create([
             'consolidated_id' => $id,
             'event_id' => 6,
         ]);
-        return response()->json($consolidated->save());
+        return response()->json($consolidated);
     }
 }

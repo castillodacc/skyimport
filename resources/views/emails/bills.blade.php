@@ -27,11 +27,22 @@
 								<tr>
 									<td style="padding: 5px 0 5px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px; text-align: justify;">
 										<strong>
-											Proceso de facturazion de su consolidado:
+											Proceso de facturación de su consolidado:
 										</strong>
-										<li> Peso:</li>
-										<li> Facturacion total:</li>
-										<li> Fecha de expedicion de factura:</li>
+										<ul>
+											<li> Cliente: {{ $consolidated->user->fullName() }}.</li>
+											<li> Identificación: {{ $consolidated->user->num_id }}.</li>
+											<li> Consolidado n°: {{ $consolidated->number }} </li>
+											<li> Peso: {{ $consolidated->weight }}.</li>
+											<li> Facturacion total: {{ $consolidated->bill }}.</li>
+											<li> Fecha de expedicion de factura: {{ $consolidated->updated_at->format('d/m/Y') }}.</li>
+										</ul>
+										<p>Recibido:</p>
+										<ul>
+											@foreach($consolidated->trackings as $tracking)
+											<li> Tracking: {{ $tracking->tracking }} - Descripcion: {{ $tracking->description }}.</li>
+											@endforeach
+										</ul>
 									</td>
 								</tr>
 								<tr>

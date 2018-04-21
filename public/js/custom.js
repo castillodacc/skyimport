@@ -992,7 +992,16 @@ if (location.href.indexOf('/consolidados') > 0) {
 		let data = $(this).serializeArray();
 		$.post(path + 'bill', data, function (response) {
 			consTable2.draw();
+			$('#price_form')[0].reset();
 			$('#modal-bill-form').modal('toggle')
+		})
+		.fail(function (response) {
+			response = response.responseJSON;
+			for(let i in response) {
+				toastr.error(response[i][0]);
+				return;
+			}
+			console.clear();
 		});
 	});
 	$('button#show-closed').click(function () {

@@ -4,6 +4,7 @@ namespace skyimport\Console\Commands;
 
 use Illuminate\Console\Command;
 use skyimport\Models\Consolidated;
+use skyimport\Models\EventsUsers;
 
 class ConsolidatedInColombia extends Command
 {
@@ -38,22 +39,21 @@ class ConsolidatedInColombia extends Command
      */
     public function handle()
     {
-        // \DB::table('events')->delete();
-        // 10 En Aduana de Colombia.
         // - Un día hábil después de que se dio notificación de vuelo, llegan a Colombia y entran en aduana que ese es otro estado de consolidado y también se notifica.
         // - salida miami - bogota un dia habil de la anterior se coloca en estado "colombia - aduana" 
-        // $dia = \Carbon::now()->formatLocalized('%A');
-        // if ($dia != 'sábado' && $dia != 'domingo') {
-        //     $consolidateds = Consolidated::where('closed_at', '<', \Carbon::now())->where('closed_at', '>', \Carbon::now()->addsemana!!)->get();
-        //     $consolidateds->each(function ($c) {
-        //         $event = $c->eventsUsers->last();
-        //         if ($event->id == 4 && $event->created_at fue hace 24 horas) {
-        //             EventsUsers::create([
-        //                 'consolidated_id' => $c->id,
-        //                 'event_id' => 10,
-        //             ]);
-        //         }
-        //     });
-        // }
+        // 24 hotas luego que se coloca el consolidado en "salida de miami a bogota" llega a colombia
+        $dia = \Carbon::now()->formatLocalized('%A');
+        if ($dia != 'sábado' && $dia != 'domingo' || 1) {
+            $consolidateds = Consolidated::whereBetween('closed_at', [\Carbon::now()->subWeeks(1), \Carbon::now()->addWeeks(1)])->get();
+            $consolidateds->each(function ($c) {
+                $event = $c->eventsUsers->last();
+                if ($event->event_id == 4 && $event->created_at->diffInHours(\Carbon::now()) == 24) {
+                    EventsUsers::create([
+                        'consolidated_id' => $c->id,
+                        'event_id' => 5,
+                    ]);
+                }
+            });
+        }
     }
 }
