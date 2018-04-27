@@ -160,31 +160,36 @@ class NotificationController extends Controller
 		}
 		$id = Tracking::findOrFail($request->tracking)->consolidated->id;
 		$this->changeStateOfConsolidated($id, $request->event);
+        Tracking::findOrFail($request->tracking)
+        ->update(['shippingstate_id' => $request->event]);
 		return EventsUsers::create([
 			'tracking_id' => $request->tracking,
 			'event_id' => $request->event,
 		]);
 	}
 
-	public function changeStateOfConsolidated($id, $event)
+	public static function changeStateOfConsolidated($id, $event)
 	{
-		if ($event == 11) {
-			$event_current = Consolidated::findOrFail($id)->eventsUsers->last()->event_id;
-			if ($event_current < 4) {$this->allStatusInMiami($id); }
-			if ($event_current < 5) {$this->allTrackingsInColombia($id); }
+		$event_current = Consolidated::findOrFail($id)->eventsUsers->last()->event_id;
+		if ($event == 8 || $event == 9) {
+			if ($event_current < 4) { Self::allStatusInMiami($id); }
+		}
+		if ($event >= 10) {
+			if ($event_current < 5) { Self::allTrackingsInColombia($id); }
 		}
 	}
 
-	public function allTrackingsInColombia($id)
+	public static function allTrackingsInColombia($id)
 	{
 		$consolidated = Consolidated::findOrFail($id);
 		$num = 1;
-		$consolidated->trackings->each(function ($t) use ($num) {
-			$event = $t->eventsUsers->last()->event_id;
-			if ($event < 10) {
+		$trackings = $consolidated->trackings;
+		foreach ($trackings as $t) {
+			$event = $t->shippingstate_id;
+			if ($event < 11) {
 				$num = 0;
 			}
-		});
+		}
 		if ($num) {
 			EventsUsers::create([
 				'consolidated_id' => $consolidated->id,
@@ -197,16 +202,17 @@ class NotificationController extends Controller
 	}
 
 
-	public function allStatusInMiami($id)
+	public static function allStatusInMiami($id)
 	{
 		$consolidated = Consolidated::findOrFail($id);
 		$num = 1;
-		$consolidated->trackings->each(function ($t) use ($num) {
-			$event = $t->eventsUsers->last()->event_id;
-			if ($event < 8) {
+		$trackings = $consolidated->trackings;
+		foreach ($trackings as $t) {
+			$event = $t->shippingstate_id;
+			if ($event < 9) {
 				$num = 0;
 			}
-		});
+		}
 		if ($num) {
 			EventsUsers::create([
 				'consolidated_id' => $consolidated->id,

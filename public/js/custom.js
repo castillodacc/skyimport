@@ -1006,6 +1006,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 	});
 }
 if (location.href.indexOf('/tracking') > 0) {
+	localStorage.removeItem('trackings');
 	$('div#header-search-a').hide();
 	$('#search-cons-a').click(function (e) {
 		e.preventDefault();
@@ -1024,6 +1025,7 @@ if (location.href.indexOf('/tracking') > 0) {
 	});
 	$('form#searchconsolidate').submit(function (e) {
 		e.preventDefault();
+		localStorage.removeItem('trackings');
 		trackings.draw();
 	});
 	$('#add-events').click(function () {
@@ -1109,11 +1111,11 @@ if (location.href.indexOf('/tracking') > 0) {
 			}
 		},
 		columns: [
-		{data: 'tracking', name: 'tracking'},
-		{data: 'number', name: 'number'},
-		{data: 'user', name: 'user', orderable: false, searchable: false},
-		{data: 'created_at', name: 'created_at'},
-		{data: 'event', name: ''},
+		{data: 'tracking_num', name: 'trackings.tracking'},
+		{data: 'consolidated_num', name: 'consolidateds.number'},
+		{data: 'user', name: 'users.id'},
+		{data: 'created_at', name: 'trackings.created_at'},
+		{data: 'event', name: 'trackings.shippingstate_id'},
 		{data: 'action', name: 'action', orderable: false, searchable: false},
 		]
 	});

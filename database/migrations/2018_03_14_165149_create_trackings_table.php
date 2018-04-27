@@ -19,14 +19,14 @@ class CreateTrackingsTable extends Migration
             $table->text('description'); // descripción
             $table->integer('distributor_id')->unsigned(); // repartidor
             $table->integer('price')->unsigned()->default(0); // price($)
-            $table->integer('shippingstate_id')->unsigned()->default(6); // estado del consolidado
-            $table->integer('consolidated_id')->unsigned(); // estado del consolidado
+            $table->integer('shippingstate_id')->unsigned()->default(7); // estado del tracking
+            $table->integer('consolidated_id')->unsigned(); // consolidado
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('consolidated_id')->references('id')->on('consolidateds')->onDelete('cascade');
             $table->foreign('distributor_id')->references('id')->on('distributors')->onDelete('cascade');
-            $table->foreign('shippingstate_id')->references('id')->on('shippingstates')->onDelete('cascade');
+            $table->foreign('shippingstate_id')->references('id')->on('events')->onDelete('cascade');
         });
     }
 
