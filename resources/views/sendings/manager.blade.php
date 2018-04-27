@@ -64,7 +64,7 @@
             </table>
         </div> 
     </div>
-    @if(Auth::user()->rol_id == 2)
+    @if(Auth::user()->role_id == 2)
     <div class="box-footer">
         <a id="addForm" href="#" class="btn btn-primary btn-sm btn-flat" data-placement="top" title="Crear consolidado"><span class="fa fa-plus"></span> Nuevo consolidado</a>
     </div>

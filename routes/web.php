@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('trackings', 'TrackingController@all');
 		Route::post('formalized/{consolidated}', 'ConsolidatedController@events');
 		Route::post('bill/', 'ConsolidatedController@bill');
+		Route::post('massive_events/{event}', 'TrackingController@addMassive');
 	});
 	Route::post('formalized/{consolidated}', 'NotificationController@events');
 	Route::post('notifications', 'NotificationController@notifications');

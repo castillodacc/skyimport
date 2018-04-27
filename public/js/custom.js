@@ -1020,10 +1020,50 @@ if (location.href.indexOf('/tracking') > 0) {
 			html += '</option>';
 		}
 		$('select#event').html(html);
+		$('select#event_to').html(html);
 	});
 	$('form#searchconsolidate').submit(function (e) {
 		e.preventDefault();
 		trackings.draw();
+	});
+	$('#add-events').click(function () {
+		$('#massive_event').modal('toggle');
+	});
+	$('#save_events').click(function (e) {
+		e.preventDefault();
+		let trac = localStorage.getItem('trackings');
+		let eve = $('select#event_to').val();
+		if (trac) {
+			trac = trac.split(',');
+			if (eve == '') {
+				toastr.warning('Debe agregar un evento');
+				return;
+			}
+		} else {
+			toastr.warning('Debe seleccionar trackings');
+			return;
+		}
+		$.post(path + 'massive_events/' + eve, {trackings:trac}, function (response) {
+			localStorage.removeItem('trackings');
+			trackings.draw();
+			$('#massive_event').modal('toggle');
+			$('select#event_to').val('');
+			if (response.errors.length > 0) {
+				let html = '';
+				for(let i in response.errors) {
+					html += '<li>'+response.errors[i]+'</li>'
+				}
+				toastr.warning('Estos trackings ya pasaron por ese evento. <br>' + html);
+			}
+		})
+		.fail(function (response) {
+			response = response.responseJSON;
+			for(let i in response) {
+				toastr.error(response[i][0]);
+				return;
+			}
+			console.clear();
+		});
 	});
 	var trackings = $('table#trackings-a-table').DataTable({
 		processing: true,
@@ -1065,8 +1105,6 @@ if (location.href.indexOf('/tracking') > 0) {
 						all.push(tracking);
 						localStorage.setItem('trackings', all);
 					}
-					return;
-					localStorage.removeItem('trackings');
 				});
 			}
 		},

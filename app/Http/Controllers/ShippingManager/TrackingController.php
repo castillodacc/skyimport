@@ -195,4 +195,23 @@ class TrackingController extends Controller
         })
         ->make(true);
     }
+
+    public function addMassive($id, Request $request)
+    {
+        $trackings = $request->trackings;
+        $errors = [];
+        foreach ($trackings as $key) {
+            $eventos = EventsUsers::where('tracking_id', '=', $key)
+            ->where('event_id', '>=', $id)->count();
+            if ($eventos) {
+                $errors[] = Tracking::findOrFail($key)->tracking;
+            } else {
+                EventsUsers::create([
+                    'tracking_id' => $key,
+                    'event_id' => $id,
+                ]);
+            }
+        }
+        return response()->json(compact('errors'));
+    }
 }
