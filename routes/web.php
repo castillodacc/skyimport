@@ -27,12 +27,13 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::group(['namespace' => 'ShippingManager'], function () {
 		Route::resource('consolidados', 'ConsolidatedController');
 		Route::post('consolidados/restore/{id}', 'ConsolidatedController@restore');
-		Route::post('consolidados/data-events/{id}', 'ConsolidatedController@dataEvents');
+		Route::post('consolidados/data-events/{id?}', 'ConsolidatedController@dataEvents');
 		Route::post('data-for-consolidated', 'ConsolidatedController@dataForRegister');
 		Route::post('extend-consolidated/{consolidated}', 'ConsolidatedController@extend');
 		Route::post('formalize-consolidated/{consolidated}', 'ConsolidatedController@formalize');
 		Route::resource('tracking', 'TrackingController');
 		Route::post('tracking/restore/{id}', 'TrackingController@restore');
+		Route::get('trackings', 'TrackingController@all');
 		Route::post('formalized/{consolidated}', 'ConsolidatedController@events');
 		Route::post('bill/', 'ConsolidatedController@bill');
 	});

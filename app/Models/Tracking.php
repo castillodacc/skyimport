@@ -15,7 +15,7 @@ class Tracking extends Model
      * @var array
      */
     protected $fillable = [
-    	'tracking', 'description', 'distributor_id', 'price', 'consolidated_id', 'shippingstate_id'
+    	'tracking', 'description', 'distributor_id', 'price', 'consolidated_id', 'shippingstate_id', 'created_at'
     ];
 
     /**
@@ -24,7 +24,7 @@ class Tracking extends Model
      * @var array
      */
     protected $hidden = [
-    	'updated_at', 'created_at', 'deleted_at'
+    	'updated_at', 'deleted_at'
     ];
 
     /**

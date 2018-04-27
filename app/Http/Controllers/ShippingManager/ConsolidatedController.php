@@ -274,9 +274,11 @@ class ConsolidatedController extends Controller
         return response()->json($consolidated);
     }
 
-    public function dataEvents($id)
+    public function dataEvents($id = null)
     {
-        $trackings = Consolidated::findOrFail($id)->trackings;
+        if ($id) {
+            $trackings = Consolidated::findOrFail($id)->trackings;
+        }
         $events = Events::where('type', '=', 2)->pluck('event', 'id');
         return response()->json(compact('trackings', 'events'));
     }

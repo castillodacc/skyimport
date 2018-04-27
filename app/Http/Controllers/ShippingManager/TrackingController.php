@@ -13,7 +13,7 @@ class TrackingController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('ajax');
+        $this->middleware('ajax')->except(['index']);
     }
 
     /**
@@ -23,6 +23,8 @@ class TrackingController extends Controller
      */
     public function index()
     {
+        if (!request()->ajax()) return view('sendings.trackings');
+
         $request = request();
 
         $query = Tracking::query()
@@ -144,5 +146,53 @@ class TrackingController extends Controller
         });
         $tracking->delete();
         return response()->json($consolidated);
+    }
+
+    public function all()
+    {
+        $query = Tracking::query()
+        ->join('consolidateds', 'trackings.consolidated_id', '=', 'consolidateds.id')
+        ->join('events_users', 'trackings.id', '=', 'events_users.tracking_id')
+        ->orderBy('events_users.event_id', 'ASC')
+        ->select(['trackings.id', 'trackings.tracking', 'trackings.consolidated_id', 'consolidateds.number', 'trackings.created_at', 'events_users.event_id'])
+        // ->groupBy('trackings.id')
+        ;
+
+        return (new Datatables)->of($query)
+        ->addColumn('user', function ($tracking) {
+            return $tracking->consolidated->user->fullName();
+        })
+        ->addColumn('action', function ($tracking) {
+            return '<label class="control control--checkbox">
+                      <input id="checkboxTracking" type="checkbox" tracking="'.$tracking->id.'">
+                      <div class="control__indicator"></div>
+                    </label>';
+        })
+        ->addColumn('event', function ($tracking) {
+            return $tracking->eventsUsers->last()->events->event;
+        })
+        ->editColumn('created_at', function ($tracking) {
+            return $tracking->created_at->diffForHumans();
+        })
+        ->filter(function ($query) {
+            $request = request();
+            $query->where('consolidateds.closed_at', '<', \Carbon::now())
+        ;
+            if (count($request->search['value']) > 0) {
+                $query
+                ->where('consolidateds.number', '=', $request->search['value'])
+                ->orWhere('trackings.tracking', '=', $request->search['value']);
+            }
+            if ($request->has('consolidated')) {
+                $query->where('consolidateds.number', '=', $request->consolidated);
+            }
+            if ($request->has('created_at')) {
+                $query->where('trackings.created_at', 'LIKE', "%{$request->created_at}%");
+            }
+            if ($request->has('event_id')) {
+                $query->Where('events_users.event_id', '=', $request->event_id);
+            }
+        })
+        ->make(true);
     }
 }

@@ -896,13 +896,6 @@ if (location.href.indexOf('/consolidados') > 0) {
 			toastr.info('Edición Cancelada.');
 		}
 	});
-	$('button#cancel-consolidated').click(function () {
-		let id = $('form#tracking-form-register input#consolidated_id')[0].value;
-		$.post(path + 'consolidados/'+id, {'_method':'DELETE'}, function (response) {
-			consTable.draw();
-			toastr.success('Consolidado Cancelado.');
-		});
-	});
 	$('button#consolidated-consolidated').click(function () {
 		let id = $('form#tracking-form-register input#consolidated_id')[0].value;
 		$.post(path + 'formalize-consolidated/' + id, function (response) {
@@ -933,6 +926,9 @@ if (location.href.indexOf('/consolidados') > 0) {
 		consTable2.draw();
 	});
 	$('#consolidated-save').click(function () {
+		$('#tracking-form-register')[0].reset();
+		$('#tracking-form-register').attr('action', path + 'tracking');
+		$('#tracking-form-register').find('[name="_method"]').val('POST');
 		consTable.draw();
 	});
 	function cargarEventos(id) {
@@ -1007,5 +1003,80 @@ if (location.href.indexOf('/consolidados') > 0) {
 	$('button#show-closed').click(function () {
 		consTable.draw();
 		consTable2.draw();
+	});
+}
+if (location.href.indexOf('/tracking') > 0) {
+	$('div#header-search-a').hide();
+	$('#search-cons-a').click(function (e) {
+		e.preventDefault();
+		$('div#header-search-a').fadeToggle();
+	});
+	$.post(path + 'consolidados/data-events', function (response) {
+		let events = response.events;
+		let html = '<option value="">Seleccione un evento</option>';
+		for(let i in events) {
+			html += '<option value="' + i + '">';
+			html += events[i];
+			html += '</option>';
+		}
+		$('select#event').html(html);
+	});
+	$('form#searchconsolidate').submit(function (e) {
+		e.preventDefault();
+		trackings.draw();
+	});
+	var trackings = $('table#trackings-a-table').DataTable({
+		processing: true,
+		serverSide: true,
+		responsive: true,
+		render: true,
+		language: translateTable,
+		ajax: {
+			url: path + 'trackings',
+			data: function (d) {
+				d.created_at = $('input#create_date').val();
+				d.event_id = $('select#event').val();
+			},
+			complete: function () {
+				let sto = localStorage.getItem('trackings');
+				if (sto) {
+					let inputs = $('input#checkboxTracking')
+					for (var i = 0; i <= inputs.length - 1; i++) {
+						tracking = $(inputs[i]).attr('tracking')
+						if (sto.includes(tracking)) {
+							$(inputs[i]).attr('checked', 'checked')
+						}
+					}
+				}
+				$('.control__indicator').click(function () {
+					let tracking = $(this).parent().find('input[type="checkbox"]').attr('tracking');
+					let trackings = localStorage.getItem('trackings');
+					let all = [];
+					if (trackings) {
+						all = trackings.split(',');
+						if (all.includes(tracking)) {
+							all.splice(all.indexOf(tracking), 1);
+							localStorage.setItem('trackings', all)
+						} else {
+							all.push(tracking);
+							localStorage.setItem('trackings', all);
+						}
+					} else {
+						all.push(tracking);
+						localStorage.setItem('trackings', all);
+					}
+					return;
+					localStorage.removeItem('trackings');
+				});
+			}
+		},
+		columns: [
+		{data: 'tracking', name: 'tracking'},
+		{data: 'number', name: 'number'},
+		{data: 'user', name: 'user', orderable: false, searchable: false},
+		{data: 'created_at', name: 'created_at'},
+		{data: 'event', name: ''},
+		{data: 'action', name: 'action', orderable: false, searchable: false},
+		]
 	});
 }
