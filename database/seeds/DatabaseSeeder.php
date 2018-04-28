@@ -126,27 +126,28 @@ class DatabaseSeeder extends Seeder
         ]);
 
         /* estados de trackings */
-        DB::table('shippingstates')->insert([
-            'state' => 'Creado',
-            'ref_id' => 2,
-            'description' => 'Cuando acaba de ser creado y no se ha notificado del recibido aun.',
-            'created_at' => Carbon::now(),
-            'updated_at' => null,
-        ]);
-        DB::table('shippingstates')->insert([
-            'state' => 'Recibido en bodega - Miami',
-            'ref_id' => 2,
-            'description' => 'Cuando se recibibe en Miami y está en espera de recibir el resto del consolidado para viajar.',
-            'created_at' => Carbon::now(),
-            'updated_at' => null,
-        ]);
-        DB::table('shippingstates')->insert([
-            'state' => 'Recibido en bodega - Colombia',
-            'ref_id' => 2,
-            'description' => 'Cuando el tracking es recibido en Colombia.',
-            'created_at' => Carbon::now(),
-            'updated_at' => null,
-        ]);
+        // DB::table('shippingstates')->insert([
+        //     'state' => 'Creado',
+        //     'ref_id' => 2,
+        //     'description' => 'Cuando acaba de ser creado y no se ha notificado del recibido aun.',
+        //     'created_at' => Carbon::now(),
+        //     'updated_at' => null,
+        // ]);
+        // DB::table('shippingstates')->insert([
+        //     'state' => 'Recibido en bodega - Miami',
+        //     'ref_id' => 2,
+        //     'description' => 'Cuando se recibibe en Miami y está en espera de recibir el resto del consolidado para viajar.',
+        //     'created_at' => Carbon::now(),
+        //     'updated_at' => null,
+        // ]);
+        // DB::table('shippingstates')->insert([
+        //     'state' => 'Recibido en bodega - Colombia',
+        //     'ref_id' => 2,
+        //     'description' => 'Cuando el tracking es recibido en Colombia.',
+        //     'created_at' => Carbon::now(),
+        //     'updated_at' => null,
+        // ]);
+
         $now = Carbon::now();
         /* Departamentos de colombia */
         DB::select("INSERT INTO states VALUES

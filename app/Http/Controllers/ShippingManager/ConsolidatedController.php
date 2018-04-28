@@ -195,6 +195,9 @@ class ConsolidatedController extends Controller
     {
         $consolidated = Consolidated::findOrFail($id);
         $consolidated->trackings->each(function ($t) {
+            $t->eventsUsers->each(function ($e) {
+                $e->delete();
+            });
             return $t->delete();
         });
         $consolidated->delete();
@@ -213,6 +216,11 @@ class ConsolidatedController extends Controller
         $tracking = Tracking::where('consolidated_id', '=', $consolidated->id)
         ->withTrashed();
         $tracking->each(function ($t) {
+            $events = EventsUsers::where('tracking_id', '=', $t->id)
+            ->withTrashed();
+            $events->each(function ($e) {
+                $e->restore();
+            });
             return $t->restore();
         });
         $consolidated->restore();
@@ -295,14 +303,14 @@ class ConsolidatedController extends Controller
         $id = $request->consolidated;
         $consolidated = Consolidated::findOrFail($id);
         $consolidated->update($request->all());
-        $mail = $consolidated->user->email;
-        if ($mail) {
-            \Mail::to($mail)->send(new \skyimport\Mail\Factura($id));
-        }
         EventsUsers::create([
             'consolidated_id' => $id,
             'event_id' => 6,
         ]);
+        $mail = $consolidated->user->email;
+        if ($mail) {
+            \Mail::to($mail)->send(new \skyimport\Mail\Factura($id));
+        }
         return response()->json($consolidated);
     }
 }
