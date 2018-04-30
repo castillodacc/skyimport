@@ -5,7 +5,7 @@
         <i class="box-title">Consolidados abiertos:</i>
         <div class="pull-right box-tools">
             <div class="btn-group btn-group-xs">
-                <button id="search-cons-a" type="button" class="btn bg-green btn-flat" data-title="Search" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Buscar filtros"><span class="fa fa-search"></span></button>
+                <button id="search-cons-a" type="button" class="btn bg-green btn-flat" data-title="Search" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Buscar filtros"><span class="fa fa-search"></span> Filtros</button>
                 <button type="button" class="btn btn-box-tool btn-flat" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button> 
             </div>
@@ -58,7 +58,7 @@
                         <th width="15%"><span class="fa fa-check-square-o"></span> Estado</th>
                         <th width="85px"><span class="fa fa-location-arrow"></span> Trackings</th>
                         <th><span class="fa fa-calendar-times-o"></span> Cierre</th>
-                        <th class="text-center" width="88px"><span class="fa fa-check-circle-o"></span> Acciones</th>
+                        <th class="text-center" width="300px"><span class="fa fa-check-circle-o"></span> Acciones</th>
                     </tr>
                 </thead>
             </table>
@@ -75,7 +75,7 @@
         <i class="box-title">Consolidados formalizados:</i>
         <div class="pull-right">
             <div class="btn-group btn-group-xs">
-                <a id="search-cons-b" class="btn bg-green btn-flat" href="#" data-title="Search" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Buscar filtros"><span class="fa fa-search"></span></a>
+                <a id="search-cons-b" class="btn bg-green btn-flat" href="#" data-title="Search" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Buscar filtros"><span class="fa fa-search"></span> Filtros</a>
                 <button type="button" class="btn btn-box-tool btn-flat" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button> 
             </div>
@@ -128,14 +128,13 @@
                         <th width="15%"><span class="fa fa-check-square-o"></span> Estado</th>
                         <th width="85px"><span class="fa fa-location-arrow"></span> Trackings</th>
                         <th><span class="fa fa-calendar-check-o"></span> Formalizado</th>
-                        <th class="text-center" width="80px"><span class="fa fa-check-circle-o"></span> Acciones</th>
+                        <th class="text-center"><span class="fa fa-check-circle-o"></span> Acciones</th>
                     </tr>
                 </thead>
             </table>
         </div>
     </div>
 </div>
-
 @include('modals.send_form')
 @include('modals.send_formalizated_edit')
 @include('modals.bill_form')

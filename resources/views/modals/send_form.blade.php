@@ -1,5 +1,5 @@
 <div class="modal fade" id="modal-send-form" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" aria-labelledby="ModalLabel">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-lg" style="width: 75%;" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -19,7 +19,7 @@
                     <form id="tracking-form-register" action="{{ route('tracking.store') }}" method="POST">
                         {{ csrf_field() }} {{ method_field('POST') }}
                         <input type="hidden" id="consolidated_id" name="consolidated_id" value="0">
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-2">
                             <div class="input-group">
                                 <div class="input-group-addon">
                                     <span class="fa fa-cart-plus"></span>
@@ -51,32 +51,34 @@
                                 <div class="input-group-addon">
                                     <span class="fa fa-dollar"></span>
                                 </div>
-                                <input type="text" id="price" name="price" class="form-control input-sm" placeholder="Valor en $">
+                                <input type="text" id="price" name="price" class="form-control input-sm" placeholder="USD $">
                             </div>
-                            <small id="price" class="form-text text-muted">Valor declarado $</small>
+                            <small id="price" class="form-text text-muted">Valor declarado USD</small>
                         </div>
-                        <div id="btn-create-tracking" class="form-group col-md-1">
-                            <button type="submit" class="btn btn-primary btn-sm btn-flat" data-toggle="tooltip" data-placement="top" title="Agregar tracking"><span class="fa fa-plus"></span></button>
+                        <div id="btn-create-tracking" class="col-md-1">
+                            <button type="submit" class="btn btn-primary btn-xs btn-flat" data-toggle="tooltip" data-placement="top" title="Agregar tracking"><span class="fa fa-plus"></span> Añadir</button>
                         </div>
-                        <div id="btns-edit-tracking" class="btn-group btn-group-xs hidden" role="toolbar">
-                            <button id="btn-edit-tracking" type="button" class="btn btn-warning btn-xs btn-flat" data-toggle="tooltip" data-placement="top" title="Editar Tracking"><span class="fa fa-edit"></span></button>
-                            <button id="btn-cancel-tracking" type="reset" class="btn btn-danger btn-xs btn-flat" data-toggle="tooltip" data-placement="top" title="Cancelar Edición"><span class="fa fa-close"></span></button>
+                        <div id="btns-edit-tracking" class="col-md-2 btn-group-xs hidden" role="toolbar">
+                            <button id="btn-edit-tracking" type="button" class="btn btn-warning btn-xs btn-flat" data-toggle="tooltip" data-placement="top" title="Editar Tracking"><span class="fa fa-edit"></span> Editar</button>
+                            <button id="btn-cancel-tracking" type="reset" class="btn btn-danger btn-xs btn-flat" data-toggle="tooltip" data-placement="top" title="Cancelar Edición"><span class="fa fa-close"></span> Cancelar</button>
                         </div>
                     </form>
                 </div>
             </div>
             <div class="modal-body">
-                <div class="box-body">
-                    <table id="tracking-table" class="table table-striped table-bordered table-hover table-condensed" cellspacing="0" width="100%">
-                        <thead>
-                            <tr>
-                                <th>Repartidor</th>
-                                <th># Traking</th>
-                                <th>Descripcion</th>
-                                <th>Accion</th>
-                            </tr>
-                        </thead>
-                    </table>
+                <div class="box-body table-responsive">
+                    <div class="col-md-12">
+                        <table id="tracking-table" class="table table-striped table-bordered table-hover table-condensed" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Repartidor</th>
+                                    <th># Traking</th>
+                                    <th>Descripcion</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">

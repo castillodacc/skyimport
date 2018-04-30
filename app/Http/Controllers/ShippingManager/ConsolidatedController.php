@@ -45,7 +45,7 @@ class ConsolidatedController extends Controller
         return (new Datatables)->of($object)
         ->addColumn('action', function ($consolidated) {
             $name = (request()->c === 'abierto') ? 'consolidated' : 'consolidated2';
-            $html = '<div class="btn-group btn-group-xs col-md-offset-1" role="toolbar">';
+            $html = '<div class="text-center">';
             $nameView = 'view-formalized';
             $nameEdit = 'edit-formalized';
             $nameDelete = 'delete-formalized';
@@ -58,27 +58,27 @@ class ConsolidatedController extends Controller
                 $event = $consolidated->eventsUsers->last()->events->id;
                 if ($event == 5 && $consolidated->bill == 0) {
                     $html .= '
-                        <button id="factureConsolidated" type="button" class="btn btn-default btn-flat" data-toggle="tooltip" data-placement="top" title="Facturar" consolidated="' . $consolidated->id . '"><span class="fa fa-dollar text-green"></span></button>
+                        <button id="factureConsolidated" type="button" class="btn btn-default btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Facturar" consolidated="' . $consolidated->id . '"><span class="fa fa-dollar text-green"></span> Facturar</button>
                     ';
                 }
             }
             if (request()->c === 'abierto' &&
                 ($consolidated->shippingstate_id == 1 || \Auth::user()->role_id === 1)) {
                 $html .= '
-                        <button id="extendConsolidated" type="button" class="btn btn-warning btn-flat" data-toggle="tooltip" data-placement="top" title="Extender un día el cierre" consolidated="' . $consolidated->id . '"><span class="fa fa-calendar-plus-o"></span></button>
+                        <button id="extendConsolidated" type="button" class="btn btn-warning btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Extender un día el cierre" consolidated="' . $consolidated->id . '"><span class="fa fa-calendar-plus-o"></span> Extender</button>
                     ';
             }
             $html .= '
-                    <button id="'.$nameView.'" type="button" class="btn btn-info btn-flat" data-toggle="tooltip" data-placement="top" title="Ver" consolidated="' . $consolidated->id . '"><span class="fa fa-eye"></span></button>
+                    <button id="'.$nameView.'" type="button" class="btn btn-info btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Ver" consolidated="' . $consolidated->id . '"><span class="fa fa-eye"></span> Mostrar</button>
                 ';
             if (request()->c === 'abierto' || \Auth::user()->role_id === 1) {
                 $html .= '
-                    <button id="'.$nameEdit.'" type="button" class="btn btn-primary btn-flat" data-toggle="tooltip" data-placement="top" title="Editar" consolidated="' . $consolidated->id . '"><span class="fa fa-edit"></span></button>
+                    <button id="'.$nameEdit.'" type="button" class="btn btn-primary btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Editar" consolidated="' . $consolidated->id . '"><span class="fa fa-edit"></span> Editar</button>
                 ';
             }
             if (\Auth::user()->role_id === 1 || request()->c === 'abierto') {
                 $html .= '
-                    <button id="'.$nameDelete.'" type="button" class="btn btn-danger btn-flat" data-toggle="tooltip" data-placement="top" title="Eliminar" consolidated="' . $consolidated->id . '"><span class="fa fa-trash"></span></button>
+                    <button id="'.$nameDelete.'" type="button" class="btn btn-danger btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar" consolidated="' . $consolidated->id . '"><span class="fa fa-trash"></span> Eliminar</button>
                 ';
             }
             $html .= '</div>';

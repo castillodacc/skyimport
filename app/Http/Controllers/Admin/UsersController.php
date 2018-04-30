@@ -43,10 +43,10 @@ class UsersController extends Controller
             return '
                     <div class="btn-group btn-group-xs col-md-offset-3" role="toolbar">
                        
-                         <button id="edit-user" type="button" class="btn btn-primary btn-flat btn-xs" user="'.$user->id.'" data-toggle="tooltip" data-placement="top" title="Editar"><span class="fa fa-edit"></span></button>
+                         <button id="edit-user" type="button" class="btn btn-primary btn-flat btn-xs" user="'.$user->id.'" data-toggle="tooltip" data-placement="top" title="Editar"><span class="fa fa-edit"></span> Editar</button>
                        
                         
-                        <button id="delete-user" type="button" class="btn btn-danger btn-flat btn-xs" user="'.$user->id.'" data-toggle="tooltip" data-placement="top" title="Eliminar"><span class="fa fa-trash"></span></button>
+                        <button id="delete-user" type="button" class="btn btn-danger btn-flat btn-xs" user="'.$user->id.'" data-toggle="tooltip" data-placement="top" title="Eliminar"><span class="fa fa-trash"></span> Eliminar</button>
                         
                     </div>
                 ';
