@@ -49,11 +49,18 @@ class ConsolidatedInColombia extends Command
                 $event = $c->eventsUsers->last();
                 if ($event->event_id == 4 && 
                     $event->created_at->diffInHours(\Carbon::now()) == 24) {
+                    $c->trackings->each(function ($t) {
+                        $t->update(['shippingstate_id' => 14]);
+                        EventsUsers::create([
+                            'tracking_id' => $t->id,
+                            'event_id' => 14,
+                        ]);
+                    });
+                    $c->update(['shippingstate_id' => 5]);
                     EventsUsers::create([
                         'consolidated_id' => $c->id,
                         'event_id' => 5,
                     ]);
-                    $c->update(['shippingstate_id' => 5]);
                 }
             });
         }
