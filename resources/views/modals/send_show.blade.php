@@ -49,7 +49,7 @@
                 </div>
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h4 class="box-title">Trakings registrados:</h4>
+                        <h4 class="box-title">Trackings registrados:</h4>
                     </div>
                     <div class="box-body">
                         <div class=" col-md-12 table-responsive">

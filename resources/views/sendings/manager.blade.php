@@ -64,11 +64,9 @@
             </table>
         </div> 
     </div>
-    @if(Auth::user()->role_id == 2)
     <div class="box-footer">
         <a id="addForm" href="#" class="btn btn-primary btn-sm btn-flat" data-placement="top" title="Crear consolidado"><span class="fa fa-plus"></span> Nuevo consolidado</a>
     </div>
-    @endif
 </div>
 <div class="box box-primary">
     <div class="box-header with-border">

@@ -7,7 +7,6 @@ use skyimport\Http\Controllers\Controller;
 use skyimport\Models\Distributor;
 use skyimport\Models\Consolidated;
 use Yajra\DataTables\Datatables;
-use skyimport\Models\Shippingstate;
 use skyimport\Models\Tracking;
 use skyimport\Models\Events;
 use skyimport\Models\EventsUsers;
@@ -30,8 +29,16 @@ class ConsolidatedController extends Controller
 
         $request = request();
         $object = Consolidated::query()
-        ->with(['user', 'Shippingstate'])
-        ->select(['id', 'closed_at', 'user_id', 'created_at', 'number', 'bill']);
+        ->with(['user'])
+        ->select([
+            'id',
+            'closed_at',
+            'user_id',
+            'created_at',
+            'number',
+            'bill',
+            'shippingstate_id'
+        ]);
         if ($request->c === 'abierto') {
             $object->where('closed_at', '>', \Carbon::now());
         } else {
@@ -47,33 +54,55 @@ class ConsolidatedController extends Controller
             $name = (request()->c === 'abierto') ? 'consolidated' : 'consolidated2';
             $html = '<div class="text-center">';
             $nameView = 'view-formalized';
-            $nameEdit = 'edit-formalized';
             $nameDelete = 'delete-formalized';
             if (request()->c === 'abierto') {
                 $nameView = 'viewConsolidated';
-                $nameEdit = 'editConsolidated';
                 $nameDelete = 'deleteConsolidated';
             }
             if (request()->c !== 'abierto' && \Auth::user()->role_id === 1) {
-                $event = $consolidated->eventsUsers->last()->events->id;
-                if ($event == 5 && $consolidated->bill == 0) {
+                if ($consolidated->shippingstate_id == 5 && $consolidated->bill == 0) {
                     $html .= '
                         <button id="factureConsolidated" type="button" class="btn btn-default btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Facturar" consolidated="' . $consolidated->id . '"><span class="fa fa-dollar text-green"></span> Facturar</button>
                     ';
+                } elseif ($consolidated->shippingstate_id == 6) {
+                    $html .= '
+                        <button id="editEventConsolidated" type="button" class="btn btn-default btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Entregado" consolidated="' . $consolidated->id . '" event="7"><span class="glyphicon glyphicon-ok text-green"></span> Entregado</button>
+                    ';
+                } elseif ($consolidated->shippingstate_id == 7) {
+                    $html .= '
+                        <button id="editEventConsolidated" type="button" class="btn btn-default btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Pagado" consolidated="' . $consolidated->id . '" event="8"><span class="glyphicon glyphicon-ok text-green"></span> Pagado</button>
+                    ';
                 }
             }
-            if (request()->c === 'abierto' &&
-                ($consolidated->shippingstate_id == 1 || \Auth::user()->role_id === 1)) {
+            $extend = $consolidated->eventsUsers->where('event_id', '=', 2)->count();
+            if (request()->c == 'abierto' &&
+                (\Auth::user()->role_id === 1 || $extend < 2)) {
                 $html .= '
-                        <button id="extendConsolidated" type="button" class="btn btn-warning btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Extender un día el cierre" consolidated="' . $consolidated->id . '"><span class="fa fa-calendar-plus-o"></span> Extender</button>
-                    ';
+                    <button id="extendConsolidated" type="button" class="btn btn-warning btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Extender un día el cierre" consolidated="' . $consolidated->id . '"><span class="fa fa-calendar-plus-o"></span> Extender</button>
+                ';
             }
             $html .= '
-                    <button id="'.$nameView.'" type="button" class="btn btn-info btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Ver" consolidated="' . $consolidated->id . '"><span class="fa fa-eye"></span> Mostrar</button>
-                ';
-            if (request()->c === 'abierto' || \Auth::user()->role_id === 1) {
+                <button id="'.$nameView.'" type="button" class="btn btn-info btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Ver" consolidated="' . $consolidated->id . '"><span class="fa fa-eye"></span> Mostrar</button>
+            ';
+            if (request()->c != 'abierto') {
+                $event = $consolidated->eventsUsers->where('event_id', '=', 3)->first();
+                $horas = $event->created_at->diffInHours(\Carbon::now());
+                if ($horas < 24) {
+                    $var = true;
+                } else {
+                    $var = false;
+                }
+            } else{
+                $var = true;
+            }
+            if ($var && $consolidated->shippingstate_id < 5) {
                 $html .= '
-                    <button id="'.$nameEdit.'" type="button" class="btn btn-primary btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Editar" consolidated="' . $consolidated->id . '"><span class="fa fa-edit"></span> Editar</button>
+                    <button id="editConsolidated" type="button" class="btn btn-primary btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Editar" consolidated="' . $consolidated->id . '"><span class="fa fa-edit"></span> Editar</button>
+                ';
+            }
+            if (request()->c != 'abierto') {
+                $html .= '
+                <button id="edit-formalized" type="button" class="btn bg-green btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Eventos" consolidated="' . $consolidated->id . '"><span class="fa fa-list"></span> Eventos</button>
                 ';
             }
             if (\Auth::user()->role_id === 1 || request()->c === 'abierto') {
@@ -85,10 +114,12 @@ class ConsolidatedController extends Controller
             return $html;
         })
         ->editColumn('created_at', function ($consolidated) {
-            return ucfirst($consolidated->created_at->diffForHumans().'.');
+            if (\Auth::user()->role_id == 2) return $consolidated->created_at->format('d/m/y');
+            return ucfirst($consolidated->created_at->diffForHumans());
         })
         ->editColumn('closed_at', function ($consolidated) {
-            return ucfirst($consolidated->closed_at->diffForHumans().'.');
+            if (\Auth::user()->role_id == 2) return $consolidated->closed_at->format('d/m/y');
+            return ucfirst($consolidated->closed_at->diffForHumans());
         })
         ->editColumn('shippingstate', function ($consolidated) {
             $event = $consolidated->eventsUsers->last()->events;
@@ -142,7 +173,7 @@ class ConsolidatedController extends Controller
                 'number' => $num,
                 'user_id' => \Auth::user()->id,
                 'shippingstate_id' => 1,
-                'closed_at' => \Carbon::now()->addDay(3),
+                'closed_at' => \Carbon::now()->addDay(5),
             ]);
             $cierre = $consolidado->closed_at->diffForHumans();
             $creacion = $consolidado->created_at->diffForHumans();
@@ -235,7 +266,7 @@ class ConsolidatedController extends Controller
     public function dataForRegister()
     {
         $distributors = Distributor::all()->pluck('name', 'id');
-        $states = Shippingstate::where('ref_id', '=', 1)->pluck('state', 'id');
+        $states = Events::where('type', '=', 1)->pluck('event', 'id');
         return response()->json(compact('distributors', 'states'));
     }
 
@@ -248,7 +279,8 @@ class ConsolidatedController extends Controller
     public function extend($id)
     {
         $consolidated = Consolidated::findOrFail($id);
-        if ($consolidated->shippingstate_id == 1 || \Auth::user()->role_id == 1) {
+        $extend = $consolidated->eventsUsers->where('event_id', '=', 2)->count();
+        if ($extend < 2 || \Auth::user()->role_id == 1) {
             $consolidated->closed_at = $consolidated->closed_at->addDay(1);
             $consolidated->shippingstate_id = 2;
             EventsUsers::create([
@@ -302,6 +334,7 @@ class ConsolidatedController extends Controller
         ]);
         $id = $request->consolidated;
         $consolidated = Consolidated::findOrFail($id);
+        $consolidated->update(['shippingstate_id' => 6]);
         $consolidated->update($request->all());
         EventsUsers::create([
             'consolidated_id' => $id,

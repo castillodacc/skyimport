@@ -9,55 +9,15 @@
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h4 class="box-title">Historial del consolidado:</h4>
-                        <div class="pull-right">
-                            <div class="btn-group">
-                                <button id="agregar-event" type="button" data-title="Agregar" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Agregar evento" class="btn btn-primary btn-xs btn-flat"><span class="fa fa-plus"></span></button>
-                            </div> 
-                        </div>
-                    </div>
-                    <div class="box-header with-border">
-                        <form id="events" action="">
-                            <div class="form-group col-md-6">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <span class="fa fa-globe"></span>
-                                    </div>
-                                    <select name="tracking" class="form-control input-sm"></select>
-                                </div>
-                                <small id="" class="form-text text-muted">N° de Tracking.</small>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <span class="fa fa-globe"></span>
-                                    </div>
-                                    <select name="event" class="form-control input-sm"></select>
-                                </div>
-                                <small id="" class="form-text text-muted">Evento.</small>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="box-body">
-                        <div style="max-height: 250px; overflow: auto;">
-                            <ul id="events-formalized" class="timeline">
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h4 class="box-title">Trakings registrados:</h4>
                     </div>
                     <div class="box-body">
                         <div class=" col-md-12 table-responsive">
-                            <table id="table-edit-formalized" class="table table-striped table-bordered table-hover table-condensed">
+                            <table id="table-edit-formalized" class="table table-striped table-bordered table-hover table-condensed" consolidated="1">
                                 <thead>
                                     <tr>
-                                        <th>Repartidor</th>
-                                        <th>Tracking</th>
-                                        <th>Descripcion</th>
-                                        <th>Valor declarado</th>
-                                        <th>Agregado</th>
+                                        <th>Fecha</th>
+                                        <th>Hora</th>
+                                        <th>Actividad</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -71,25 +31,3 @@
         </div>
     </div>
 </div>
-
-<script id="timeline-template" type="text/x-custom-template">
-    <li id="fecha" class="time-label">
-        <span class="bg-teal">
-        </span>
-    </li>
-    <li id="contenido">
-        <i class="fa fa-truck bg-orange"></i>
-        <div class="timeline-item">
-            <span class="time"><i class="fa fa-clock-o"></i></span>
-
-            <h3 class="timeline-header"><a href="#"></a> ...</h3>
-
-            <div class="timeline-body">
-            </div>
-
-            <div class="timeline-footer">
-                <a id="delete-event" class="btn btn-danger btn-xs"><span class="fa fa-trash"></span></a>
-            </div>
-        </div>
-    </li>
-</script>

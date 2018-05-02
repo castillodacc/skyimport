@@ -43,17 +43,34 @@ class ConsolidatedInColombia extends Command
         // - salida miami - bogota un dia habil de la anterior se coloca en estado "colombia - aduana" 
         // 24 hotas luego que se coloca el consolidado en "salida de miami a bogota" llega a colombia
         $dia = \Carbon::now()->formatLocalized('%A');
-        if ($dia != 'sábado' && $dia != 'domingo' || 1) {
-            $consolidateds = Consolidated::whereBetween('closed_at', [\Carbon::now()->subWeeks(1), \Carbon::now()->addWeeks(1)])->get();
+        if ($dia != 'sábado' && $dia != 'domingo') {
+            $consolidateds = Consolidated::where('shippingstate_id', 4)->get();
             $consolidateds->each(function ($c) {
                 $event = $c->eventsUsers->last();
-                if ($event->event_id == 4 && $event->created_at->diffInHours(\Carbon::now()) == 24) {
+                if ($event->event_id == 4 && 
+                    $event->created_at->diffInHours(\Carbon::now()) == 24) {
                     EventsUsers::create([
                         'consolidated_id' => $c->id,
                         'event_id' => 5,
                     ]);
+                    $c->update(['shippingstate_id' => 5]);
                 }
             });
         }
+
+        // evalua que el consolidado que ya expire su fecha de formalizacion pase de evento.
+        $consolidated = Consolidated::where('closed_at', '<', \Carbon::now())->where('shippingstate_id', '<', 3)->get();
+        $consolidated->each(function ($c) {
+            if ($c->trackings->count()) {
+                $c->shippingstate_id = 3;
+                EventsUsers::create([
+                    'consolidated_id' => $c->id,
+                    'event_id' => 3,
+                ]);
+                $c->save();
+            } else {
+                $c->delete();
+            }
+        });
     }
 }

@@ -92,21 +92,21 @@ $.ajax({
 		let url = path + 'consolidados/' + consolidated;
 		$.get(url, function (response) {
 			let modal = $('div#modal-send-show');
-			modal.find('.modal-title').html('<span class="fa fa-cube"></span> Consolidado n° ' + response.number + '.');
-			modal.find('td#number').text(response.number + '.');
-			modal.find('td#user').text(response.user.name + ' ' + response.user.last_name + '.');
-			modal.find('td#created_date').text(response.open + '.');
-			modal.find('td#closed_date').text(response.close + '.');
+			modal.find('.modal-title').html('<span class="fa fa-cube"></span> Consolidado n° ' + response.number);
+			modal.find('td#number').text(response.number);
+			modal.find('td#user').text(response.user.name + ' ' + response.user.last_name);
+			modal.find('td#created_date').text(response.open);
+			modal.find('td#closed_date').text(response.close);
 			if (response.bill > 0) {
-				modal.find('td#bill').addClass('success').text(response.bill);
-				modal.find('td#weight').addClass('success').text(response.weight);
+				modal.find('td#bill').text(new Intl.NumberFormat("de-DE", {style: "currency", currency: 'COP'}).format(response.bill)).addClass('success');
+				modal.find('td#weight').text(response.weight).addClass('success');
 			} else {
 				modal.find('td#bill').removeClass('success').text(response.bill);
 				modal.find('td#weight').removeClass('success').text(response.weight);
 			}
 			modal.find('td#state').html(response.event);
-			modal.find('td#cant').text(response.trackings.length + '.');
-			modal.find('td#value').text(response.sum_total + '.');
+			modal.find('td#cant').text(response.trackings.length);
+			modal.find('td#value').text(new Intl.NumberFormat("de-DE", {style: "currency", currency: "USD"}).format(response.sum_total));
 			trackTableView.draw();
 			modal.modal('toggle');
 		});
@@ -118,7 +118,6 @@ $.ajax({
 let translateTableCustom = translateTable;
 translateTableCustom.sInfoFiltered = '';
 var trackTableView = $('table#table-view-trackings').DataTable({
-	lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "Todos"]],	
 	processing: true,
 	serverSide: true,
 	responsive: true,
@@ -135,7 +134,7 @@ var trackTableView = $('table#table-view-trackings').DataTable({
 	{data: 'description', name: 'trackings.description'},
 	{data: 'price', name: 'trackings.price'},
 	{data: 'created_at', name: 'created_at'},
-	{data: 'shippingstate.state', name: 'shippingstate.state'},
+	{data: 'shippingstate_id', name: 'shippingstate_id'},
 	]
 });
 if (location.href.indexOf('/perfil') > 0) {
@@ -492,12 +491,6 @@ if (location.href.indexOf('/consolidados') > 0) {
 			option += '<option value="'+i+'">'+d[i]+'</option>';
 		}
 		$('select#distributor_id').html(option);
-		let s = response.states;
-		option = '<option value="">Seleccione un estado</option>';
-		for (let i in s) {
-			option += '<option value="'+i+'">'+s[i]+'</option>';
-		}
-		$('form#searchconsolidate select#status').html(option);
 	});
 	var consTable = $('table#consolidated-a-table').DataTable({
 		lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "Todos"]],	
@@ -550,18 +543,19 @@ if (location.href.indexOf('/consolidados') > 0) {
 					let url = path + 'consolidados/' + consolidated;
 					$.get(url, function (response) {
 						let modal = $('div#modal-send-show');
-						modal.find('.modal-title').html('<span class="fa fa-cube"></span> Consolidado n° ' + response.number + '.');
-						modal.find('td#number').text(response.number + '.');
-						modal.find('td#user').text(response.user.name + ' ' + response.user.last_name + '.');
-						modal.find('td#created_date').text(response.open + '.');
-						modal.find('td#closed_date').text(response.close + '.');
+						modal.find('.modal-title').html('<span class="fa fa-cube"></span> Consolidado n° ' + response.number);
+						modal.find('td#number').text(response.number);
+						modal.find('td#user').text(response.user.name + ' ' + response.user.last_name);
+						modal.find('td#created_date').text(response.open);
+						modal.find('td#closed_date').text(response.close);
 						modal.find('td#state').text(response.event);
-						modal.find('td#cant').text(response.trackings.length + '.');
-						modal.find('td#value').text(response.sum_total + '.');
+						modal.find('td#cant').text(response.trackings.length);
+						modal.find('td#value').text(new Intl.NumberFormat("de-DE", {style: "currency", currency: "USD"}).format(response.sum_total));
 						trackTableView.draw();
 						modal.modal('toggle');
 					});
 				});
+				$('button#editConsolidated').off('click');
 				$('button#editConsolidated').click(function () {
 					let consolidated = $(this).attr('consolidated');
 					let url = path + 'consolidados/' + consolidated;
@@ -569,7 +563,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 						$('.f-close').text(response.close);
 						$('.f-create').text(response.open);
 						$('form#tracking-form-register input#consolidated_id').val(response.id);
-						$('#modal-send-form').modal('toggle').find('.modal-title').html('<span class="fa fa-edit"></span> Editar Consolidado ' + response.number + '.');
+						$('#modal-send-form').modal('toggle').find('.modal-title').html('<span class="fa fa-edit"></span> Editar Consolidado ' + response.number);
 						trackTable.draw();
 					});
 				});
@@ -617,7 +611,6 @@ if (location.href.indexOf('/consolidados') > 0) {
 		]
 	});
 	var trackTable = $('table#tracking-table').DataTable({
-		lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "Todos"]],	
 		processing: true,
 		serverSide: true,
 		responsive: true,
@@ -643,7 +636,8 @@ if (location.href.indexOf('/consolidados') > 0) {
 				});
 				$('a#editTracking').click(function () {
 					let tracking = $(this).attr('tracking');
-					$(this).parent().parent().addClass('info');
+					$('tr').removeClass('info');
+					$(this).parent().parent().parent().addClass('info');
 					$.get(path + 'tracking/' + tracking, function (response) {
 						let entradas = $('form#tracking-form-register');
 						for (let i in response) {
@@ -689,6 +683,30 @@ if (location.href.indexOf('/consolidados') > 0) {
 					let text = $(td[3]).text();
 					$(td[3]).html(text);
 				}
+				$('button#editEventConsolidated').click(function () {
+					let consolidated = $(this).attr('consolidated');
+					let event = $(this).attr('event');
+					let data = {
+						consolidated: consolidated,
+						event: event,
+					}
+					$.post(path + 'add-event', data, function (response) {
+						consTable2.draw();
+						toastr.success('Cambio de estado Exitoso');
+					});
+				});
+				$('button#editConsolidated').off('click');
+				$('button#editConsolidated').click(function () {
+					let consolidated = $(this).attr('consolidated');
+					let url = path + 'consolidados/' + consolidated;
+					$.get(url, function (response) {
+						$('.f-close').text(response.close);
+						$('.f-create').text(response.open);
+						$('form#tracking-form-register input#consolidated_id').val(response.id);
+						$('#modal-send-form').modal('toggle').find('.modal-title').html('<span class="fa fa-edit"></span> Editar Consolidado ' + response.number);
+						trackTable.draw();
+					});
+				});
 				$('button#view-formalized').click(function (e) {
 					e.preventDefault();
 					let consolidated = $(this).attr('consolidated');
@@ -696,21 +714,21 @@ if (location.href.indexOf('/consolidados') > 0) {
 					let url = path + 'consolidados/' + consolidated;
 					$.get(url, function (response) {
 						let modal = $('div#modal-send-show');
-						modal.find('.modal-title').html('<span class="fa fa-cube"></span> Consolidado n° ' + response.number + '.');
-						modal.find('td#number').text(response.number + '.');
-						modal.find('td#user').text(response.user.name + ' ' + response.user.last_name + '.');
-						modal.find('td#created_date').text(response.open + '.');
-						modal.find('td#closed_date').text(response.close + '.');
+						modal.find('.modal-title').html('<span class="fa fa-cube"></span> Consolidado n° ' + response.number);
+						modal.find('td#number').text(response.number);
+						modal.find('td#user').text(response.user.name + ' ' + response.user.last_name);
+						modal.find('td#created_date').text(response.open);
+						modal.find('td#closed_date').text(response.close);
 						modal.find('td#state').html(response.event);
 						if (response.bill > 0) {
-							modal.find('td#bill').text(response.bill).addClass('bg-success');
+							modal.find('td#bill').text(new Intl.NumberFormat("de-DE", {style: "currency", currency: 'COP'}).format(response.bill)).addClass('bg-success');
 							modal.find('td#weight').text(response.weight).addClass('bg-success');
 						} else {
-							modal.find('td#bill').text(response.bill).removeClass('bg-success');
-							modal.find('td#weight').text(response.weight).removeClass('bg-success');
+							modal.find('td#bill').text(response.bill).removeClass('success');
+							modal.find('td#weight').text(response.weight).removeClass('success');
 						}
-						modal.find('td#cant').text(response.trackings.length + '.');
-						modal.find('td#value').text(response.sum_total + '.');
+						modal.find('td#cant').text(response.trackings.length);
+						modal.find('td#value').text(new Intl.NumberFormat("de-DE", {style: "currency", currency: "USD"}).format(response.sum_total));
 						trackTableView.draw();
 						modal.modal('toggle');
 					});
@@ -782,27 +800,27 @@ if (location.href.indexOf('/consolidados') > 0) {
 		{data: 'action', orderable: false, searchable: false}
 		]
 	});
-	$('button#agregar-event').click(function () {
-		let tracking = $('form#events').find('select[name="tracking"]').val();
-		let event = $('form#events').find('select[name="event"]').val();
-		if (tracking && event) {
-			let consolidated = $(this).attr('consolidated');
-			data = {
-				tracking: tracking,
-				event: event,
-			}
-			$.post(path + 'notifications/create', data, function (response) {
-				if (response.msg) {
-					toastr.warning(response.msg);
-					return;
-				}
-				toastr.success('Evento agregado.');
-				$('form#events').find('select[name="tracking"]').val('');
-				$('form#events').find('select[name="event"]').val('');
-				cargarEventos(consolidated);
-			});
-		}
-	});
+	// $('button#agregar-event').click(function () {
+	// 	let tracking = $('form#events').find('select[name="tracking"]').val();
+	// 	let event = $('form#events').find('select[name="event"]').val();
+	// 	if (tracking && event) {
+	// 		let consolidated = $(this).attr('consolidated');
+	// 		data = {
+	// 			tracking: tracking,
+	// 			event: event,
+	// 		}
+	// 		$.post(path + 'notifications/create', data, function (response) {
+	// 			if (response.msg) {
+	// 				toastr.warning(response.msg);
+	// 				return;
+	// 			}
+	// 			toastr.success('Evento agregado.');
+	// 			$('form#events').find('select[name="tracking"]').val('');
+	// 			$('form#events').find('select[name="event"]').val('');
+	// 			cargarEventos(consolidated);
+	// 		});
+	// 	}
+	// });
 	$('#addForm').click(function (e) {
 		e.preventDefault();
 		$(this).attr('disabled', '');
@@ -934,7 +952,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 	function cargarEventos(id) {
 		$.post(path + 'formalized/' + id, function (response) {
 			$('div#modal-send_formalizated_edit').find('h4')
-			.html('<span class="fa fa-edit"></span> Editar Consolidado: ' + response.consolidated.number + '.');
+			.html('<span class="fa fa-list"></span> Eventos del Consolidado: ' + response.consolidated.number);
 			let event = response.event;
 			let template, item;
 			$('ul#events-formalized').html('');
@@ -963,24 +981,31 @@ if (location.href.indexOf('/consolidados') > 0) {
 		});
 	}
 	var trackTable2 = $('table#table-edit-formalized').DataTable({
-		lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "Todos"]],	
 		processing: true,
 		serverSide: true,
 		responsive: true,
 		render: true,
 		language: translateTableCustom,
 		ajax: {
-			url: path + 'tracking',
+			url: path + 'events',
 			data: function (d) {
 				d.consolidated_id = $('table#table-edit-formalized').attr('consolidated');
 			},
+			complete: function () {
+				let tr = $('table#table-edit-formalized tr');
+				for (var i = 0; i <= tr.length; i++) {
+					let t = tr[i];
+					let td = $(t).children('td');
+					let text = $(td[2]).text();
+					$(td[2]).html(text);
+				}
+			}
 		},
+		order: [[2, 'DESC']],
 		columns: [
-		{data: 'distributor.name', name: 'trackings.distributor_id'},
-		{data: 'tracking', name: 'trackings.id'},
-		{data: 'description', name: 'trackings.description'},
-		{data: 'price', name: 'trackings.description'},
-		{data: 'created_at', name: 'trackings.created_at'},
+		{data: 'fecha', name: 'created_at', orderable: false, searchable: false},
+		{data: 'hora', name: 'created_at', orderable: false, searchable: false},
+		{data: 'evento', name: 'event_id', orderable: false, searchable: false},
 		]
 	});
 	$('#price_form').submit(function (e) {

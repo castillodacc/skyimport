@@ -43,42 +43,16 @@ class DatabaseSeeder extends Seeder
             'email' => 'root@importadorasky.com',
             'password' => bcrypt('secret'),
             'role_id' => 1,
+            'created_at' => Carbon::now(),
             'updated_at' => null,
         ]);
 
-        /* Estados del consolidado */
-        DB::table('shippingstates')->insert([
-            'state' => 'Pendiente de formalización',
-            'ref_id' => 1,
-            'description' => null,
-            'created_at' => Carbon::now(),
-            'updated_at' => null,
-        ]);
-        DB::table('shippingstates')->insert([
-            'state' => 'Tiempo extendido',
-            'ref_id' => 1,
-            'description' => null,
-            'created_at' => Carbon::now(),
-            'updated_at' => null,
-        ]);
-        DB::table('shippingstates')->insert([
-            'state' => 'Formalizado',
-            'ref_id' => 1,
-            'description' => null,
-            'created_at' => Carbon::now(),
-            'updated_at' => null,
-        ]);
-        DB::table('shippingstates')->insert([
-            'state' => 'Miami a BOG',
-            'ref_id' => 1,
-            'description' => null,
-            'created_at' => Carbon::now(),
-            'updated_at' => null,
-        ]);
-        DB::table('shippingstates')->insert([
-            'state' => 'Finalizado',
-            'ref_id' => 1,
-            'description' => null,
+        DB::table('users')->insert([
+            'name' => 'rs',
+            'last_name' => 'rs',
+            'email' => 'rs@importadorasky.com',
+            'password' => bcrypt('secret'),
+            'role_id' => 2,
             'created_at' => Carbon::now(),
             'updated_at' => null,
         ]);
@@ -124,29 +98,6 @@ class DatabaseSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => null,
         ]);
-
-        /* estados de trackings */
-        // DB::table('shippingstates')->insert([
-        //     'state' => 'Creado',
-        //     'ref_id' => 2,
-        //     'description' => 'Cuando acaba de ser creado y no se ha notificado del recibido aun.',
-        //     'created_at' => Carbon::now(),
-        //     'updated_at' => null,
-        // ]);
-        // DB::table('shippingstates')->insert([
-        //     'state' => 'Recibido en bodega - Miami',
-        //     'ref_id' => 2,
-        //     'description' => 'Cuando se recibibe en Miami y está en espera de recibir el resto del consolidado para viajar.',
-        //     'created_at' => Carbon::now(),
-        //     'updated_at' => null,
-        // ]);
-        // DB::table('shippingstates')->insert([
-        //     'state' => 'Recibido en bodega - Colombia',
-        //     'ref_id' => 2,
-        //     'description' => 'Cuando el tracking es recibido en Colombia.',
-        //     'created_at' => Carbon::now(),
-        //     'updated_at' => null,
-        // ]);
 
         $now = Carbon::now();
         /* Departamentos de colombia */
@@ -249,48 +200,58 @@ class DatabaseSeeder extends Seeder
          **/
         Events::create([
             'type' => 1,
-            'event' => 'Nuevo Consolidado Creado.'
+            'event' => 'Nuevo Consolidado Creado'
         ]);
         Events::create([
             'type' => 1,
-            'event' => 'Tiempo extendido.'
+            'event' => 'Tiempo extendido'
         ]);
         Events::create([
             'type' => 1,
-            'event' => 'formalizado.'
+            'event' => 'Formalizado'
         ]);
         Events::create([
             'type' => 1,
-            'event' => 'Salida de Miami a Bogotá.'
+            'event' => 'Salida de Miami a Bogotá'
         ]);
         Events::create([
             'type' => 1,
-            'event' => 'Facturar.'
+            'event' => 'Facturar'
         ]);
         Events::create([
             'type' => 1,
-            'event' => '<span class="fa fa-check-square-o cye-lm-tag"></span> Facturado.'
+            'event' => '<span class="fa fa-check-square-o cye-lm-tag"></span> Facturado'
         ]);
+        Events::create([
+            'type' => 1,
+            'event' => '<span class="fa fa-check-square-o cye-lm-tag"></span> Entregado'
+        ]);
+        Events::create([
+            'type' => 1,
+            'event' => '<span class="fa fa-check-square-o cye-lm-tag"></span> Pagado'
+        ]);
+        Events::create(['type' => 1, 'event' => '']);
+        Events::create(['type' => 1, 'event' => '']);
 
         Events::create([
             'type' => 2,
-            'event' => 'Nuevo Tracking Creado.'
+            'event' => 'Nuevo Tracking Creado'
         ]);
         Events::create([
             'type' => 2,
-            'event' => 'Recibido en bodega - Miami.'
+            'event' => 'Recibido en bodega - Miami'
         ]);
         Events::create([
             'type' => 2,
-            'event' => 'Salida de Miami a Bogotá.'
+            'event' => 'Salida de Miami a Bogotá'
         ]);
         Events::create([
             'type' => 2,
-            'event' => 'En Aduana de Colombia.'
+            'event' => 'En Aduana de Colombia'
         ]);
         Events::create([
             'type' => 2,
-            'event' => 'Recibido en bodega - Colombia.'
+            'event' => 'Recibido en bodega - Colombia'
         ]);
         // $this->call(UsersTableSeeder::class);
     }

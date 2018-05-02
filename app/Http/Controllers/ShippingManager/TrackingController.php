@@ -34,8 +34,8 @@ class TrackingController extends Controller
     $request = request();
 
     $query = Tracking::query()
-    ->with(['distributor', 'shippingstate'])
-    ->select(['trackings.*', ]);
+    ->with(['distributor'])
+    ->select(['trackings.*']);
 
     return (new Datatables)->of($query)
     ->addColumn('action', function ($tracking) {
@@ -46,8 +46,19 @@ class TrackingController extends Controller
         </div>
         ';
     })
-    ->editColumn('shippingstate.state', function ($tracking) {
-      return $tracking->eventsUsers->last()->events->event;
+    ->editColumn('shippingstate_id', function ($tracking) {
+      if (\Auth::user()->role_id == 1) {
+        $event = $tracking->eventsUsers->last()->events->event;
+        return $event;
+      } else {
+        $event = $tracking->eventsUsers->last()->events;
+        if ($event->id > 12) {
+          $text = 'Recibido en bodega - Miami';
+        } else {
+          $text = $event->event;
+        }
+        return $text;
+      }
     })
     ->editColumn('created_at', function ($tracking) {
       return $tracking->created_at->diffForHumans().'.';
@@ -84,7 +95,7 @@ class TrackingController extends Controller
     $tracking = Tracking::create($request->all());
     EventsUsers::create([
       'tracking_id' => $tracking->id,
-      'event_id' => 7,
+      'event_id' => 11,
     ]);
     return response()->json($tracking);
   }
@@ -193,7 +204,7 @@ class TrackingController extends Controller
     ->filter(function ($query) {
       $request = request();
       $query->where('consolidateds.closed_at', '<', \Carbon::now())
-      ->where('trackings.shippingstate_id', '<', '11');
+      ->where('trackings.shippingstate_id', '<', 15);
 
       if (count($request->search['value']) > 0) {
         $query

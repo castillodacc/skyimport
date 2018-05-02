@@ -18,8 +18,8 @@ class CreateTrackingsTable extends Migration
             $table->string('tracking'); // TBA21321
             $table->text('description'); // descripción
             $table->integer('distributor_id')->unsigned(); // repartidor
-            $table->integer('price')->unsigned()->default(0); // price($)
-            $table->integer('shippingstate_id')->unsigned()->default(7); // estado del tracking
+            $table->float('price', 8, 2)->unsigned(); // price($)
+            $table->integer('shippingstate_id')->unsigned()->default(11); // estado del tracking
             $table->integer('consolidated_id')->unsigned(); // consolidado
             $table->timestamps();
             $table->softDeletes();

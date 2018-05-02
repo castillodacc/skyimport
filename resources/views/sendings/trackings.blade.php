@@ -5,8 +5,8 @@
         <i class="box-title">Trackings en proceso:</i>
         <div class="pull-right box-tools">
             <div class="btn-group btn-group-xs">
-                <button id="add-events" type="button" class="btn bg-primary btn-flat" data-title="add" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Agregar Evento" style="margin-right: 5px"><span class="fa fa-plus"></span></button>
-                <button id="search-cons-a" type="button" class="btn bg-green btn-flat" data-title="tooltip"  data-toggle="tooltip" data-target="massive_event" data-placement="top" rel="tooltip" title="Buscar filtros"><span class="fa fa-search"></span></button>
+                <button id="add-events" type="button" class="btn bg-primary btn-flat" data-title="add" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Actualizar estado" style="margin-right: 5px"><span class="fa fa-plus"></span> Actualizar estado</button>
+                <button id="search-cons-a" type="button" class="btn bg-green btn-flat" data-title="tooltip"  data-toggle="tooltip" data-target="massive_event" data-placement="top" rel="tooltip" title="Buscar filtros"><span class="fa fa-search"></span> Filtros</button>
                 <button type="button" class="btn btn-box-tool btn-flat" data-widget="collapse"><i class="fa fa-minus"></i></button>
             </div>
         </div>

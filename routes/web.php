@@ -43,6 +43,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('notifications/create', 'NotificationController@store');
 	Route::post('notifications-view', 'NotificationController@viewer');
 	Route::delete('event/{event}', 'NotificationController@destroy');
+	Route::get('events', 'NotificationController@eventsAll');
+	Route::post('add-event', 'NotificationController@addEvent');
     //    Route::get('/link1', function ()    {
 	//        // Uses Auth Middleware
 	//    });

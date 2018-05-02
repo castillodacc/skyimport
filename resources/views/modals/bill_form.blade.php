@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header bg-primary">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title text-center" id="exampleModalLabel"><span class="fa fa-dollar"></span> Facturación</h4>
+                <h4 class="modal-title text-center" id="exampleModalLabel"><span class="fa fa-dollar"></span> Facturar</h4>
             </div>
             <div class="modal-body">
                 <form id="price_form" method="POST" action="">
@@ -15,18 +15,18 @@
                                 <div class="input-group-addon">
                                     <span class="fa fa-balance-scale"></span>
                                 </div>
-                                <input type="text" id="weight" name="weight" placeholder="Lb/Kg" class="form-control">
+                                <input type="text" id="weight" name="weight" placeholder="Lb" class="form-control">
                             </div>
-                            <small id="weight" class="form-text text-muted">Peso total del consolidado Libras/Kg.</small>
+                            <small id="weight" class="form-text text-muted">Peso total del consolidado Libras.</small>
                         </div>
                          <div class="form-group col-md-6">
                             <div class="input-group">
                                 <div class="input-group-addon">
                                     <span class="fa fa-dollar"></span>
                                 </div> 
-                                <input type="text" id="bill" name="bill" placeholder="Total a facturar" class="form-control">
+                                <input type="text" id="bill" name="bill" placeholder="Total a facturar (COP)" class="form-control">
                             </div>                        
-                            <small id="bill" class="form-text text-muted">Precio total a facturar.</small>
+                            <small id="bill" class="form-text text-muted">Precio total a facturar en COP.</small>
                         </div>
                     </div>
                     <div class="modal-footer">
