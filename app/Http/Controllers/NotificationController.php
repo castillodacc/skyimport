@@ -53,7 +53,7 @@ class NotificationController extends Controller
 				} elseif ($e->event_id == 5) {
 					return 'Paquete recibido en Bogotá, Colombia. En espera, revisión por parte de la agencia de aduanas, Aeropuerto El Dorado BOG.';
 				} elseif ($e->event_id == 6) {
-					return 'Entregado a Importadora Sky. Se adjunta Orden de servicio por valor de $'.$e->consolidated->bill.'.';
+					return 'Entregado a Importadora Sky. Se adjunta Orden de servicio por valor de $'.number_format($e->consolidated->bill, 2, ',', '.').'.';
 				}
 			} else {
 				if ($e->event_id === 12) {
