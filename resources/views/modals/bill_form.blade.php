@@ -1,5 +1,5 @@
 <div class="modal fade in" id="modal-bill-form" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -10,7 +10,7 @@
                     {{ csrf_field() }} {{ method_field('POST') }}
                     <input type="hidden" name="consolidated" >
                     <div class="row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-12">
                             <div class="input-group">
                                 <div class="input-group-addon">
                                     <span class="fa fa-balance-scale"></span>
@@ -19,14 +19,14 @@
                             </div>
                             <small id="weight" class="form-text text-muted">Peso total del consolidado en Libras.</small>
                         </div>
-                         <div class="form-group col-md-6">
+                         <div class="form-group col-md-12">
                             <div class="input-group">
                                 <div class="input-group-addon">
                                     <span class="fa fa-dollar"></span>
                                 </div> 
-                                <input type="text" id="bill" name="bill" placeholder="Total a facturar (COP)" class="form-control">
+                                <input type="text" id="bill" name="bill" placeholder="Total a facturar (USD)" class="form-control">
                             </div>                        
-                            <small id="bill" class="form-text text-muted">Precio total a facturar en COP.</small>
+                            <small id="bill" class="form-text text-muted">Precio total a facturar en USD.</small>
                         </div>
                     </div>
                     <div class="modal-footer">

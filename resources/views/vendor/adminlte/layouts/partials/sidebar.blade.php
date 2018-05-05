@@ -12,7 +12,7 @@
             <li><a href="{{ route('tracking.index') }}"><i class='fa fa-location-arrow'></i> <span>Administrar Trackings</span></a></li>
             <hr>
             @endif
-            <li><a href="{{ route('consolidados.index') }}"><i class='fa fa-arrows-h'></i> <span>Administrar envios</span></a></li>
+            <li><a href="{{ route('consolidados.index') }}"><i class='fa fa-arrows-h'></i> <span>@if(Auth::user()->role_id == 1) Administrar @else Mis @endif envios</span></a></li>
             <hr>
         </ul>
     </section>
