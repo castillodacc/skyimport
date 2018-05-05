@@ -33,18 +33,18 @@
                                 <div class="input-group-addon">
                                     <span class="fa fa-location-arrow"></span>
                                 </div>
-                                <input type="text" id="tracking" name="tracking" class="form-control input-sm" placeholder="Traking" required="">
+                                <input type="text" id="tracking" name="tracking" class="form-control input-sm" placeholder="Tracking" required="">
                             </div>
-                            <small id="tracking" class="form-text text-muted">Numero de tracking</small>
+                            <small id="tracking" class="form-text text-muted">Número de tracking</small>
                         </div>
                         <div class="form-group col-md-3">
                             <div class="input-group">
                                 <div class="input-group-addon">
                                     <span class="fa fa-commenting"></span>
                                 </div>
-                                <input type="text" id="description" name="description" class="form-control input-sm" placeholder="Descripcion" required="">
+                                <input type="text" id="description" name="description" class="form-control input-sm" placeholder="Descripción" required="">
                             </div>
-                            <small id="description" class="form-text text-muted">Descripcion</small>
+                            <small id="description" class="form-text text-muted">Descripción</small>
                         </div>
                         <div class="form-group col-md-2">
                             <div class="input-group">
@@ -72,8 +72,8 @@
                             <thead>
                                 <tr>
                                     <th>Repartidor</th>
-                                    <th># Traking</th>
-                                    <th>Descripcion</th>
+                                    <th># Tracking</th>
+                                    <th>Descripción</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>

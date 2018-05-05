@@ -45,6 +45,7 @@
                 <thead>
                     <tr>
                         <th width="15%"><span class="fa fa-location-arrow"></span> Trackings</th>
+                        <th><span class="fa fa-commenting"></span> Descripción</th>
                         <th width="15%"><span class="fa fa-cube"></span> Consolidado</th>
                         <th width="15%"><span class="fa fa-user"></span> Usuario</th>
                         <th width="15%"><span class="fa fa-calendar-plus-o"></span> Creación</th>

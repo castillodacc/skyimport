@@ -30,7 +30,7 @@
                         </div>
                         <input type="text" id="create_date" name="create_date" class="form-control input-sm" placeholder="dd/mm/aaaa">
                     </div>
-                    <small id="create_date" class="form-text text-muted">Fecha de creacion.</small>
+                    <small id="create_date" class="form-text text-muted">Fecha de creación.</small>
                 </div>
                 <div class="form-group col-md-2">
                     <div class="input-group date" data-provide="datepicker">
@@ -98,7 +98,7 @@
                         </div>
                         <input type="text" id="1" name="created_at" class="form-control input-sm" placeholder="dd/mm/aaaa">
                     </div>
-                    <small id="create_date" class="form-text text-muted">Fecha de creacion.</small>
+                    <small id="create_date" class="form-text text-muted">Fecha de creación.</small>
                 </div>
                 <div class="form-group col-md-2">
                     <div class="input-group date" data-provide="datepicker">
@@ -122,7 +122,7 @@
                     <tr>
                         <th><span class="fa fa-cube"></span> Consolidado</th>
                         <th><span class="fa fa-user"></span> Usuario</th>
-                        <th><span class="fa fa-calendar-plus-o"></span> Creacion</th>
+                        <th><span class="fa fa-calendar-plus-o"></span> Creación</th>
                         <th width="15%"><span class="fa fa-check-square-o"></span> Estado</th>
                         <th width="85px"><span class="fa fa-location-arrow"></span> Trackings</th>
                         <th><span class="fa fa-calendar-check-o"></span> Formalizado</th>

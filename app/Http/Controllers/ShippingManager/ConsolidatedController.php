@@ -75,8 +75,13 @@ class ConsolidatedController extends Controller
                 }
             }
             $extend = $consolidated->eventsUsers->where('event_id', '=', 2)->count();
-            if (request()->c == 'abierto' &&
-                (\Auth::user()->role_id === 1 || $extend < 2)) {
+            $var = false;
+            $event = $consolidated->eventsUsers->last();
+            if ($event->event_id == 3) {
+                $horas = $event->created_at->diffInHours(\Carbon::now());
+                if ($horas < 24) $var = true;
+            }
+            if ((request()->c == 'abierto' && $extend < 2) || (\Auth::user()->role_id == 1 && $var) ) {
                 $html .= '
                     <button id="extendConsolidated" type="button" class="btn btn-warning btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Extender un día el cierre" consolidated="' . $consolidated->id . '"><span class="fa fa-calendar-plus-o"></span> Extender</button>
                 ';
@@ -84,18 +89,8 @@ class ConsolidatedController extends Controller
             $html .= '
                 <button id="'.$nameView.'" type="button" class="btn btn-info btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Ver" consolidated="' . $consolidated->id . '"><span class="fa fa-eye"></span> Mostrar</button>
             ';
-            if (request()->c != 'abierto') {
-                $event = $consolidated->eventsUsers->where('event_id', '=', 3)->first();
-                $horas = $event->created_at->diffInHours(\Carbon::now());
-                if ($horas < 24) {
-                    $var = true;
-                } else {
-                    $var = false;
-                }
-            } else{
-                $var = true;
-            }
-            if ($var && $consolidated->shippingstate_id < 5) {
+
+            if ($consolidated->shippingstate_id < 3 || \Auth::user()->role_id == 1) {
                 $html .= '
                     <button id="editConsolidated" type="button" class="btn btn-primary btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Editar" consolidated="' . $consolidated->id . '"><span class="fa fa-edit"></span> Editar</button>
                 ';
@@ -303,7 +298,6 @@ class ConsolidatedController extends Controller
     {
         $consolidated = Consolidated::findOrFail($id);
         if (! $consolidated->trackings->count()) return response(['msg' => 'El consolidado debe tener al menos un tracking.'], 422);
-        if (\Auth::user()->id != $consolidated->user_id) return response(['msg' => 'El consolidado lo debe cerrar quien lo aperturó.'], 422);
         $consolidated->closed_at = \Carbon::now();
         $consolidated->shippingstate_id = 3;
         EventsUsers::create([
@@ -319,7 +313,9 @@ class ConsolidatedController extends Controller
         if ($id) {
             $trackings = Consolidated::findOrFail($id)->trackings;
         }
-        $events = Events::where('type', '=', 2)->pluck('event', 'id');
+        $events = Events::where('type', '=', 2)
+                ->where('id', '<>', 13)
+                ->pluck('event', 'id');
         return response()->json(compact('trackings', 'events'));
     }
 

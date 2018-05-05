@@ -17,7 +17,7 @@
                                 </div>
                                 <input type="text" id="weight" name="weight" placeholder="Lb" class="form-control">
                             </div>
-                            <small id="weight" class="form-text text-muted">Peso total del consolidado Libras.</small>
+                            <small id="weight" class="form-text text-muted">Peso total del consolidado en Libras.</small>
                         </div>
                          <div class="form-group col-md-6">
                             <div class="input-group">

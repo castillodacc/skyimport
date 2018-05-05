@@ -4,7 +4,7 @@ namespace skyimport\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TrakingStoreRequest extends FormRequest
+class TrackingUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -40,10 +40,10 @@ class TrakingStoreRequest extends FormRequest
     public function attributes()
     {
         return [
-            'tracking'   => 'tracking',
-            'description'        => 'descripción',
+            'tracking' => 'tracking',
+            'description' => 'descripción',
             'consolidated_id' => 'consolidado',
-            'distributor_id'  => 'distribuidor',
+            'distributor_id' => 'distribuidor',
             'price' => 'precio',
         ];
     }

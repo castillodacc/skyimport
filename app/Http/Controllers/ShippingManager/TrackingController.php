@@ -5,7 +5,8 @@ namespace skyimport\Http\Controllers\ShippingManager;
 use Illuminate\Http\Request;
 use skyimport\Http\Controllers\Controller;
 use skyimport\Models\Tracking;
-use skyimport\Http\Requests\TrakingStoreRequest;
+use skyimport\Http\Requests\TrackingStoreRequest;
+use skyimport\Http\Requests\TrackingUpdateRequest;
 use skyimport\Models\EventsUsers;
 use Yajra\DataTables\Datatables;
 
@@ -82,10 +83,10 @@ class TrackingController extends Controller
   /**
    * Store a newly created resource in storage.
    *
-   * @param  \skyimport\Http\Requests\TrakingStoreRequest  $request
+   * @param  \skyimport\Http\Requests\TrackingStoreRequest  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(TrakingStoreRequest $request)
+  public function store(TrackingStoreRequest $request)
   {
     $existe = Tracking::where('tracking', '=', $request->tracking)
     ->where('distributor_id', '=', $request->distributor_id)
@@ -126,11 +127,11 @@ class TrackingController extends Controller
   /**
    * Update the specified resource in storage.
    *
-   * @param  \Illuminate\Http\Request  $request
+   * @param  \skyimport\Http\Requests\TrackingUpdateRequest  $request
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id)
+  public function update(TrackingUpdateRequest $request, $id)
   {
     $tracking = Tracking::findOrFail($id)->update($request->all());
     return response()->json($tracking);
@@ -182,7 +183,8 @@ class TrackingController extends Controller
       'trackings.created_at',
       'trackings.shippingstate_id',
       'trackings.id',
-      'trackings.consolidated_id'
+      'trackings.consolidated_id',
+      'trackings.description'
     ]);
 
     return (new Datatables)->of($query)
@@ -194,6 +196,9 @@ class TrackingController extends Controller
       <input id="checkboxTracking" type="checkbox" tracking="'.$tracking->id.'">
       <div class="control__indicator"></div>
       </label>';
+    })
+    ->addColumn('description', function ($tracking) {
+      return $tracking->description;
     })
     ->addColumn('event', function ($tracking) {
       return $tracking->eventsUsers->last()->events->event;

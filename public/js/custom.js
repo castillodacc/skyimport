@@ -98,15 +98,15 @@ $.ajax({
 			modal.find('td#created_date').text(response.open);
 			modal.find('td#closed_date').text(response.close);
 			if (response.bill > 0) {
-				modal.find('td#bill').text(new Intl.NumberFormat("de-DE", {style: "currency", currency: 'COP'}).format(response.bill)).addClass('success');
-				modal.find('td#weight').text(response.weight).addClass('success');
+				modal.find('td#bill').text(response.bill + ' USD').addClass('success');
+				modal.find('td#weight').text(response.weight + ' Lb').addClass('success');
 			} else {
 				modal.find('td#bill').removeClass('success').text(response.bill);
 				modal.find('td#weight').removeClass('success').text(response.weight);
 			}
 			modal.find('td#state').html(response.event);
 			modal.find('td#cant').text(response.trackings.length);
-			modal.find('td#value').text(new Intl.NumberFormat("de-DE", {style: "currency", currency: "USD"}).format(response.sum_total));
+			modal.find('td#value').text(response.sum_total + ' USD');
 			trackTableView.draw();
 			modal.modal('toggle');
 		});
@@ -683,6 +683,27 @@ if (location.href.indexOf('/consolidados') > 0) {
 					let text = $(td[3]).text();
 					$(td[3]).html(text);
 				}
+				$('button#extendConsolidated').click(function () {
+					let consolidated = $(this).attr('consolidated');
+					let url = path + 'extend-consolidated/' + consolidated;
+					$.ajax({
+						url: url,
+						type: 'POST',
+						dataType: 'json',
+					})
+					.done(function(response) {
+						if (response.msg) {
+							toastr.info(response.msg);
+							return;
+						}
+						consTable.draw();
+						consTable2.draw();
+						toastr.success('Consolidado Extendido un día.');
+					})
+					.fail(function(response) {
+						toastr.error('Opps al parecer a ocurrido un error');
+					});
+				});
 				$('button#editEventConsolidated').click(function () {
 					let consolidated = $(this).attr('consolidated');
 					let event = $(this).attr('event');
@@ -721,14 +742,14 @@ if (location.href.indexOf('/consolidados') > 0) {
 						modal.find('td#closed_date').text(response.close);
 						modal.find('td#state').html(response.event);
 						if (response.bill > 0) {
-							modal.find('td#bill').text(new Intl.NumberFormat("de-DE", {style: "currency", currency: 'COP'}).format(response.bill)).addClass('bg-success');
-							modal.find('td#weight').text(response.weight).addClass('bg-success');
+							modal.find('td#bill').text(response.bill + ' USD').addClass('bg-success');
+							modal.find('td#weight').text(response.weight + ' Lb').addClass('bg-success');
 						} else {
 							modal.find('td#bill').text(response.bill).removeClass('success');
 							modal.find('td#weight').text(response.weight).removeClass('success');
 						}
 						modal.find('td#cant').text(response.trackings.length);
-						modal.find('td#value').text(new Intl.NumberFormat("de-DE", {style: "currency", currency: "USD"}).format(response.sum_total));
+						modal.find('td#value').text(response.sum_total + ' USD');
 						trackTableView.draw();
 						modal.modal('toggle');
 					});
@@ -1137,6 +1158,7 @@ if (location.href.indexOf('/tracking') > 0) {
 		},
 		columns: [
 		{data: 'tracking_num', name: 'trackings.tracking'},
+		{data: 'description', name: 'id', orderable: false, searchable: false},
 		{data: 'consolidated_num', name: 'consolidateds.number'},
 		{data: 'user', name: 'users.id'},
 		{data: 'created_at', name: 'trackings.created_at'},

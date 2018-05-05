@@ -19,22 +19,22 @@ class NotificationController extends Controller
 	{
 		$request = request();
 		$consolidated = Consolidated::find($request->consolidated_id);
+		$events = EventsUsers::query();
 		if (isset($consolidated->id)) {
 			$c = $consolidated->id;
 			foreach ($consolidated->trackings as $t) {
 				$tr[] = $t->id;
 			}
-
-			$events = EventsUsers::whereIn('tracking_id', $tr)
-			->where('event_id', '<>', 11)
-			->where('event_id', '<>', 13)
-			->where('event_id', '<>', 14)
-			->where('event_id', '<>', 15)
-			->orWhere('consolidated_id', '=', $c)
-			->whereIn('event_id', [1,4,5,6,7,8,12])
-			->orderBy('created_at', 'DESC');
-		} else {
-			$events = EventsUsers::query();
+			if (isset($tr)) {
+				$events = EventsUsers::whereIn('tracking_id', $tr)
+				->where('event_id', '<>', 11)
+				->where('event_id', '<>', 13)
+				->where('event_id', '<>', 14)
+				->where('event_id', '<>', 15)
+				->orWhere('consolidated_id', '=', $c)
+				->whereIn('event_id', [1,4,5,6,7,8,12])
+				->orderBy('created_at', 'DESC');
+			}
 		}
 
 		return (new Datatables)->of($events)
@@ -244,12 +244,12 @@ class NotificationController extends Controller
 	public static function allTrackingsInColombia($id)
 	{
 		$consolidated = Consolidated::findOrFail($id);
-		$num = 1;
+		$num = true;
 		$trackings = $consolidated->trackings;
 		foreach ($trackings as $t) {
 			$event = $t->shippingstate_id;
 			if ($event < 15) {
-				$num = 0;
+				$num = false;
 			}
 		}
 		if ($num) {
@@ -268,12 +268,12 @@ class NotificationController extends Controller
 	public static function allStatusInMiami($id)
 	{
 		$consolidated = Consolidated::findOrFail($id);
-		$num = 1;
+		$num = true;
 		$trackings = $consolidated->trackings;
 		foreach ($trackings as $t) {
 			$event = $t->shippingstate_id;
-			if ($event < 13) {
-				$num = 0;
+			if ($event < 12) {
+				$num = false;
 			}
 		}
 		if ($num) {
@@ -282,6 +282,13 @@ class NotificationController extends Controller
 				'event_id' => 4,
 			]);
 			$consolidated->update(['shippingstate_id' => 4]);
+			foreach ($trackings as $t) {
+				$t->update(['shippingstate_id' => 13]);
+				EventsUsers::create([
+					'tracking_id' => $t->id,
+					'event_id' => 13,
+				]);
+			}
 		}
 	}
 
