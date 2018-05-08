@@ -39,7 +39,7 @@
                                         <td class="" id="weight"></td>
                                     </tr>
                                     <tr>
-                                        <th>Precio total facturado:</th>
+                                        <th>Total de la orden de servicio:</th>
                                         <td class="" id="bill"></td>
                                     </tr>
                                 </tbody>

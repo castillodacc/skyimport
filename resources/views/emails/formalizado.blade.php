@@ -27,19 +27,17 @@
 								<tr>
 									<td style="padding: 5px 0 5px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px; text-align: justify;">
 										<strong>
-											Orden de Servicio de su Consolidado:
+											Hola, el siguiente correo es para notificarle que el siguiente consolidado fue formalizado.
 										</strong>
 										<ul>
-											<li> Cliente: {{ $consolidated->user->fullName() }}.</li>
-											<li> Identificación: {{ $consolidated->user->num_id }}.</li>
-											<li> Consolidado n°: {{ $consolidated->number }} </li>
-											<li> Peso: {{ $consolidated->weight }} Lb.</li>
-											<li> Total a pagar: {{ $consolidated->bill }} USD.</li>
-											<li> Fecha de expedicion de factura: {{ \Carbon::now()->format('Y/m/d') }}.</li>
+											<li> Consolidado n°: {{ $consolidado->number }} </li>
+											<li> Cliente: {{ $consolidado->user->fullName() }}.</li>
+											<li> Total de trackigns: {{ $consolidado->trackings->count() }}.</li>
+											<li> Identificación: {{ $consolidado->user->num_id }}.</li>
 										</ul>
 										<p>Recibido:</p>
 										<ul>
-											@foreach($consolidated->trackings as $tracking)
+											@foreach($consolidado->trackings as $tracking)
 											<li> Tracking: {{ $tracking->tracking }} - Descripción: {{ $tracking->description }}.</li>
 											@endforeach
 										</ul>
@@ -58,7 +56,7 @@
 														</tr>
 														<tr>
 															<td style="padding: 25px 0 0 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-																La información acerca de sus consolidados podra ser consultada en cualquier dispositivo movil o de escritorios de nuestra herramienta web <a href="{{ url('/') }}">{{ url('/') }}</a>.
+																La informacion acerca de sus consolidados podra ser consultada en cualquier dispositivo movil o de escritorios de nuestra herramienta web <a href="{{ url('/') }}">{{ url('/') }}</a>.
 															</td>
 														</tr>
 													</table>

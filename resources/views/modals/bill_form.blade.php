@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header bg-primary">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title text-center" id="exampleModalLabel"><span class="fa fa-dollar"></span> Facturar</h4>
+                <h4 class="modal-title text-center" id="exampleModalLabel"><span class="fa fa-dollar"></span> Orden de Servicio</h4>
             </div>
             <div class="modal-body">
                 <form id="price_form" method="POST" action="">
@@ -24,9 +24,9 @@
                                 <div class="input-group-addon">
                                     <span class="fa fa-dollar"></span>
                                 </div> 
-                                <input type="text" id="bill" name="bill" placeholder="Total a facturar (USD)" class="form-control">
+                                <input type="text" id="bill" name="bill" placeholder="Total de orden de servicio (USD)" class="form-control">
                             </div>                        
-                            <small id="bill" class="form-text text-muted">Precio total a facturar en USD.</small>
+                            <small id="bill" class="form-text text-muted">Precio total de la orden de servicio en USD.</small>
                         </div>
                     </div>
                     <div class="modal-footer">

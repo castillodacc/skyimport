@@ -936,6 +936,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 		}
 	});
 	$('button#consolidated-consolidated').click(function () {
+		$('button#consolidated-consolidated').attr('disabled', 'disabled')
 		let id = $('form#tracking-form-register input#consolidated_id')[0].value;
 		$.post(path + 'formalize-consolidated/' + id, function (response) {
 			consTable.draw();
@@ -949,10 +950,12 @@ if (location.href.indexOf('/consolidados') > 0) {
 			$('#tracking-form-register input[name=_method]').val('POST');
 			$('tr').removeClass('info');
 			$('form#tracking-form-register input#consolidated_id').val('');
+			$('button#consolidated-consolidated').removeAttr('disabled', 'disabled')
 		})
 		.fail(function(response) {
 			toastr.warning(response.responseJSON.msg);
 			console.clear();
+			$('button#consolidated-consolidated').removeAttr('disabled', 'disabled')
 		});
 	});
 	$('div#header-search-b').hide();

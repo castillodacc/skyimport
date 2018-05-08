@@ -58,5 +58,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'can' => \skyimport\Http\Middleware\CheckPermisologia::class,
         'ajax' => \skyimport\Http\Middleware\OnlyAjax::class,
+        'admin' => \skyimport\Http\Middleware\onlyAdmin::class,
     ];
 }

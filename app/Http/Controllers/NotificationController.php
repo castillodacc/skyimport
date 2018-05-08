@@ -131,7 +131,7 @@ class NotificationController extends Controller
 				}
 			}
 			$id = array_unique($id);
-			$event = EventsUsers::whereIn('id', $id)->orderBy('created_at', 'DESC')->limit(30)->get();
+			$event = EventsUsers::whereIn('id', $id)->orderBy('created_at', 'DESC')->limit(15)->get();
 			foreach ($event as $e) {
 				if ($e->consolidated_id == null) {
 					if (in_array($e->event_id, [12,13,15])) {
@@ -277,10 +277,6 @@ class NotificationController extends Controller
 			}
 		}
 		if ($num) {
-			EventsUsers::create([
-				'consolidated_id' => $consolidated->id,
-				'event_id' => 4,
-			]);
 			$consolidated->update(['shippingstate_id' => 4]);
 			foreach ($trackings as $t) {
 				$t->update(['shippingstate_id' => 13]);
@@ -289,6 +285,10 @@ class NotificationController extends Controller
 					'event_id' => 13,
 				]);
 			}
+			EventsUsers::create([
+				'consolidated_id' => $consolidated->id,
+				'event_id' => 4,
+			]);
 		}
 	}
 

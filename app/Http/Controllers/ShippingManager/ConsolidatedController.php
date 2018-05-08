@@ -10,6 +10,7 @@ use Yajra\DataTables\Datatables;
 use skyimport\Models\Tracking;
 use skyimport\Models\Events;
 use skyimport\Models\EventsUsers;
+use skyimport\User;
 
 class ConsolidatedController extends Controller
 {
@@ -62,7 +63,7 @@ class ConsolidatedController extends Controller
             if (request()->c !== 'abierto' && \Auth::user()->role_id === 1) {
                 if ($consolidated->shippingstate_id == 5 && $consolidated->bill == 0) {
                     $html .= '
-                        <button id="factureConsolidated" type="button" class="btn btn-default btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Facturar" consolidated="' . $consolidated->id . '"><span class="fa fa-dollar text-green"></span> Facturar</button>
+                        <button id="factureConsolidated" type="button" class="btn btn-default btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Orden de Servicio" consolidated="' . $consolidated->id . '"><span class="fa fa-dollar text-green"></span> Orden de Servicio</button>
                     ';
                 } elseif ($consolidated->shippingstate_id == 6) {
                     $html .= '
@@ -304,8 +305,11 @@ class ConsolidatedController extends Controller
             'consolidated_id' => $consolidated->id,
             'event_id' => 3,
         ]);
-        $consolidated->save();
-        return response()->json($consolidated);
+        $admins = \skyimport\User::where('role_id', '=', 1)->get();
+        foreach ($admins as $admin) {
+            \Mail::to($admin->email)->send(new \skyimport\Mail\Formalizado($consolidated));
+        }
+        return response()->json($consolidated->save());
     }
 
     public function dataEvents($id = null)

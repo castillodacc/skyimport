@@ -74,6 +74,10 @@ class ConsolidatedInColombia extends Command
                     'consolidated_id' => $c->id,
                     'event_id' => 3,
                 ]);
+                $admins = \skyimport\User::where('role_id', '=', 1)->get();
+                foreach ($admins as $admin) {
+                    \Mail::to($admin->email)->send(new \skyimport\Mail\Formalizado($c));
+                }
                 $c->save();
             } else {
                 $c->delete();
