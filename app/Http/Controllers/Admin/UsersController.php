@@ -125,6 +125,11 @@ class UsersController extends Controller
             $file = $request->file('avatar');
             $ext = $request->avatar->getClientOriginalExtension();
             $name = $id.'.'.$ext;
+            foreach (['.jpg','.jpeg','.png'] as $e) {
+                if(\File::exists(public_path('/storage/app/' . $id . $e))){
+                    \File::delete(public_path('/storage/app/' . $id . $e));
+                }
+            }
             \Storage::disk('local')->put($name,  \File::get($file));
         }
         return response('', 200);
