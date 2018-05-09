@@ -318,7 +318,8 @@ class ConsolidatedController extends Controller
             $trackings = Consolidated::findOrFail($id)->trackings;
         }
         $events = Events::where('type', '=', 2)
-                ->where('id', '<>', 13)
+                ->where('id', '=', 12)
+                ->orWhere('id', '=', 15)
                 ->pluck('event', 'id');
         return response()->json(compact('trackings', 'events'));
     }
