@@ -285,6 +285,7 @@ class NotificationController extends Controller
 					'event_id' => 13,
 				]);
 			}
+			sleep(1);
 			EventsUsers::create([
 				'consolidated_id' => $consolidated->id,
 				'event_id' => 4,
