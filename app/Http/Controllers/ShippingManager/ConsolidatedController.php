@@ -43,8 +43,9 @@ class ConsolidatedController extends Controller
         if ($request->c === 'abierto') {
             $object->where('closed_at', '>', \Carbon::now());
         } else {
-            $object->where('closed_at', '<', \Carbon::now());
+            $object->where('closed_at', '<', \Carbon::now())->orderBy('closed_at', 'DESC');
         }
+
 
         if (\Auth::user()->role_id == 2) {
             $object->where('user_id', '=', \Auth::user()->id);
@@ -65,14 +66,19 @@ class ConsolidatedController extends Controller
                     $html .= '
                         <button id="factureConsolidated" type="button" class="btn btn-default btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Orden de Servicio" consolidated="' . $consolidated->id . '"><span class="fa fa-dollar text-green"></span> Orden de Servicio</button>
                     ';
-                } elseif ($consolidated->shippingstate_id == 6) {
-                    $html .= '
-                        <button id="editEventConsolidated" type="button" class="btn btn-default btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Entregado" consolidated="' . $consolidated->id . '" event="7"><span class="glyphicon glyphicon-ok text-green"></span> Entregado</button>
-                    ';
-                } elseif ($consolidated->shippingstate_id == 7) {
-                    $html .= '
-                        <button id="editEventConsolidated" type="button" class="btn btn-default btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Pagado" consolidated="' . $consolidated->id . '" event="8"><span class="glyphicon glyphicon-ok text-green"></span> Pagado</button>
-                    ';
+                } else {
+                    $e = $consolidated->eventsUsers->where('event_id', '=', 7)->count();
+                    $p = $consolidated->eventsUsers->where('event_id', '=', 8)->count();
+                    if (! $e) {
+                        $html .= '
+                            <button id="editEventConsolidated" type="button" class="btn btn-default btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Entregado" consolidated="' . $consolidated->id . '" event="7"><span class="glyphicon glyphicon-ok text-green"></span> Entregado</button>
+                        ';
+                    }
+                    if (! $p) {
+                        $html .= '
+                            <button id="editEventConsolidated" type="button" class="btn btn-default btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Pagado" consolidated="' . $consolidated->id . '" event="8"><span class="glyphicon glyphicon-ok text-green"></span> Pagado</button>
+                        ';
+                    }
                 }
             }
             $extend = $consolidated->eventsUsers->where('event_id', '=', 2)->count();

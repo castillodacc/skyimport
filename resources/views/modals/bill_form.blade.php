@@ -24,9 +24,9 @@
                                 <div class="input-group-addon">
                                     <span class="fa fa-dollar"></span>
                                 </div> 
-                                <input type="text" id="bill" name="bill" placeholder="Total de orden de servicio (USD)" class="form-control">
+                                <input type="text" id="bill" name="bill" placeholder="Total de orden de servicio (COP)" class="form-control">
                             </div>                        
-                            <small id="bill" class="form-text text-muted">Precio total de la orden de servicio en USD.</small>
+                            <small id="bill" class="form-text text-muted">Precio total de la orden de servicio en COP.</small>
                         </div>
                     </div>
                     <div class="modal-footer">

@@ -98,7 +98,7 @@ $.ajax({
 			modal.find('td#created_date').text(response.open);
 			modal.find('td#closed_date').text(response.close);
 			if (response.bill > 0) {
-				modal.find('td#bill').text(response.bill + ' USD').addClass('success');
+				modal.find('td#bill').text(response.bill + ' COP').addClass('success');
 				modal.find('td#weight').text(response.weight + ' Lb').addClass('success');
 			} else {
 				modal.find('td#bill').removeClass('success').text(response.bill);
@@ -742,7 +742,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 						modal.find('td#closed_date').text(response.close);
 						modal.find('td#state').html(response.event);
 						if (response.bill > 0) {
-							modal.find('td#bill').text(response.bill + ' USD').addClass('bg-success');
+							modal.find('td#bill').text(response.bill + ' COP').addClass('bg-success');
 							modal.find('td#weight').text(response.weight + ' Lb').addClass('bg-success');
 						} else {
 							modal.find('td#bill').text(response.bill).removeClass('success');
