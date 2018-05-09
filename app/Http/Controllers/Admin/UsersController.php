@@ -13,7 +13,7 @@ class UsersController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('admin');
+        $this->middleware('admin')->only(['index', 'store', 'destroy', 'restore']);
         $this->middleware('ajax')->except(['index', 'profile']);
     }
 
