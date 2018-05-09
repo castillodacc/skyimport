@@ -261,7 +261,7 @@ class ConsolidatedController extends Controller
      */
     public function dataForRegister()
     {
-        $distributors = Distributor::all()->pluck('name', 'id');
+        $distributors = Distributor::orderBy('name', 'ASC')->get();
         $states = Events::where('type', '=', 1)->pluck('event', 'id');
         return response()->json(compact('distributors', 'states'));
     }

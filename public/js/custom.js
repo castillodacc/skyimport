@@ -488,7 +488,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 		let d = response.distributors;
 		let option = '<option value="">Repartidor</option>';
 		for (let i in d) {
-			option += '<option value="'+i+'">'+d[i]+'</option>';
+			option += '<option value="'+d[i].id+'">'+d[i].name+'</option>';
 		}
 		$('select#distributor_id').html(option);
 	});

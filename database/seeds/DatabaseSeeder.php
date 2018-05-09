@@ -98,6 +98,11 @@ class DatabaseSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => null,
         ]);
+        DB::table('distributors')->insert([
+            'name' => 'Otros',
+            'created_at' => Carbon::now(),
+            'updated_at' => null,
+        ]);
 
         $now = Carbon::now();
         /* Departamentos de colombia */
