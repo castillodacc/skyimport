@@ -578,8 +578,8 @@ if (location.href.indexOf('/consolidados') > 0) {
 						data: {'_method': 'DELETE'}
 					})
 					.done(function(response) {
-						toastr.success('Consolidado Borrado exitosamente!');
-						tr.html('<td colspan="7" class="text-center"> Consolidado Eliminado con exito. <a href="#" id="restore-consolidated" consolidated="'+id+'">Restaurar</a> | <a href="#" id="no-restore">Continuar</a></td>');
+						toastr.success('Consolidado borrado exitosamente!');
+						tr.html('<td colspan="7" class="text-center"> Consolidado eliminado con exito. <a href="#" id="restore-consolidated" consolidated="'+id+'">Restaurar</a> | <a href="#" id="no-restore">Continuar</a></td>');
 						$('a#restore-consolidated').click(function (e) {
 							e.preventDefault();
 							let consolidated = $(this).attr('consolidated');
@@ -663,6 +663,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 	var consTable2 = $('table#consolidated-b-table').DataTable({
 		lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "Todos"]],	
 		processing: true,
+		autoWidth: false,
 		serverSide: true,
 		responsive: true,
 		render: true,
@@ -787,7 +788,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 					let tr = $(this).parent().parent().parent();
 					$.post(path + 'consolidados/' + consolidated, {'_method': 'DELETE'}, function () {
 						toastr.success('Consolidado Borrado!');
-						tr.html('<td colspan="7" class="text-center"> Consolidado Eliminado con exito. <a href="#" id="restore-consolidated" consolidated="'+consolidated+'">Restaurar</a> | <a href="#" id="no-restore">Continuar</a></td>');
+						tr.html('<td colspan="7" class="text-center"> Consolidado Eliminado con exito. <a href="#" id="restore-consolidated" consolidated="'+consolidated+'"> Restaurar</a> | <a href="#" id="no-restore">Continuar</a></td>');
 						$('a#restore-consolidated').click(function (e) {
 							e.preventDefault();
 							let consolidated = $(this).attr('consolidated');

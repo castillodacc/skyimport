@@ -8,10 +8,10 @@
             <div class="modal-header">
                 <div class="row">
                     <div class="col-md-5">
-                        <b><span class="glyphicon glyphicon-calendar"></span> Fecha de creación:</b> <span class="f-create"></span>.
+                        <b><span class="fa fa-calendar-check-o"></span> Fecha de creación:</b> <span class="f-create"></span>.
                     </div>
                     <div class="col-md-5 col-md-offset-1">
-                        <b><span class="glyphicon glyphicon-calendar"></span> Fecha de cierre:</b> <span class="f-close"></span>.
+                        <b><span class="fa fa-calendar-times-o"></span> Fecha de cierre:</b> <span class="f-close"></span>.
                     </div>
                     <hr>
                 </div>
@@ -56,11 +56,11 @@
                             <small id="price" class="form-text text-muted">Valor declarado USD</small>
                         </div>
                         <div id="btn-create-tracking" class="col-md-1">
-                            <button type="submit" class="btn btn-primary btn-xs btn-flat" data-toggle="tooltip" data-placement="top" title="Agregar tracking"><span class="fa fa-plus"></span> Añadir</button>
+                            <button type="submit" class="btn btn-primary btn-xs btn-flat"><span class="fa fa-plus"></span> Añadir</button>
                         </div>
                         <div id="btns-edit-tracking" class="col-md-2 btn-group-xs hidden" role="toolbar">
-                            <button id="btn-edit-tracking" type="button" class="btn btn-warning btn-xs btn-flat" data-toggle="tooltip" data-placement="top" title="Editar Tracking"><span class="fa fa-edit"></span> Editar</button>
-                            <button id="btn-cancel-tracking" type="reset" class="btn btn-danger btn-xs btn-flat" data-toggle="tooltip" data-placement="top" title="Cancelar Edición"><span class="fa fa-close"></span> Cancelar</button>
+                            <button id="btn-edit-tracking" type="button" class="btn btn-primary btn-xs btn-flat"><span class="fa fa-pencil"></span> Editar</button>
+                            <button id="btn-cancel-tracking" type="reset" class="btn btn-danger btn-xs btn-flat"><span class="fa fa-close"></span> Cancelar</button>
                         </div>
                     </form>
                 </div>

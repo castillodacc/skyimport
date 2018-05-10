@@ -42,8 +42,8 @@ class TrackingController extends Controller
     ->addColumn('action', function ($tracking) {
       return '
         <div class="text-center">
-          <a id="editTracking" tracking="'.$tracking->id.'" class="btn btn-primary btn-xs btn-flat" href="#" data-toggle="tooltip" title="Editar"><span class="fa fa-edit"></span> Editar</a> 
-          <a id="deleteTracking" tracking="'.$tracking->id.'" class="btn btn-danger btn-xs btn-flat" href="#" data-toggle="tooltip" title="Eliminar"><span class="fa fa-close"></span> Cancelar</a>
+          <a id="editTracking" tracking="'.$tracking->id.'" class="btn btn-primary btn-xs btn-flat" href="#"><span class="fa fa-pencil"></span> Editar</a> 
+          <a id="deleteTracking" tracking="'.$tracking->id.'" class="btn btn-danger btn-xs btn-flat" href="#"><span class="fa fa-close"></span> Cancelar</a>
         </div>
         ';
     })

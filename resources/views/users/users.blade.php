@@ -15,20 +15,20 @@
 			<table id="users-table" class="table table-striped table-bordered table-hover table-condensed" cellspacing="0" width="100%">
 			<thead>
 				<tr>
-					<th><span class="fa fa-user-circle"></span> Usuario</th>
-					<th><span class="fa fa-id-card"></span> Identificación</th>
-					<th width="100px"><span class="fa fa-hand-stop-o"></span> Rol</th>
-					<th><span class="glyphicon glyphicon-envelope"></span> Correo</th>
-					<th><span class="fa fa-globe"></span> Pais</th>
-					<th><span class="fa fa-phone"></span> Telefono</th>
-					<th><span class="fa fa-check-circle-o"></span> Acciones</th>
+					<th width="25%">Usuario</th>
+					<th>Identificación</th>
+					<th width="5%">Rol</th>
+					<th>Correo</th>
+					<th>Pais</th>
+					<th>Telefono</th>
+					<th class="text-center" width="20%">Acciones</th>
 				</tr>
 			</thead>
 		</table>
 		</div>
 	</div>
 	<div class="box-footer">
-		<a id="register_user" class="btn btn-primary btn-sm btn-flat" data-toggle="tooltip" data-placement="top" title="Crear usuario"><span class="fa fa-plus"></span> Registrar usuario</a>
+		<a id="register_user" class="btn btn-primary btn-sm btn-flat"><span class="fa fa-plus"></span> Registrar usuario</a>
 	</div>
 </div>
 @include('modals.user_form')

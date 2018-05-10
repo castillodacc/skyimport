@@ -5,7 +5,7 @@
         <i class="box-title">Consolidados abiertos:</i>
         <div class="pull-right box-tools">
             <div class="btn-group btn-group-xs">
-                <button id="search-cons-a" type="button" class="btn bg-green btn-flat" data-title="Search" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Buscar filtros"><span class="fa fa-search"></span> Filtros</button>
+                <button id="search-cons-a" type="button" class="btn bg-green btn-flat" data-title="Search"><span class="fa fa-search"></span> Filtros</button>
                 <button type="button" class="btn btn-box-tool btn-flat" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button> 
             </div>
@@ -42,7 +42,7 @@
                     <small id="close_date" class="form-text text-muted">Fecha de cierre.</small>
                 </div>
                 <div class="form-group col-md-2">
-                    <button type="submit" class="btn bg-green btn-sm btn-flat" data-toggle="tooltip" data-placement="top" title="Buscar filtros"><span class="fa fa-search"></span> Buscar</button>
+                    <button type="submit" class="btn bg-green btn-sm btn-flat"><span class="fa fa-search"></span> Buscar</button>
                 </div>
             </div>
         </form>
@@ -52,20 +52,20 @@
             <table id="consolidated-a-table" class="table table-striped table-bordered table-hover table-condensed" cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                        <th><span class="fa fa-cube"></span> Consolidado</th>
-                        <th><span class="fa fa-user"></span> Usuario</th>
-                        <th><span class="fa fa-calendar-plus-o"></span> Creación</th>
-                        <th width="15%"><span class="fa fa-check-square-o"></span> Estado</th>
-                        <th width="85px"><span class="fa fa-location-arrow"></span> Trackings</th>
-                        <th><span class="fa fa-calendar-times-o"></span> Cierre</th>
-                        <th class="text-center" width="300px"><span class="fa fa-check-circle-o"></span> Acciones</th>
+                        <th>Consolidado</th>
+                        <th width="20%">Usuario</th>
+                        <th width="12%">Creación</th>
+                        <th width="15%">Estado</th>
+                        <th>Trackings</th>
+                        <th width="13%">Cierre</th>
+                        <th class="text-center" width="30%">Acciones</th>
                     </tr>
                 </thead>
             </table>
         </div> 
     </div>
     <div class="box-footer">
-        <a id="addForm" href="#" class="btn btn-primary btn-sm btn-flat" data-placement="top" title="Crear consolidado"><span class="fa fa-plus"></span> Nuevo consolidado</a>
+        <a id="addForm" href="#" class="btn btn-primary btn-sm btn-flat"><span class="fa fa-plus"></span> Nuevo consolidado</a>
     </div>
 </div>
 <div class="box box-primary">
@@ -73,7 +73,7 @@
         <i class="box-title">Consolidados formalizados:</i>
         <div class="pull-right">
             <div class="btn-group btn-group-xs">
-                <a id="search-cons-b" class="btn bg-green btn-flat" href="#" data-title="Search" data-toggle="tooltip" data-target="" data-placement="top" rel="tooltip" title="Buscar filtros"><span class="fa fa-search"></span> Filtros</a>
+                <a id="search-cons-b" class="btn bg-green btn-flat" href="#"><span class="fa fa-search"></span> Filtros</a>
                 <button type="button" class="btn btn-box-tool btn-flat" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button> 
             </div>
@@ -110,7 +110,7 @@
                     <small id="create_date" class="form-text text-muted">Fecha de cierre.</small>
                 </div>
                 <div class="form-group col-md-2">
-                    <button type="submit" class="btn bg-green btn-sm btn-flat" data-toggle="tooltip" data-placement="top" title="Buscar filtros"><span class="fa fa-search"></span> Buscar</button>
+                    <button type="submit" class="btn bg-green btn-sm btn-flat"><span class="fa fa-search"></span> Buscar</button>
                 </div>
             </div>
         </form>
@@ -120,13 +120,13 @@
             <table id="consolidated-b-table" class="table table-striped table-bordered table-hover table-condensed" cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                        <th><span class="fa fa-cube"></span> Consolidado</th>
-                        <th><span class="fa fa-user"></span> Usuario</th>
-                        <th><span class="fa fa-calendar-plus-o"></span> Creación</th>
-                        <th width="15%"><span class="fa fa-check-square-o"></span> Estado</th>
-                        <th width="85px"><span class="fa fa-location-arrow"></span> Trackings</th>
-                        <th><span class="fa fa-calendar-check-o"></span> Formalizado</th>
-                        <th class="text-center"><span class="fa fa-check-circle-o"></span> Acciones</th>
+                        <th>Consolidado</th>
+                        <th>Usuario</th>
+                        <th>Creación</th>
+                        <th>Estado</th>
+                        <th>Trackings</th>
+                        <th>Formalizado</th>
+                        <th class="text-center" width="48%">Acciones</th>
                     </tr>
                 </thead>
             </table>

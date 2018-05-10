@@ -64,19 +64,19 @@ class ConsolidatedController extends Controller
             if (request()->c !== 'abierto' && \Auth::user()->role_id === 1) {
                 if ($consolidated->shippingstate_id == 5 && $consolidated->bill == 0) {
                     $html .= '
-                        <button id="factureConsolidated" type="button" class="btn btn-default btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Orden de Servicio" consolidated="' . $consolidated->id . '"><span class="fa fa-dollar text-green"></span> Orden de Servicio</button>
+                        <button id="factureConsolidated" type="button" class="btn bg-purple btn-flat btn-xs" consolidated="' . $consolidated->id . '"><span class="fa fa-dollar"></span> Orden de Servicio</button>
                     ';
                 } else {
                     $e = $consolidated->eventsUsers->where('event_id', '=', 7)->count();
                     $p = $consolidated->eventsUsers->where('event_id', '=', 8)->count();
                     if (! $e) {
                         $html .= '
-                            <button id="editEventConsolidated" type="button" class="btn btn-default btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Entregado" consolidated="' . $consolidated->id . '" event="7"><span class="glyphicon glyphicon-ok text-green"></span> Entregado</button>
+                            <button id="editEventConsolidated" type="button" class="btn btn-success btn-flat btn-xs" consolidated="' . $consolidated->id . '" event="7"><span class="glyphicon glyphicon-ok"></span> Entregado</button>
                         ';
                     }
                     if (! $p) {
                         $html .= '
-                            <button id="editEventConsolidated" type="button" class="btn btn-default btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Pagado" consolidated="' . $consolidated->id . '" event="8"><span class="glyphicon glyphicon-ok text-green"></span> Pagado</button>
+                            <button id="editEventConsolidated" type="button" class="btn bg-navy btn-flat btn-xs" consolidated="' . $consolidated->id . '" event="8"><span class="fa fa-list-alt"></span> Pagado</button>
                         ';
                     }
                 }
@@ -90,26 +90,26 @@ class ConsolidatedController extends Controller
             }
             if ((request()->c == 'abierto' && $extend < 2) || (\Auth::user()->role_id == 1 && $var) ) {
                 $html .= '
-                    <button id="extendConsolidated" type="button" class="btn btn-warning btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Extender un día el cierre" consolidated="' . $consolidated->id . '"><span class="fa fa-calendar-plus-o"></span> Extender</button>
+                    <button id="extendConsolidated" type="button" class="btn btn-warning btn-flat btn-xs" consolidated="' . $consolidated->id . '"><span class="fa fa-calendar-plus-o"></span> Extender</button>
                 ';
             }
             $html .= '
-                <button id="'.$nameView.'" type="button" class="btn btn-info btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Ver" consolidated="' . $consolidated->id . '"><span class="fa fa-eye"></span> Mostrar</button>
+                <button id="'.$nameView.'" type="button" class="btn btn-info btn-flat btn-xs" consolidated="' . $consolidated->id . '"><span class="fa fa-eye"></span> Mostrar</button>
             ';
 
             if ($consolidated->shippingstate_id < 3 || \Auth::user()->role_id == 1) {
                 $html .= '
-                    <button id="editConsolidated" type="button" class="btn btn-primary btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Editar" consolidated="' . $consolidated->id . '"><span class="fa fa-edit"></span> Editar</button>
+                    <button id="editConsolidated" type="button" class="btn btn-primary btn-flat btn-xs" consolidated="' . $consolidated->id . '"><span class="fa fa-pencil"></span> Editar</button>
                 ';
             }
             if (request()->c != 'abierto') {
                 $html .= '
-                <button id="edit-formalized" type="button" class="btn bg-green btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Eventos" consolidated="' . $consolidated->id . '"><span class="fa fa-list"></span> Eventos</button>
+                <button id="edit-formalized" type="button" class="btn bg-teal btn-flat btn-xs" consolidated="' . $consolidated->id . '"><span class="fa fa-list"></span> Eventos</button>
                 ';
             }
             if (\Auth::user()->role_id === 1 || request()->c === 'abierto') {
                 $html .= '
-                    <button id="'.$nameDelete.'" type="button" class="btn btn-danger btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Eliminar" consolidated="' . $consolidated->id . '"><span class="fa fa-trash"></span> Eliminar</button>
+                    <button id="'.$nameDelete.'" type="button" class="btn btn-danger btn-flat btn-xs" consolidated="' . $consolidated->id . '"><span class="fa fa-trash"></span> Eliminar</button>
                 ';
             }
             $html .= '</div>';
