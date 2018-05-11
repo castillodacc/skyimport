@@ -88,7 +88,8 @@ class ConsolidatedController extends Controller
                 $horas = $event->created_at->diffInHours(\Carbon::now());
                 if ($horas < 24) $var = true;
             }
-            if ((request()->c == 'abierto' && $extend < 2) || (\Auth::user()->role_id == 1 && $var) ) {
+            if ((request()->c == 'abierto' && $extend < 2 && \Auth::user()->role_id == 2) ||
+                (\Auth::user()->role_id == 1 && ($var || request()->c == 'abierto')) ) {
                 $html .= '
                     <button id="extendConsolidated" type="button" class="btn btn-warning btn-flat btn-xs" consolidated="' . $consolidated->id . '"><span class="fa fa-calendar-plus-o"></span> Extender</button>
                 ';
