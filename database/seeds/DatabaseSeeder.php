@@ -225,15 +225,15 @@ class DatabaseSeeder extends Seeder
         ]);
         Events::create([
             'type' => 1,
-            'event' => '<span class="fa fa-check-square-o cye-lm-tag"></span> Creada Orden de Servicio'
+            'event' => '<span class="fa fa-dollar cye-lm-tag"></span> Creada Orden de Servicio'
         ]);
         Events::create([
             'type' => 1,
-            'event' => '<span class="fa fa-check-square-o cye-lm-tag"></span> Entregado'
+            'event' => '<span class="glyphicon glyphicon-ok cye-lm-tag"></span> Entregado'
         ]);
         Events::create([
             'type' => 1,
-            'event' => '<span class="fa fa-check-square-o cye-lm-tag"></span> Pagado'
+            'event' => '<span class="fa fa-list-alt cye-lm-tag"></span> Pagado'
         ]);
         Events::create(['type' => 1, 'event' => '']);
         Events::create(['type' => 1, 'event' => '']);

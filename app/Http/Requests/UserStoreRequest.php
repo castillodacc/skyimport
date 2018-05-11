@@ -24,14 +24,14 @@ class UserStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'          => 'required|max:50',
-            'last_name'     => 'required|max:50',
-            'email'         => 'required|email|max:60|unique:users',
-            'phone'         => 'required|numeric|unique:users',
-            'num_id'        => 'required|numeric|exr_ced|unique:users',
+            'name'          => 'required|max:25',
+            'last_name'     => 'required|max:25',
+            'email'         => 'required|email|max:30|unique:users',
+            'phone'         => 'required|numeric|unique:users|digits_between:6,11',
+            'num_id'        => 'required|numeric|exr_ced|unique:users|max:1000000000|min:500000',
             'country_id'    => 'required|numeric',
             'state_id'      => 'required|numeric',
-            'city'          => 'required|string|max:50',
+            'city'          => 'required|alpha|max:20',
             'address'       => 'required|string|max:100',
             'address_two'   => 'nullable|string|max:100',
             'role_id'       => 'required|numeric',
