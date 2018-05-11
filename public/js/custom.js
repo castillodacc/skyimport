@@ -793,28 +793,11 @@ if (location.href.indexOf('/consolidados') > 0) {
 					e.preventDefault();
 					let consolidated = $(this).attr('consolidated');
 					$('table#table-edit-formalized').attr('consolidated', consolidated);
+					$('table#table-edit-formalized tbody').html('')
 					cargarEventos(consolidated);
 					$('button#agregar-event').attr('consolidated', consolidated);
-					$.post(path + 'consolidados/data-events/' + consolidated, function (response) {
-						let trackings = response.trackings;
-						let html = '<option value="">Seleccione un tracking</option>';
-						for(let i in trackings) {
-							html += '<option value="' + trackings[i].id + '">';
-							html += trackings[i].tracking + ' - ' + trackings[i].description;
-							html += '</option>';
-						}
-						$('form#events select[name="tracking"]').html(html);
-						let events = response.events;
-						html = '<option value="">Seleccione un evento</option>';
-						for(let i in events) {
-							html += '<option value="' + i + '">';
-							html += events[i];
-							html += '</option>';
-						}
-						$('form#events select[name="event"]').html(html);
-					});
 					trackTable2.draw();
-					$('#modal-send_formalizated_edit').modal('toggle');
+					setTimeout(function () {$('#modal-send_formalizated_edit').modal('toggle'); },350);
 				});
 				$('button#delete-formalized').click(function (e) {
 					e.preventDefault();
