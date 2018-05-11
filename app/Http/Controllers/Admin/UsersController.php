@@ -212,4 +212,10 @@ class UsersController extends Controller
         $user = User::withTrashed()->findOrFail($id)->restore();
         return response()->json($user);
     }
+
+    public function getAll()
+    {
+        $users = User::get(['name', 'last_name', 'id', 'num_id']);
+        return response()->json(compact('users'));
+    }
 }

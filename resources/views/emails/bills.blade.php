@@ -34,7 +34,7 @@
 											<li> Identificación: {{ $consolidated->user->num_id }}.</li>
 											<li> Consolidado n°: {{ $consolidated->number }} </li>
 											<li> Peso: {{ $consolidated->weight }} Lb.</li>
-											<li> Total a pagar: {{ $consolidated->bill }} COP.</li>
+											<li> Total a pagar: {{ number_format($consolidated->bill, 2, ',', '.') }} COP.</li>
 											<li> Fecha de expedicion de factura: {{ \Carbon::now()->format('Y/m/d') }}.</li>
 										</ul>
 										<p>Recibido:</p>

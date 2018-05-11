@@ -18,6 +18,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::group(['namespace' => 'Admin'], function () {
 		Route::resource('usuarios', 'UsersController');
 		Route::post('usuarios/restore/{id}', 'UsersController@restore');
+		Route::post('users-all', 'UsersController@getAll');
 		Route::get('perfil/{id?}', 'UsersController@profile')->name('profile');
 		Route::get('get-data-user', 'UsersController@dataForRegister');
 		Route::get('get-data-states/{state}', 'UsersController@dataStates');
@@ -29,6 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::post('consolidados/restore/{id}', 'ConsolidatedController@restore');
 		Route::post('consolidados/data-events/{id?}', 'ConsolidatedController@dataEvents');
 		Route::post('data-for-consolidated', 'ConsolidatedController@dataForRegister');
+		Route::post('user-consolidated/{consolidated}', 'ConsolidatedController@addUserConsolidated');
 		Route::post('extend-consolidated/{consolidated}', 'ConsolidatedController@extend');
 		Route::post('formalize-consolidated/{consolidated}', 'ConsolidatedController@formalize');
 		Route::resource('tracking', 'TrackingController');

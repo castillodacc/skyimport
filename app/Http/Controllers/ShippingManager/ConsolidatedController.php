@@ -66,7 +66,7 @@ class ConsolidatedController extends Controller
                     $html .= '
                         <button id="factureConsolidated" type="button" class="btn btn-default btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Orden de Servicio" consolidated="' . $consolidated->id . '"><span class="fa fa-dollar text-green"></span> Orden de Servicio</button>
                     ';
-                } else {
+                } elseif ($consolidated->shippingstate_id > 5) {
                     $e = $consolidated->eventsUsers->where('event_id', '=', 7)->count();
                     $p = $consolidated->eventsUsers->where('event_id', '=', 8)->count();
                     if (! $e) {
@@ -97,7 +97,8 @@ class ConsolidatedController extends Controller
                 <button id="'.$nameView.'" type="button" class="btn btn-info btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Ver" consolidated="' . $consolidated->id . '"><span class="fa fa-eye"></span> Mostrar</button>
             ';
 
-            if ($consolidated->shippingstate_id < 3 || \Auth::user()->role_id == 1) {
+            if ((\Auth::user()->role_id == 2 && ($consolidated->shippingstate_id < 3 || $var)) ||
+                (\Auth::user()->role_id == 1 && $consolidated->shippingstate_id < 5)) {
                 $html .= '
                     <button id="editConsolidated" type="button" class="btn btn-primary btn-flat btn-xs" data-toggle="tooltip" data-placement="top" title="Editar" consolidated="' . $consolidated->id . '"><span class="fa fa-edit"></span> Editar</button>
                 ';
@@ -135,6 +136,10 @@ class ConsolidatedController extends Controller
                 $class = "primary";
             } else {
                 $class = "danger";
+            }
+            $last = $consolidated->eventsUsers->whereIn('event_id', [5,6,7,8])->count();
+            if ($last == 4) {
+                return '<span class="label label-' . $class . '"><i class="fa fa-check-square-o" aria-hidden="true"></i> OK</span>';
             }
             return '<span class="label label-' . $class . '">' . $event->event . '</span>';
         })
@@ -180,11 +185,12 @@ class ConsolidatedController extends Controller
             $cierre = $consolidado->closed_at->diffForHumans();
             $creacion = $consolidado->created_at->diffForHumans();
             $id = $consolidado->id;
+            $user = $consolidado->user;
             EventsUsers::create([
                 'consolidated_id' => $id,
                 'event_id' => 1,
             ]);
-            return response()->json(compact('creacion', 'cierre', 'id'));
+            return response()->json(compact('creacion', 'cierre', 'id', 'user'));
         }
     }
 
@@ -352,5 +358,15 @@ class ConsolidatedController extends Controller
             \Mail::to($mail)->send(new \skyimport\Mail\Factura($id));
         }
         return response()->json($consolidated);
+    }
+
+    public function addUserConsolidated($id)
+    {
+        $c = Consolidated::findOrFail($id);
+        if ($c->user_id == request()->user_id) {
+            return response()->json(['msg' => 'Este usuario pertenece a este consolidado.']);
+        }
+        $c->update(['user_id' => request()->user_id]);
+        return response()->json($c);
     }
 }

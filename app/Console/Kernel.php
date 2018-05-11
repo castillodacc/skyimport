@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('consolidated:beforeAduana')->twiceDaily(1, 13);
+        $schedule->command('consolidated:beforeAduana')->hourly();
         // $schedule->command('inspire')
         //          ->hourly();
     }

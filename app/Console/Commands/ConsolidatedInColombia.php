@@ -39,16 +39,12 @@ class ConsolidatedInColombia extends Command
      */
     public function handle()
     {
-        // - Un día hábil después de que se dio notificación de vuelo, llegan a Colombia y entran en aduana que ese es otro estado de consolidado y también se notifica.
-        // - salida miami - bogota un dia habil de la anterior se coloca en estado "colombia - aduana" 
-        // 24 hotas luego que se coloca el consolidado en "salida de miami a bogota" llega a colombia
         $dia = \Carbon::now()->formatLocalized('%A');
         if ($dia != 'sábado' && $dia != 'domingo') {
             $consolidateds = Consolidated::where('shippingstate_id', 4)->get();
             $consolidateds->each(function ($c) {
-                $event = $c->eventsUsers->last();
-                if ($event->event_id == 4 && 
-                    $event->created_at->diffInHours(\Carbon::now()) == 24) {
+                $event = $c->eventsUsers->where('event_id', 4)->first();
+                if ($event->created_at->diffInHours(\Carbon::now()) == 24) {
                     $c->trackings->each(function ($t) {
                         $t->update(['shippingstate_id' => 14]);
                         EventsUsers::create([
@@ -66,21 +62,25 @@ class ConsolidatedInColombia extends Command
         }
 
         // evalua que el consolidado que ya expire su fecha de formalizacion pase de evento.
-        $consolidated = Consolidated::where('closed_at', '<', \Carbon::now())->where('shippingstate_id', '<', 3)->get();
+        $consolidated = skyimport\Models\Consolidated::where('shippingstate_id', '<', 3)->get();
         $consolidated->each(function ($c) {
             if ($c->trackings->count()) {
-                $c->shippingstate_id = 3;
-                EventsUsers::create([
-                    'consolidated_id' => $c->id,
-                    'event_id' => 3,
-                ]);
-                $admins = \skyimport\User::where('role_id', '=', 1)->get();
-                foreach ($admins as $admin) {
-                    \Mail::to($admin->email)->send(new \skyimport\Mail\Formalizado($c));
+                if ($c->closed_at < \Carbon::now()) {
+                    $c->shippingstate_id = 3;
+                    EventsUsers::create([
+                        'consolidated_id' => $c->id,
+                        'event_id' => 3,
+                    ]);
+                    $admins = \skyimport\User::where('role_id', '=', 1)->get();
+                    foreach ($admins as $admin) {
+                        \Mail::to($admin->email)->send(new \skyimport\Mail\Formalizado($c));
+                    }
+                    $c->save();
                 }
-                $c->save();
             } else {
-                $c->delete();
+                if ($c->created_at->diffInHours(\Carbon::now()) == 1) {
+                    $c->delete();
+                }
             }
         });
     }

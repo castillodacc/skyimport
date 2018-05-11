@@ -221,11 +221,11 @@ class DatabaseSeeder extends Seeder
         ]);
         Events::create([
             'type' => 1,
-            'event' => 'Facturar'
+            'event' => 'Crear Orden de Servicio'
         ]);
         Events::create([
             'type' => 1,
-            'event' => '<span class="fa fa-check-square-o cye-lm-tag"></span> Crear Orden de Servicio'
+            'event' => '<span class="fa fa-check-square-o cye-lm-tag"></span> Creada Orden de Servicio'
         ]);
         Events::create([
             'type' => 1,

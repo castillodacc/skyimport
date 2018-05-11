@@ -98,8 +98,8 @@ $.ajax({
 			modal.find('td#created_date').text(response.open);
 			modal.find('td#closed_date').text(response.close);
 			if (response.bill > 0) {
-				modal.find('td#bill').text(response.bill + ' COP').addClass('success');
-				modal.find('td#weight').text(response.weight + ' Lb').addClass('success');
+				modal.find('td#bill').text(number_format(response.bill, 2) + ' COP').addClass('success');
+				modal.find('td#weight').text(number_format(response.weight, 2) + ' Lb').addClass('success');
 			} else {
 				modal.find('td#bill').removeClass('success').text(response.bill);
 				modal.find('td#weight').removeClass('success').text(response.weight);
@@ -137,6 +137,28 @@ var trackTableView = $('table#table-view-trackings').DataTable({
 	{data: 'shippingstate_id', name: 'shippingstate_id'},
 	]
 });
+function number_format(amount, decimals) {
+
+    amount += ''; // por si pasan un numero en vez de un string
+    amount = parseFloat(amount.replace(/[^0-9\.]/g, '')); // elimino cualquier cosa que no sea numero o punto
+
+    decimals = decimals || 0; // por si la variable no fue fue pasada
+
+    // si no es un numero o es igual a cero retorno el mismo cero
+    if (isNaN(amount) || amount === 0) 
+        return parseFloat(0).toFixed(decimals);
+
+    // si es mayor o menor que cero retorno el valor formateado como numero
+    amount = '' + amount.toFixed(decimals);
+
+    var amount_parts = amount.split('.'),
+        regexp = /(\d+)(\d{3})/;
+
+    while (regexp.test(amount_parts[0]))
+        amount_parts[0] = amount_parts[0].replace(regexp, '$1' + '.' + '$2');
+
+    return amount_parts.join(',');
+}
 if (location.href.indexOf('/perfil') > 0) {
 // al cargar la pagina se colocan los inputs con readonly
 let inputs = $('form#profile').find('input, textarea, select');
@@ -395,7 +417,7 @@ if (location.href.indexOf('/usuarios') > 0) {
 				});
 				$('button#delete-user').click(function (e) {
 					let id = $(this).attr('user');
-					let tr = $(this).parent().parent().parent().parent();
+					let tr = $(this).parent().parent().parent();
 					let url = path + 'usuarios/' + id;
 					$.ajax({
 						url: url,
@@ -405,12 +427,12 @@ if (location.href.indexOf('/usuarios') > 0) {
 					})
 					.done(function(response) {
 						toastr.success('Usuario Borrado exitosamente!');
-						tr.html('<td colspan="7" class="text-center"> Usuario Eliminado con exito. <a href="#" id="restore-user" user="'+id+'">Restaurar</a> | <a href="#" id="no-restore">Continuar</a></td>');
+						tr.html('<td colspan="7" class="text-center"> Usuario Eliminado con éxito. <a href="#" id="restore-user" user="'+id+'">Restaurar</a> | <a href="#" id="no-restore">Continuar</a></td>');
 						$('a#restore-user').click(function (e) {
 							e.preventDefault();
 							let user = $(this).attr('user');
 							$.post(path + 'usuarios/restore/' + user, function () {
-								toastr.success('usuario restaurado');
+								toastr.success('Usuario Restaurado');
 								oTable.draw();
 							});
 						});
@@ -560,8 +582,14 @@ if (location.href.indexOf('/consolidados') > 0) {
 					let consolidated = $(this).attr('consolidated');
 					let url = path + 'consolidados/' + consolidated;
 					$.get(url, function (response) {
+						$('tr').removeClass('info');
+						$('#btn-create-tracking').show();
+						$('#btns-edit-tracking').hide();
+						$('#tracking-form-register input[name=_method]').val('POST');
+						$('#tracking-form-register').attr('action', path + 'tracking');
 						$('.f-close').text(response.close);
 						$('.f-create').text(response.open);
+						$('input[name="user_id"]').val(response.user.name + ' ' + response.user.last_name + ((response.user.num_id) ? ' / ' + response.user.num_id : ''));
 						$('form#tracking-form-register input#consolidated_id').val(response.id);
 						$('#modal-send-form').modal('toggle').find('.modal-title').html('<span class="fa fa-edit"></span> Editar Consolidado ' + response.number);
 						trackTable.draw();
@@ -637,7 +665,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 				$('a#editTracking').click(function () {
 					let tracking = $(this).attr('tracking');
 					$('tr').removeClass('info');
-					$(this).parent().parent().parent().addClass('info');
+					$(this).parent().parent().parent().addClass('info')
 					$.get(path + 'tracking/' + tracking, function (response) {
 						let entradas = $('form#tracking-form-register');
 						for (let i in response) {
@@ -721,8 +749,14 @@ if (location.href.indexOf('/consolidados') > 0) {
 					let consolidated = $(this).attr('consolidated');
 					let url = path + 'consolidados/' + consolidated;
 					$.get(url, function (response) {
+						$('tr').removeClass('info');
+						$('#btn-create-tracking').show();
+						$('#btns-edit-tracking').hide();
+						$('#tracking-form-register input[name=_method]').val('POST');
+						$('#tracking-form-register').attr('action', path + 'tracking');
 						$('.f-close').text(response.close);
 						$('.f-create').text(response.open);
+						$('input[name="user_id"]').val(response.user.name + ' ' + response.user.last_name + ((response.user.num_id) ? ' / ' + response.user.num_id : ''));
 						$('form#tracking-form-register input#consolidated_id').val(response.id);
 						$('#modal-send-form').modal('toggle').find('.modal-title').html('<span class="fa fa-edit"></span> Editar Consolidado ' + response.number);
 						trackTable.draw();
@@ -742,8 +776,8 @@ if (location.href.indexOf('/consolidados') > 0) {
 						modal.find('td#closed_date').text(response.close);
 						modal.find('td#state').html(response.event);
 						if (response.bill > 0) {
-							modal.find('td#bill').text(response.bill + ' COP').addClass('bg-success');
-							modal.find('td#weight').text(response.weight + ' Lb').addClass('bg-success');
+							modal.find('td#bill').text(number_format(response.bill, 2) + ' COP').addClass('bg-success');
+							modal.find('td#weight').text(number_format(response.weight, 2) + ' Lb').addClass('bg-success');
 						} else {
 							modal.find('td#bill').text(response.bill).removeClass('success');
 							modal.find('td#weight').text(response.weight).removeClass('success');
@@ -854,8 +888,14 @@ if (location.href.indexOf('/consolidados') > 0) {
 			}
 		})
 		.done(function(response) {
+			$('tr').removeClass('info');
+			$('#btn-create-tracking').show();
+			$('#btns-edit-tracking').hide();
+			$('#tracking-form-register input[name=_method]').val('POST');
+			$('#tracking-form-register').attr('action', path + 'tracking');
 			$('.f-close').text(response.cierre);
 			$('.f-create').text(response.creacion);
+			$('input[name="user_id"]').val(response.user.name + ' ' + response.user.last_name + ((response.user.num_id) ? ' / ' + response.user.num_id : ''));
 			$('form#tracking-form-register input#consolidated_id').val(response.id);
 			$('#modal-send-form').modal('toggle').find('.modal-title').html('<span class="fa fa-plus"></span> Crear Nuevo Consolidado.');
 			trackTable.draw();
@@ -967,10 +1007,15 @@ if (location.href.indexOf('/consolidados') > 0) {
 		e.preventDefault();
 		consTable2.draw();
 	});
-	$('#consolidated-save').click(function () {
+	$('#consolidated-save, #modal-send-form button[class="close"]').click(function () {
+		if ($('#tracking-table tbody tr td').length == 1) {
+			toastr.info('Debe de agregar trackings para guardar el consolidado.');
+			return;
+		}
 		$('#tracking-form-register')[0].reset();
 		$('#tracking-form-register').attr('action', path + 'tracking');
 		$('#tracking-form-register').find('[name="_method"]').val('POST');
+		$('#modal-send-form').modal('toggle');
 		consTable.draw();
 	});
 	function cargarEventos(id) {
@@ -1052,6 +1097,54 @@ if (location.href.indexOf('/consolidados') > 0) {
 	$('button#show-closed').click(function () {
 		consTable.draw();
 		consTable2.draw();
+	});
+	$.post(path + 'users-all', function (response) {
+		let u = response.users;
+		let html = '';
+		for(let i in u) {
+			html += '<option value="' + u[i].name + ' ' + u[i].last_name + ((u[i].num_id) ? ' / ' + u[i].num_id : '') + '" id="' + u[i].id + '"></option>';
+		}
+		$('#user_id').html(html)
+	});
+	$('#user-of-consolidated').submit(function (e) {
+		e.preventDefault();
+		let consolidated = $('form#tracking-form-register #consolidated_id').val();
+		let url  = path + 'user-consolidated/' + consolidated;
+		let data = $(this).serializeArray();
+		let user = $('datalist#user_id option[value="'+$('input[list="user_id"]').val()+'"]').attr('id');
+		data[2].value = user;
+		if (! user) {
+			toastr.info('Debe seleccionar un usuario');
+			return;
+		}
+		$.ajax({
+			url: url,
+			type: 'POST',
+			dataType: 'json',
+			data: data,
+		})
+		.done(function(response) {
+			if (response.msg) {
+				toastr.info(response.msg);
+				return;
+			}
+			toastr.success('Usuario agregado al consolidado!');
+		})
+		.fail(function(response) {
+			toastr.error('Error al editar.');
+		});
+	});
+	$('input[name="user_id"]').focus(function () {
+		localStorage.setItem('user', $(this).val());
+		$(this).val('');
+	});
+	$('input[name="user_id"]').blur(function () {
+		if ($(this).val() == '') {
+			$(this).val(localStorage.getItem('user'));
+		} else {
+			$(this).val($(this).val())
+		}
+		localStorage.removeItem('user');
 	});
 }
 if (location.href.indexOf('/tracking') > 0) {

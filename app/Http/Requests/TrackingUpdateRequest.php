@@ -24,11 +24,11 @@ class TrackingUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'tracking' => 'required',
-            'description' => 'required|string',
+            'tracking' => 'required|max:20|min:5',
+            'description' => 'required|string|max:15|min:3',
             'consolidated_id' => 'required|numeric',
             'distributor_id' => 'required|numeric',
-            'price' => 'numeric',
+            'price' => 'max:1000000',
         ];
     }
 
