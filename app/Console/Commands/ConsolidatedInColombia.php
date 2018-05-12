@@ -62,7 +62,7 @@ class ConsolidatedInColombia extends Command
         }
 
         // evalua que el consolidado que ya expire su fecha de formalizacion pase de evento.
-        $consolidated = skyimport\Models\Consolidated::where('shippingstate_id', '<', 3)->get();
+        $consolidated = \skyimport\Models\Consolidated::where('shippingstate_id', '<', 3)->get();
         $consolidated->each(function ($c) {
             if ($c->trackings->count()) {
                 if ($c->closed_at < \Carbon::now()) {
