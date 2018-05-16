@@ -6,21 +6,21 @@ use Illuminate\Console\Command;
 use skyimport\Models\Consolidated;
 use skyimport\Models\EventsUsers;
 
-class ConsolidatedInColombia extends Command
+class Consolidateds extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'consolidated:beforeAduana';
+    protected $signature = 'consolidated:jobs';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Un día hábil después de que se dio notificación de vuelo, llegan a Colombia y entran en aduana';
+    protected $description = 'Un día hábil después de que se dio notificación de vuelo, llegan a Colombia y entran en aduana, los consolidados que llevan más de una hora vacios se borran.';
 
     /**
      * Create a new command instance.
@@ -44,6 +44,7 @@ class ConsolidatedInColombia extends Command
             $consolidateds = Consolidated::where('shippingstate_id', 4)->get();
             $consolidateds->each(function ($c) {
                 $event = $c->eventsUsers->where('event_id', 4)->first();
+                $this->info($event->created_at->diffInMinutes(\Carbon::now()));
                 if ($event->created_at->diffInHours(\Carbon::now()) == 24) {
                     $c->trackings->each(function ($t) {
                         $t->update(['shippingstate_id' => 14]);

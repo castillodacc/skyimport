@@ -221,6 +221,10 @@ class DatabaseSeeder extends Seeder
         ]);
         Events::create([
             'type' => 1,
+            'event' => 'En Aduana - Colombia'
+        ]);
+        Events::create([
+            'type' => 1,
             'event' => 'Crear Orden de Servicio'
         ]);
         Events::create([
@@ -235,7 +239,6 @@ class DatabaseSeeder extends Seeder
             'type' => 1,
             'event' => '<span class="fa fa-list-alt cye-lm-tag"></span> Pagado'
         ]);
-        Events::create(['type' => 1, 'event' => '']);
         Events::create(['type' => 1, 'event' => '']);
 
         Events::create([

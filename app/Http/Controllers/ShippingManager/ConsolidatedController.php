@@ -62,21 +62,21 @@ class ConsolidatedController extends Controller
                 $nameDelete = 'deleteConsolidated';
             }
             if (request()->c !== 'abierto' && \Auth::user()->role_id === 1) {
-                if ($consolidated->shippingstate_id == 5 && $consolidated->bill == 0) {
+                if ($consolidated->shippingstate_id == 6 && $consolidated->bill == 0) {
                     $html .= '
                         <button id="factureConsolidated" type="button" class="btn bg-purple btn-flat btn-xs" consolidated="' . $consolidated->id . '"><span class="fa fa-dollar"></span> Orden de Servicio</button>
                     ';
                 } elseif ($consolidated->shippingstate_id > 5) {
-                    $e = $consolidated->eventsUsers->where('event_id', '=', 7)->count();
-                    $p = $consolidated->eventsUsers->where('event_id', '=', 8)->count();
+                    $e = $consolidated->eventsUsers->where('event_id', '=', 8)->count();
+                    $p = $consolidated->eventsUsers->where('event_id', '=', 9)->count();
                     if (! $e) {
                         $html .= '
-                            <button id="editEventConsolidated" type="button" class="btn btn-success btn-flat btn-xs" consolidated="' . $consolidated->id . '" event="7"><span class="glyphicon glyphicon-ok"></span> Entregado</button>
+                            <button id="editEventConsolidated" type="button" class="btn btn-success btn-flat btn-xs" consolidated="' . $consolidated->id . '" event="8"><span class="glyphicon glyphicon-ok"></span> Entregado</button>
                         ';
                     }
                     if (! $p) {
                         $html .= '
-                            <button id="editEventConsolidated" type="button" class="btn bg-navy btn-flat btn-xs" consolidated="' . $consolidated->id . '" event="8"><span class="fa fa-list-alt"></span> Pagado</button>
+                            <button id="editEventConsolidated" type="button" class="btn bg-navy btn-flat btn-xs" consolidated="' . $consolidated->id . '" event="9"><span class="fa fa-list-alt"></span> Pagado</button>
                         ';
                     }
                 }
@@ -138,9 +138,12 @@ class ConsolidatedController extends Controller
             } else {
                 $class = "danger";
             }
-            $last = $consolidated->eventsUsers->whereIn('event_id', [5,6,7,8])->count();
+            $last = $consolidated->eventsUsers->whereIn('event_id', [6,7,8,9])->count();
             if ($last == 4) {
-                return '<span class="label label-' . $class . '"><i class="fa fa-check-square-o" aria-hidden="true"></i> OK</span>';
+                return '<span class="label label-' . $class . '"><i class="fa fa-check-square-o" aria-hidden="true"></i> Finalizado</span>';
+            }
+            if (\Auth::user()->role_id == 2 && $event->id == 6) {
+                return '<span class="label label-' . $class . '">En Aduana - Colombia</span>';
             }
             return '<span class="label label-' . $class . '">' . $event->event . '</span>';
         })
@@ -348,11 +351,11 @@ class ConsolidatedController extends Controller
         ]);
         $id = $request->consolidated;
         $consolidated = Consolidated::findOrFail($id);
-        $consolidated->update(['shippingstate_id' => 6]);
+        $consolidated->update(['shippingstate_id' => 7]);
         $consolidated->update($request->all());
         EventsUsers::create([
             'consolidated_id' => $id,
-            'event_id' => 6,
+            'event_id' => 7,
         ]);
         $mail = $consolidated->user->email;
         if ($mail) {

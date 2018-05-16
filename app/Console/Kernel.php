@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \skyimport\Console\Commands\ConsolidatedInColombia::class,
+        \skyimport\Console\Commands\Consolidateds::class,
     ];
 
     /**
@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('consolidated:beforeAduana')->hourly();
+        $schedule->command('consolidated:jobs')->hourly();
         // $schedule->command('inspire')
         //          ->hourly();
     }

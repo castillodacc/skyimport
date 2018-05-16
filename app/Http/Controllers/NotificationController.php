@@ -19,7 +19,7 @@ class NotificationController extends Controller
 	{
 		$request = request();
 		$consolidated = Consolidated::find($request->consolidated_id);
-		$events = EventsUsers::query();
+		$events = EventsUsers::query()->withTrashed();
 		if (isset($consolidated->id)) {
 			$c = $consolidated->id;
 			foreach ($consolidated->trackings as $t) {
@@ -221,13 +221,14 @@ class NotificationController extends Controller
 			return response()->json(['msg' => 'Ya el tracking paso por este evento.']);
 		}
 		$id = Tracking::findOrFail($request->tracking)->consolidated->id;
-		$this->changeStateOfConsolidated($id, $request->event);
         Tracking::findOrFail($request->tracking)
         ->update(['shippingstate_id' => $request->event]);
-		return EventsUsers::create([
+		EventsUsers::create([
 			'tracking_id' => $request->tracking,
 			'event_id' => $request->event,
 		]);
+		$this->changeStateOfConsolidated($id, $request->event);
+		return;
 	}
 
 	public static function changeStateOfConsolidated($id, $event)
@@ -236,8 +237,8 @@ class NotificationController extends Controller
 		if ($event == 12 || $event == 13) {
 			if ($event_current < 4) { Self::allStatusInMiami($id); }
 		}
-		if ($event >= 14) {
-			if ($event_current < 5) { Self::allTrackingsInColombia($id); }
+		if ($event == 15) {
+			if ($event_current <= 5) { Self::allTrackingsInColombia($id); }
 		}
 	}
 
@@ -255,9 +256,9 @@ class NotificationController extends Controller
 		if ($num) {
 			EventsUsers::create([
 				'consolidated_id' => $consolidated->id,
-				'event_id' => 5,
+				'event_id' => 6,
 			]);
-			$consolidated->shippingstate_id = 5;
+			$consolidated->shippingstate_id = 6;
 			$consolidated->weight = 0;
 			$consolidated->bill = 0;
 			$consolidated->save();
