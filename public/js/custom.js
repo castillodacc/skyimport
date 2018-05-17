@@ -506,6 +506,14 @@ if (location.href.indexOf('/consolidados') > 0) {
 		e.preventDefault();
 		$('div#header-search-a').fadeToggle();
 	});
+	$('button#cancel-consolidated').click(function () {
+		let id = $('form#tracking-form-register input#consolidated_id')[0].value;
+		$.post(path + 'consolidados/'+id, {'_method':'DELETE'}, function (response) {
+			consTable.draw();
+			$('#modal-send-form').modal('toggle');
+			toastr.success('Consolidado Cancelado.');
+		});
+	});
 	$.post(path + 'data-for-consolidated', function (response) {
 		let d = response.distributors;
 		let option = '<option value="">Repartidor</option>';

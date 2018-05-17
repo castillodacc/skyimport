@@ -24,8 +24,8 @@ class TrackingUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'tracking' => 'required|digits_between:5,20',
-            'description' => 'required|alpha|max:15|min:3',
+            'tracking' => 'required|digits_between:5,25',
+            'description' => 'required|string|alpha|max:15|min:3',
             'consolidated_id' => 'required|numeric',
             'distributor_id' => 'required|numeric',
             'price' => 'required|max:1000000',
@@ -40,7 +40,7 @@ class TrackingUpdateRequest extends FormRequest
     public function attributes()
     {
         return [
-            'tracking' => 'tracking',
+            'tracking' => 'número de tracking',
             'description' => 'descripción',
             'consolidated_id' => 'consolidado',
             'distributor_id' => 'distribuidor',

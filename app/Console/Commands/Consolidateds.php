@@ -44,7 +44,7 @@ class Consolidateds extends Command
             $consolidateds = Consolidated::where('shippingstate_id', 4)->get();
             $consolidateds->each(function ($c) {
                 $event = $c->eventsUsers->where('event_id', 4)->first();
-                $this->info($event->created_at->diffInMinutes(\Carbon::now()));
+                $this->info($event->created_at->diffInHours(\Carbon::now()));
                 if ($event->created_at->diffInHours(\Carbon::now()) == 24) {
                     $c->trackings->each(function ($t) {
                         $t->update(['shippingstate_id' => 14]);

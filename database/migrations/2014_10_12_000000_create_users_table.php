@@ -43,7 +43,7 @@ class CreateUsersTable extends Migration
             $table->string('last_name'); // apellido
             $table->string('email')->unique(); // correo
             $table->string('phone')->nullable(); // telefono
-            $table->integer('num_id')->unsigned()->unique()->nullable(); // número de identificación
+            $table->string('num_id')->unique()->nullable(); // número de identificación
             $table->string('password'); // contraseña
             $table->integer('state_id')->unsigned()->nullable(); // estado
             $table->string('city')->nullable(); // ciudad

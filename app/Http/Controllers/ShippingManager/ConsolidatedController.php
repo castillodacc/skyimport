@@ -98,7 +98,7 @@ class ConsolidatedController extends Controller
                 <button id="'.$nameView.'" type="button" class="btn btn-info btn-flat btn-xs" consolidated="' . $consolidated->id . '"><span class="fa fa-eye"></span> Mostrar</button>
             ';
 
-            if ((\Auth::user()->role_id == 2 && ($consolidated->shippingstate_id < 3 || $var)) ||
+            if ((\Auth::user()->role_id == 2 && $consolidated->shippingstate_id < 2) ||
                 (\Auth::user()->role_id == 1 && $consolidated->shippingstate_id < 5)) {
                 $html .= '
                     <button id="editConsolidated" type="button" class="btn btn-primary btn-flat btn-xs" consolidated="' . $consolidated->id . '"><span class="fa fa-pencil"></span> Editar</button>
