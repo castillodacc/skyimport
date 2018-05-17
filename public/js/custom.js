@@ -839,27 +839,6 @@ if (location.href.indexOf('/consolidados') > 0) {
 		{data: 'action', orderable: false, searchable: false}
 		]
 	});
-	// $('button#agregar-event').click(function () {
-	// 	let tracking = $('form#events').find('select[name="tracking"]').val();
-	// 	let event = $('form#events').find('select[name="event"]').val();
-	// 	if (tracking && event) {
-	// 		let consolidated = $(this).attr('consolidated');
-	// 		data = {
-	// 			tracking: tracking,
-	// 			event: event,
-	// 		}
-	// 		$.post(path + 'notifications/create', data, function (response) {
-	// 			if (response.msg) {
-	// 				toastr.warning(response.msg);
-	// 				return;
-	// 			}
-	// 			toastr.success('Evento agregado.');
-	// 			$('form#events').find('select[name="tracking"]').val('');
-	// 			$('form#events').find('select[name="event"]').val('');
-	// 			cargarEventos(consolidated);
-	// 		});
-	// 	}
-	// });
 	$('#addForm').click(function (e) {
 		e.preventDefault();
 		$(this).attr('disabled', '');

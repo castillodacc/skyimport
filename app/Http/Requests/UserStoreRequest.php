@@ -28,7 +28,7 @@ class UserStoreRequest extends FormRequest
             'last_name'     => 'required|max:25',
             'email'         => 'required|email|max:30|unique:users',
             'phone'         => 'required|numeric|unique:users|digits_between:6,11',
-            'num_id'        => 'required|numeric|exr_ced|unique:users|max:1000000000|min:500000',
+            'num_id'        => 'required|numeric|exr_ced|unique:users|digits_between:7,12',
             'country_id'    => 'required|numeric',
             'state_id'      => 'required|numeric',
             'city'          => 'required|alpha|max:20',

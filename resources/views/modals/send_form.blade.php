@@ -1,4 +1,4 @@
-<div class="modal fade" id="modal-send-form" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" aria-labelledby="ModalLabel">
+<div class="modal fade" data-keyboard="false" id="modal-send-form" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" aria-labelledby="ModalLabel">
     <div class="modal-dialog modal-lg" style="width: 75%;" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary">
@@ -102,6 +102,7 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <button type="button" id="cancel-consolidated" class="btn btn-danger btn-flat"><span class="fa fa-close"></span> Cancelar</butotton>
                 <button type="button" id="consolidated-save" class="btn btn-primary btn-flat"><span class="glyphicon glyphicon-saved"></span> Guardar</button>
                 <button type="button" id="consolidated-consolidated" class="btn btn-success btn-flat"><span class="fa fa-send"></span> Formalizar</button>
             </div>
