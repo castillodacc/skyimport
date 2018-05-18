@@ -831,8 +831,8 @@ if (location.href.indexOf('/consolidados') > 0) {
 				$('button#factureConsolidated').click(function () {
 					let consolidated = $(this).attr('consolidated');
 					let modal = $('#modal-bill-form');
-					modal.modal('toggle')
 					modal.find('input[name="consolidated"]').val(consolidated);
+					modal.modal('toggle')
 				});
 			}
 		},
@@ -1050,10 +1050,12 @@ if (location.href.indexOf('/consolidados') > 0) {
 	});
 	$('#price_form').submit(function (e) {
 		e.preventDefault();
+		$(this).find('button[type="submit"]').attr('disabled','disabled');
 		let data = $(this).serializeArray();
 		$.post(path + 'bill', data, function (response) {
 			consTable2.draw();
 			$('#price_form')[0].reset();
+			$(this).find('button[type="submit"]').removeAttr('disabled');
 			$('#modal-bill-form').modal('toggle')
 		})
 		.fail(function (response) {
@@ -1063,6 +1065,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 				return;
 			}
 			console.clear();
+			$(this).find('button[type="submit"]').removeAttr('disabled');
 		});
 	});
 	$('button#show-closed').click(function () {

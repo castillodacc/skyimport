@@ -32,7 +32,7 @@ class NotificationController extends Controller
 				->where('event_id', '<>', 14)
 				->where('event_id', '<>', 15)
 				->orWhere('consolidated_id', '=', $c)
-				->whereIn('event_id', [1,4,5,6,7,8,12])
+				->whereIn('event_id', [1,4,5,7,8,12])
 				->orderBy('created_at', 'DESC');
 			}
 		}
@@ -52,8 +52,8 @@ class NotificationController extends Controller
 					return 'Trackings del consolidado recibidos, Salida de la bodega de Importadora Sky, destino: Bogotá, Colombia.';
 				} elseif ($e->event_id == 5) {
 					return 'Paquete recibido en Bogotá, Colombia. En espera, revisión por parte de la agencia de aduanas, Aeropuerto El Dorado BOG.';
-				} elseif ($e->event_id == 6) {
-					return 'Entregado a Importadora Sky. Se adjunta Orden de servicio por valor de $'.number_format($e->consolidated->bill, 2, ',', '.').'.';
+				} elseif ($e->event_id == 7) {
+					return 'Entregado a Importadora Sky. Se adjunta Orden de servicio por valor de $'.number_format($e->consolidated->bill, 2, ',', '.').' COP.';
 				}
 			} else {
 				if ($e->event_id === 12) {
@@ -323,5 +323,16 @@ class NotificationController extends Controller
 			'consolidated_id' => $request->consolidated,
 			'event_id' => $request->event,
 		]);
+		$num = $consolidated
+				->eventsUsers
+				->whereIn('event_id', [7,8,9])
+				->count();
+		if ($num == 3) {
+			$consolidated->update(['shippingstate_id' => 10]);
+			EventsUsers::create([
+				'consolidated_id' => $request->consolidated,
+				'event_id' => 10,
+			]);
+		}
     }
 }

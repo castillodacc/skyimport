@@ -239,7 +239,10 @@ class DatabaseSeeder extends Seeder
             'type' => 1,
             'event' => '<span class="fa fa-list-alt cye-lm-tag"></span> Pagado'
         ]);
-        Events::create(['type' => 1, 'event' => '']);
+        Events::create([
+            'type' => 1,
+            'event' => '<i class="fa fa-check-square-o" aria-hidden="true"></i> Finalizado'
+        ]);
 
         Events::create([
             'type' => 2,

@@ -209,7 +209,7 @@ class TrackingController extends Controller
     ->filter(function ($query) {
       $request = request();
       $query->where('consolidateds.closed_at', '<', \Carbon::now())
-      ->where('trackings.shippingstate_id', '<', 15);
+      ->where('consolidateds.shippingstate_id', '<>', 10);
 
       if (count($request->search['value']) > 0) {
         $query

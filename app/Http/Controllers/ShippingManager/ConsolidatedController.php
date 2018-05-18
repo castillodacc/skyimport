@@ -109,7 +109,7 @@ class ConsolidatedController extends Controller
                 <button id="edit-formalized" type="button" class="btn bg-teal btn-flat btn-xs" consolidated="' . $consolidated->id . '"><span class="fa fa-list"></span> Eventos</button>
                 ';
             }
-            if (\Auth::user()->role_id === 1 || request()->c === 'abierto') {
+            if ((\Auth::user()->role_id === 1 && $consolidated->shippingstate_id < 10) || (\Auth::user()->role_id === 2 && request()->c === 'abierto')) {
                 $html .= '
                     <button id="'.$nameDelete.'" type="button" class="btn btn-danger btn-flat btn-xs" consolidated="' . $consolidated->id . '"><span class="fa fa-trash"></span> Eliminar</button>
                 ';
@@ -137,10 +137,6 @@ class ConsolidatedController extends Controller
                 $class = "primary";
             } else {
                 $class = "danger";
-            }
-            $last = $consolidated->eventsUsers->whereIn('event_id', [6,7,8,9])->count();
-            if ($last == 4) {
-                return '<span class="label label-' . $class . '"><i class="fa fa-check-square-o" aria-hidden="true"></i> Finalizado</span>';
             }
             if (\Auth::user()->role_id == 2 && $event->id == 6) {
                 return '<span class="label label-' . $class . '">En Aduana - Colombia</span>';
@@ -344,18 +340,18 @@ class ConsolidatedController extends Controller
     {
         $this->validate($request, [
             'weight' => 'numeric|required',
-            'bill' => 'numeric|required',
+            'bill' => 'numeric|required'
         ],[],[
             'weight' => 'peso',
-            'bill' => 'precio',
+            'bill' => 'precio'
         ]);
         $id = $request->consolidated;
         $consolidated = Consolidated::findOrFail($id);
         $consolidated->update(['shippingstate_id' => 7]);
         $consolidated->update($request->all());
         EventsUsers::create([
-            'consolidated_id' => $id,
-            'event_id' => 7,
+            'consolidated_id' => $consolidated->id,
+            'event_id' => 7
         ]);
         $mail = $consolidated->user->email;
         if ($mail) {

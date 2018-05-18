@@ -28,7 +28,7 @@ class TrackingStoreRequest extends FormRequest
             'description' => 'required|string|max:15|min:3',
             'consolidated_id' => 'required|numeric',
             'distributor_id' => 'required|numeric',
-            'price' => 'required|max:1000000',
+            'price' => 'required|numeric|max:1000000',
         ];
     }
 
