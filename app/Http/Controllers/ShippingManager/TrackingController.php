@@ -231,10 +231,13 @@ class TrackingController extends Controller
     $trackings = $request->trackings;
     $errors = [];
     foreach ($trackings as $key) {
-      $eventos = EventsUsers::where('tracking_id', '=', $key)
-      ->where('event_id', '>=', $id)->count();
-      if ($eventos) {
-        $errors[] = Tracking::findOrFail($key)->tracking;
+      $event_current = Tracking::find($key)
+                      ->eventsUsers
+                      ->last()
+                      ->event_id;
+      if ($event_current >= $id) {
+        $t = Tracking::findOrFail($key);
+        $errors[] = $t->tracking . ' / ' . $t->description;
       } else {
         EventsUsers::create([
           'tracking_id' => $key,

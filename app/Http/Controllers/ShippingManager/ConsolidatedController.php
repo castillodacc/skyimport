@@ -109,7 +109,8 @@ class ConsolidatedController extends Controller
                 <button id="edit-formalized" type="button" class="btn bg-teal btn-flat btn-xs" consolidated="' . $consolidated->id . '"><span class="fa fa-list"></span> Eventos</button>
                 ';
             }
-            if ((\Auth::user()->role_id === 1 && $consolidated->shippingstate_id < 10) || (\Auth::user()->role_id === 2 && request()->c === 'abierto')) {
+            if ((\Auth::user()->role_id === 1 && $consolidated->shippingstate_id < 10) ||
+                (\Auth::user()->role_id === 2 && request()->c === 'abierto')) {
                 $html .= '
                     <button id="'.$nameDelete.'" type="button" class="btn btn-danger btn-flat btn-xs" consolidated="' . $consolidated->id . '"><span class="fa fa-trash"></span> Eliminar</button>
                 ';

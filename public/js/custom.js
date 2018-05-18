@@ -961,12 +961,12 @@ if (location.href.indexOf('/consolidados') > 0) {
 			$('#tracking-form-register input[name=_method]').val('POST');
 			$('tr').removeClass('info');
 			$('form#tracking-form-register input#consolidated_id').val('');
-			$('button#consolidated-consolidated').removeAttr('disabled', 'disabled')
+			$('button#consolidated-consolidated').removeAttr('disabled')
 		})
 		.fail(function(response) {
 			toastr.warning(response.responseJSON.msg);
 			console.clear();
-			$('button#consolidated-consolidated').removeAttr('disabled', 'disabled')
+			$('button#consolidated-consolidated').removeAttr('disabled')
 		});
 	});
 	$('div#header-search-b').hide();
@@ -1055,17 +1055,17 @@ if (location.href.indexOf('/consolidados') > 0) {
 		$.post(path + 'bill', data, function (response) {
 			consTable2.draw();
 			$('#price_form')[0].reset();
-			$(this).find('button[type="submit"]').removeAttr('disabled');
+			$('#price_form').find('button[type="submit"]').removeAttr('disabled');
 			$('#modal-bill-form').modal('toggle')
 		})
 		.fail(function (response) {
 			response = response.responseJSON;
+			$('#price_form').find('button[type="submit"]').removeAttr('disabled');
+			console.clear();
 			for(let i in response) {
 				toastr.error(response[i][0]);
 				return;
 			}
-			console.clear();
-			$(this).find('button[type="submit"]').removeAttr('disabled');
 		});
 	});
 	$('button#show-closed').click(function () {
@@ -1171,7 +1171,8 @@ if (location.href.indexOf('/tracking') > 0) {
 				for(let i in response.errors) {
 					html += '<li>'+response.errors[i]+'</li>'
 				}
-				toastr.warning('Estos trackings ya pasaron por ese evento. <br>' + html);
+				$('button#consolidated-consolidated').removeAttr('disabled')
+				toastr.info('Estos trackings ya pasaron por ese evento. <br>' + html);
 			}
 		})
 		.fail(function (response) {
