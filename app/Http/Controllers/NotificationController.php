@@ -12,7 +12,7 @@ class NotificationController extends Controller
 {
 	public function __construct()
 	{
-		$this->middleware('ajax')->except(['eventsAll']);
+		$this->middleware('ajax');
 	}
 
 	public function eventsAll()

@@ -120,6 +120,7 @@ translateTableCustom.sInfoFiltered = '';
 var trackTableView = $('table#table-view-trackings').DataTable({
 	processing: true,
 	serverSide: true,
+	searching: false,
 	responsive: true,
 	language: translateTableCustom,
 	ajax: {
@@ -526,6 +527,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 		lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "Todos"]],	
 		processing: true,
 		serverSide: true,
+		searching: false,
 		responsive: true,
 		render: true,
 		language: translateTable,
@@ -581,6 +583,13 @@ if (location.href.indexOf('/consolidados') > 0) {
 						modal.find('td#state').text(response.event);
 						modal.find('td#cant').text(response.trackings.length);
 						modal.find('td#value').text(new Intl.NumberFormat("de-DE", {style: "currency", currency: "USD"}).format(response.sum_total));
+						if (response.bill > 0) {
+							modal.find('td#bill').text(number_format(response.bill, 2) + ' COP').addClass('success');
+							modal.find('td#weight').text(number_format(response.weight, 2) + ' Lb').addClass('success');
+						} else {
+							modal.find('td#bill').removeClass('success').text(response.bill);
+							modal.find('td#weight').removeClass('success').text(response.weight);
+						}
 						trackTableView.draw();
 						modal.modal('toggle');
 					});
@@ -649,6 +658,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 	var trackTable = $('table#tracking-table').DataTable({
 		processing: true,
 		serverSide: true,
+		searching: false,
 		responsive: true,
 		render: true,
 		language: translateTableCustom,
@@ -700,6 +710,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 		lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "Todos"]],	
 		processing: true,
 		autoWidth: false,
+        searching: false,
 		serverSide: true,
 		responsive: true,
 		render: true,
@@ -1096,6 +1107,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 		processing: true,
 		serverSide: true,
 		responsive: true,
+		searching: false,
 		render: true,
 		language: translateTableCustom,
 		ajax: {

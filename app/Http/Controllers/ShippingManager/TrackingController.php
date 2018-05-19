@@ -8,13 +8,14 @@ use skyimport\Models\Tracking;
 use skyimport\Http\Requests\TrackingStoreRequest;
 use skyimport\Http\Requests\TrackingUpdateRequest;
 use skyimport\Models\EventsUsers;
+use skyimport\Models\Consolidated;
 use Yajra\DataTables\Datatables;
 
 class TrackingController extends Controller
 {
   public function __construct()
   {
-    $this->middleware('ajax')->except(['index']);
+    $this->middleware('ajax')->except(['index', 'viewConsult']);
   }
 
   /**
@@ -251,5 +252,22 @@ class TrackingController extends Controller
       }
     }
     return response()->json(compact('errors'));
+  }
+
+  public function viewConsult()
+  {
+    if (request()->method() == 'GET') return view('sendings.consult');
+
+    $consolidated = Consolidated::where('number', '=', request()->consolidated)->first();
+    if ($consolidated == null) {
+      return response()->json(['mgs' => 'Este consolidado no ha sido registrado en nuestro sistema.']);
+    }
+    $consolidated->event = $consolidated->eventsUsers->last()->events->event;
+    $consolidated->trackings;
+    $consolidated->sum_total = $consolidated->trackings->sum('price');
+    $consolidated->close = $consolidated->closed_at->diffForHumans();
+    $consolidated->open = $consolidated->created_at->diffForHumans();
+    $consolidated->user;
+    return response()->json($consolidated);
   }
 }

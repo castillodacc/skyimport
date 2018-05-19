@@ -47,11 +47,13 @@ class Consolidateds extends Command
                 $this->info($event->created_at->diffInHours(\Carbon::now()));
                 if ($event->created_at->diffInHours(\Carbon::now()) == 24) {
                     $c->trackings->each(function ($t) {
-                        $t->update(['shippingstate_id' => 14]);
-                        EventsUsers::create([
-                            'tracking_id' => $t->id,
-                            'event_id' => 14,
-                        ]);
+                        if ($t->shippingstate_id < 14) {
+                            $t->update(['shippingstate_id' => 14]);
+                            EventsUsers::create([
+                                'tracking_id' => $t->id,
+                                'event_id' => 14,
+                            ]);
+                        }
                     });
                     $c->update(['shippingstate_id' => 5]);
                     EventsUsers::create([

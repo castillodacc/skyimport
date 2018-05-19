@@ -24,7 +24,7 @@
                                 <div class="input-group-addon">
                                     <span class="fa fa-user"></span>
                                 </div>
-                                <input type="text" class="js-example-basic-single" name="user_id" list="user_id" autocomplete="off">
+                                <input type="text" class="js-example-basic-single form-control input-sm" name="user_id" list="user_id" autocomplete="off">
                                 <datalist id="user_id"></datalist>
                             </div>
                             <small id="user_id" class="form-text text-muted">Usuario poseedor del consolidado.</small>
