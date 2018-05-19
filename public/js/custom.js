@@ -1020,34 +1020,6 @@ if (location.href.indexOf('/consolidados') > 0) {
 			});
 		});
 	}
-	var trackTable2 = $('table#table-edit-formalized').DataTable({
-		processing: true,
-		serverSide: true,
-		responsive: true,
-		render: true,
-		language: translateTableCustom,
-		ajax: {
-			url: path + 'events',
-			data: function (d) {
-				d.consolidated_id = $('table#table-edit-formalized').attr('consolidated');
-			},
-			complete: function () {
-				let tr = $('table#table-edit-formalized tr');
-				for (var i = 0; i <= tr.length; i++) {
-					let t = tr[i];
-					let td = $(t).children('td');
-					let text = $(td[2]).text();
-					$(td[2]).html(text);
-				}
-			}
-		},
-		order: [[2, 'DESC']],
-		columns: [
-		{data: 'fecha', name: 'created_at', orderable: false, searchable: false},
-		{data: 'hora', name: 'created_at', orderable: false, searchable: false},
-		{data: 'evento', name: 'event_id', orderable: false, searchable: false},
-		]
-	});
 	$('#price_form').submit(function (e) {
 		e.preventDefault();
 		$(this).find('button[type="submit"]').attr('disabled','disabled');
@@ -1119,6 +1091,41 @@ if (location.href.indexOf('/consolidados') > 0) {
 			$(this).val($(this).val())
 		}
 		localStorage.removeItem('user');
+	});
+	var trackTable2 = $('table#table-edit-formalized').DataTable({
+		processing: true,
+		serverSide: true,
+		responsive: true,
+		render: true,
+		language: translateTableCustom,
+		ajax: {
+			url: path + 'events',
+			data: function (d) {
+				d.consolidated_id = function () {
+					let num = $('table#table-edit-formalized').attr('consolidated');
+					if (num > 0) {
+						return num;
+					} else {
+						return null;
+					}
+				}
+			},
+			complete: function () {
+				let tr = $('table#table-edit-formalized tr');
+				for (var i = 0; i <= tr.length; i++) {
+					let t = tr[i];
+					let td = $(t).children('td');
+					let text = $(td[2]).text();
+					$(td[2]).html(text);
+				}
+			}
+		},
+		order: [[2, 'DESC']],
+		columns: [
+		{data: 'fecha', name: 'created_at', orderable: false, searchable: false},
+		{data: 'hora', name: 'created_at', orderable: false, searchable: false},
+		{data: 'evento', name: 'event_id', orderable: false, searchable: false},
+		]
 	});
 }
 if (location.href.indexOf('/tracking') > 0) {

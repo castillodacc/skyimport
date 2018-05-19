@@ -178,8 +178,6 @@ class TrackingController extends Controller
     ->join('users', 'consolidateds.user_id', '=', 'users.id')
     ->select([
       'trackings.tracking as tracking_num',
-      'consolidateds.number as consolidated_num',
-      'users.id',
       'trackings.created_at',
       'trackings.shippingstate_id',
       'trackings.id',
@@ -188,6 +186,9 @@ class TrackingController extends Controller
     ]);
 
     return (new Datatables)->of($query)
+    ->addColumn('consolidated_num', function ($tracking) {
+      return $tracking->consolidated->number;
+    })
     ->addColumn('user', function ($tracking) {
       return $tracking->consolidated->user->fullName();
     })
@@ -208,10 +209,11 @@ class TrackingController extends Controller
     })
     ->filter(function ($query) {
       $request = request();
-      $query->where('consolidateds.closed_at', '<', \Carbon::now())
+      $query
+      ->where('consolidateds.closed_at', '<', \Carbon::now())
       ->where('consolidateds.shippingstate_id', '<>', 10);
 
-      if (count($request->search['value']) > 0) {
+      if (isset($request->search['value']) && count($request->search['value']) > 0) {
         $query
         ->where('consolidateds.number', '=', $request->search['value'])
         ->orWhere('trackings.tracking', '=', $request->search['value']);

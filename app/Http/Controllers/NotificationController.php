@@ -19,8 +19,8 @@ class NotificationController extends Controller
 	{
 		$request = request();
 		$consolidated = Consolidated::find($request->consolidated_id);
-		$events = EventsUsers::query()->withTrashed();
-		if (isset($consolidated->id)) {
+		$events = EventsUsers::query()->withTrashed()->limit(10);
+		if (! is_null($consolidated)) {
 			$c = $consolidated->id;
 			foreach ($consolidated->trackings as $t) {
 				$tr[] = $t->id;

@@ -312,6 +312,7 @@ class ConsolidatedController extends Controller
     {
         $consolidated = Consolidated::findOrFail($id);
         if (! $consolidated->trackings->count()) return response(['msg' => 'El consolidado debe tener al menos un tracking.'], 422);
+        if ($consolidated->shippingstate_id == 3) return;
         $consolidated->closed_at = \Carbon::now();
         $consolidated->shippingstate_id = 3;
         EventsUsers::create([

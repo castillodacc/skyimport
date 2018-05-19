@@ -12,7 +12,7 @@
                     </div>
                     <div class="box-body">
                         <div class=" col-md-12 table-responsive">
-                            <table id="table-edit-formalized" class="table table-striped table-bordered table-hover table-condensed" consolidated="1">
+                            <table id="table-edit-formalized" class="table table-striped table-bordered table-hover table-condensed" consolidated="">
                                 <thead>
                                     <tr>
                                         <th>Fecha</th>
