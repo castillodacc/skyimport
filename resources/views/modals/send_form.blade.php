@@ -1,4 +1,4 @@
-<div class="modal fade" data-keyboard="false" id="modal-send-form" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" aria-labelledby="ModalLabel">
+<div class="modal fade" data-keyboard="false" id="modal-send-form" role="dialog" aria-hidden="true" data-backdrop="static" aria-labelledby="ModalLabel">
     <div class="modal-dialog modal-lg" style="width: 75%;" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary">
@@ -16,24 +16,24 @@
                     <hr>
                 </div>
                 @if(\Auth::user()->role_id == 1)
-                <div class="row">
-                    <form id="user-of-consolidated">
+                <form id="user-of-consolidated">
+                    <div class="row">
                         {{ csrf_field() }} {{ method_field('POST') }}
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-4">
                             <div class="input-group">
                                 <div class="input-group-addon">
                                     <span class="fa fa-user"></span>
                                 </div>
-                                <input type="text" class="js-example-basic-single form-control input-sm" name="user_id" list="user_id" autocomplete="off">
-                                <datalist id="user_id"></datalist>
+                                <select id="user_id" class="form-control input-sm select2" name="user_id" aria-hidden="true" tabindex="-1" selected>
+                                </select>
                             </div>
-                            <small id="user_id" class="form-text text-muted">Usuario poseedor del consolidado.</small>
+                            <small class="form-text text-muted">Usuario poseedor del consolidado.</small>
                         </div>
                         <div class="col-md-1">
                             <button type="submit" class="btn btn-primary btn-xs btn-flat" data-toggle="tooltip"><span class="fa fa-plus"></span> Guardar</button>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
                 @endif
                 <div class="row">
                     <form id="tracking-form-register" action="{{ route('tracking.store') }}" method="POST">

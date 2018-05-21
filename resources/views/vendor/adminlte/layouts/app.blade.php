@@ -63,7 +63,6 @@ desired effect
     @include('adminlte::layouts.partials.scripts')
 @show
 {{-- evaluar el compilado de plantillas de vue --}}
-<script src="{{ asset('js/custom.js') }}"></script>
 
 </body>
 </html>

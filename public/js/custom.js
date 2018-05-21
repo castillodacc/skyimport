@@ -507,7 +507,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 		e.preventDefault();
 		$('div#header-search-a').fadeToggle();
 	});
-	$('button#cancel-consolidated').click(function () {
+	$('button#cancel-consolidated, #modal-send-form button[class="close"]').click(function () {
 		let id = $('form#tracking-form-register input#consolidated_id')[0].value;
 		$.post(path + 'consolidados/'+id, {'_method':'DELETE'}, function (response) {
 			consTable.draw();
@@ -606,7 +606,9 @@ if (location.href.indexOf('/consolidados') > 0) {
 						$('#tracking-form-register').attr('action', path + 'tracking');
 						$('.f-close').text(response.close);
 						$('.f-create').text(response.open);
-						$('input[name="user_id"]').val(response.user.name + ' ' + response.user.last_name + ((response.user.num_id) ? ' / ' + response.user.num_id : ''));
+						$('select#user_id').val(response.user.id);
+						$('select#user_id').select2({'value':response.user.id});
+						$('span.select2').css('width', '100%');
 						$('form#tracking-form-register input#consolidated_id').val(response.id);
 						$('#modal-send-form').modal('toggle').find('.modal-title').html('<span class="fa fa-edit"></span> Editar Consolidado ' + response.number);
 						trackTable.draw();
@@ -776,7 +778,9 @@ if (location.href.indexOf('/consolidados') > 0) {
 						$('#tracking-form-register').attr('action', path + 'tracking');
 						$('.f-close').text(response.close);
 						$('.f-create').text(response.open);
-						$('input[name="user_id"]').val(response.user.name + ' ' + response.user.last_name + ((response.user.num_id) ? ' / ' + response.user.num_id : ''));
+						$('select#user_id').val(response.user.id);
+						$('select#user_id').select2({'value':response.user.id});
+						$('span.select2').css('width', '100%');
 						$('form#tracking-form-register input#consolidated_id').val(response.id);
 						$('#modal-send-form').modal('toggle').find('.modal-title').html('<span class="fa fa-edit"></span> Editar Consolidado ' + response.number);
 						trackTable.draw();
@@ -877,7 +881,9 @@ if (location.href.indexOf('/consolidados') > 0) {
 			$('#tracking-form-register').attr('action', path + 'tracking');
 			$('.f-close').text(response.cierre);
 			$('.f-create').text(response.creacion);
-			$('input[name="user_id"]').val(response.user.name + ' ' + response.user.last_name + ((response.user.num_id) ? ' / ' + response.user.num_id : ''));
+			$('select#user_id').val(response.user.id);
+			$('select#user_id').select2({'value':response.user.id});
+			$('span.select2').css('width', '100%');
 			$('form#tracking-form-register input#consolidated_id').val(response.id);
 			$('#modal-send-form').modal('toggle').find('.modal-title').html('<span class="fa fa-plus"></span> Crear Nuevo Consolidado.');
 			trackTable.draw();
@@ -989,7 +995,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 		e.preventDefault();
 		consTable2.draw();
 	});
-	$('#consolidated-save, #modal-send-form button[class="close"]').click(function () {
+	$('#consolidated-save').click(function () {
 		if ($('#tracking-table tbody tr td').length == 1) {
 			toastr.info('Debe de agregar trackings para guardar el consolidado.');
 			return;
@@ -1059,17 +1065,17 @@ if (location.href.indexOf('/consolidados') > 0) {
 		let u = response.users;
 		let html = '';
 		for(let i in u) {
-			html += '<option value="' + u[i].name + ' ' + u[i].last_name + ((u[i].num_id) ? ' / ' + u[i].num_id : '') + '" id="' + u[i].id + '"></option>';
+			html += '<option value="' + u[i].id + '">' + u[i].name + ' ' + u[i].last_name + ((u[i].num_id) ? ' / ' + u[i].num_id : '') + '</option>';
 		}
-		$('#user_id').html(html)
+		$('select#user_id').html(html);
+		$('select#user_id').select2();
+		$('span.select2').css('width', '100%')
 	});
 	$('#user-of-consolidated').submit(function (e) {
 		e.preventDefault();
 		let consolidated = $('form#tracking-form-register #consolidated_id').val();
 		let url  = path + 'user-consolidated/' + consolidated;
-		let data = $(this).serializeArray();
-		let user = $('datalist#user_id option[value="'+$('input[list="user_id"]').val()+'"]').attr('id');
-		data[2].value = user;
+		let user = $('select#user_id').val();
 		if (! user) {
 			toastr.info('Debe seleccionar un usuario');
 			return;
@@ -1078,7 +1084,9 @@ if (location.href.indexOf('/consolidados') > 0) {
 			url: url,
 			type: 'POST',
 			dataType: 'json',
-			data: data,
+			data: {
+				user_id: user
+			},
 		})
 		.done(function(response) {
 			if (response.msg) {
@@ -1090,18 +1098,6 @@ if (location.href.indexOf('/consolidados') > 0) {
 		.fail(function(response) {
 			toastr.error('Error al editar.');
 		});
-	});
-	$('input[name="user_id"]').focus(function () {
-		localStorage.setItem('user', $(this).val());
-		$(this).val('');
-	});
-	$('input[name="user_id"]').blur(function () {
-		if ($(this).val() == '') {
-			$(this).val(localStorage.getItem('user'));
-		} else {
-			$(this).val($(this).val())
-		}
-		localStorage.removeItem('user');
 	});
 	var trackTable2 = $('table#table-edit-formalized').DataTable({
 		processing: true,

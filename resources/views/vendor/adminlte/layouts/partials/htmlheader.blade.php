@@ -12,6 +12,7 @@
     <link href="{{ asset('/css/all.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('/plugins/dataTables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('/plugins/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('/plugins/select2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('/css/skins/skin-skyimport.css') }}" rel="stylesheet" type="text/css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
