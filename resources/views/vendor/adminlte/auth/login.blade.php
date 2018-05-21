@@ -48,15 +48,20 @@
                         </div><!-- /.col <--></-->
                     </div>
                 </form>
-
                 {{-- @include('adminlte::auth.partials.social_login') --}}
-                
-                <a href="{{ url('consultar-consolidado') }}">Consultar Consolidado.</a><br>
-                <a href="{{ url('/password/reset') }}">{{ trans('adminlte_lang::message.forgotpassword') }}</a><br>
-                @if(env('REGISTRATION_OPEN'))
-                <a href="{{ url('/register') }}" class="text-center">{{ trans('adminlte_lang::message.registermember') }}</a>
-                @endif
-
+                <div class="row">
+                    <div class="col-xs-12 btn-group">
+                        <a class="btn btn-flat btn-xs btn-default" href="{{ url('consultar-consolidado') }}"><span class="fa fa-hand-pointer-o"></span> Consultar consolidado</a>
+                        <a class="btn btn-flat btn-xs btn-default pull-right" href="{{ url('/password/reset') }}"><span class="fa fa-question-circle"></span> {{ trans('adminlte_lang::message.forgotpassword') }}</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 btn-group">
+                        @if(env('REGISTRATION_OPEN'))
+                        <a class="btn btn-flat btn-xs pull-right btn-default" href="{{ url('/register') }}" class="text-center"><span class="fa fa-user-plus"></span> {{ trans('adminlte_lang::message.registermember') }}</a>
+                        @endif
+                    </div>
+                </div>
             </div><!-- /.login-box-body -->
 
         </div><!-- /.login-box -->
