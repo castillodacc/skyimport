@@ -1,34 +1,28 @@
 @extends('emails.layouts')
+
 @section('title')
 	<strong>
 		Bienvenido a U.S Cargo el Servicio Courier de Importadora Sky.
 	</strong>
 @endsection
+
 @section('content')
 	<tr>
 		<td style="padding: 5px 0 5px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px; text-align: justify;">
-			<p>
-				Usted ha creado un casillero el día de Hoy, esto le permitirá tener una dirección en Miami, FL. donde van a llegar los artículos o mercancía que compre en los Estados Unidos o que sus proveedores le envíen; permítanos asesorarle en cualquier proceso logístico y de compras en el exterior, nosotros podemos guiarlo en como usted debe hacer sus compras en línea, recuerde que nosotros le haremos llegar sus envíos hasta la puerta de su casa o negocio en Colombia, y recuerde que tanto el CASILLERO como la ZONA DE ALMACENAJE para consolidar sus compras son completamente gratis, siempre buscamos que nuestros clientes ahorren en sus envíos.
-			</p>
-			<p>
-				Cuando su proveedor o la página web donde realiza la compra le pide la direccián de envio o SHIPPING ADDRESS usted deberá escribirla de la siguiente manera:
-			</p>
+			<p>Nuevo Usuario Registrado.</p>
 		</td>
 	</tr>
 	<tr>
 		<td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px; text-align: justify;">
-			<li><b>Firts name:</b> {{ $data['name'] }}</li>
-			<li><b>Last name:</b> {{ $data['last_name'] }} <b>Sky</b></li>
-			<li><b>Address:</b> 8566 NW 61th ST. Apt / Officce: CO132 </li>
-			<li><b>City:</b> MIAMI</li>
-			<li><b>State:</b> FLORIDA</li>
-			<li><b>ZIP CODE:</b> 33166</li>
-			<li><b>Phone:</b> 5122347692</li>
+			<li><b>Nombre:</b> {{ $data['name'] }}</li>
+			<li><b>Apellido:</b> {{ $data['last_name'] }} <b>Sky</b></li>
+			<li><b>Correo:</b> {{ $data['email'] }} </li>
+			<li><b>N° de Identificación:</b> {{ $data['num_id'] }}</li>
 		</td>
 	</tr>
 	<tr>
 		<td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px; text-align: justify;">
-			<b>El link para entrar desde su cuenta es:</b>
+			<b>El link para entrar a su cuenta es:</b>
 			<p>
 				<li><b><a href="{{ url('/') }}">{{ url('/') }}</a></b></li>
 			</p>

@@ -93,6 +93,7 @@ class TrackingController extends Controller
     ->where('distributor_id', '=', $request->distributor_id)
     ->where('consolidated_id', '=', $request->consolidated_id)
     ->value('id');
+
     if ($existe) return response()->json(['msg' => 'El Tracking Ya fue registrado.']);
     $tracking = Tracking::create($request->all());
     EventsUsers::create([
@@ -242,11 +243,11 @@ class TrackingController extends Controller
         $t = Tracking::findOrFail($key);
         $errors[] = $t->tracking . ' / ' . $t->description;
       } else {
+        Tracking::findOrFail($key)->update(['shippingstate_id' => $id]);
         EventsUsers::create([
           'tracking_id' => $key,
           'event_id' => $id,
         ]);
-        Tracking::findOrFail($key)->update(['shippingstate_id' => $id]);
         $id_consolidated = Tracking::findOrFail($key)->consolidated->id;
         \skyimport\Http\Controllers\NotificationController::changeStateOfConsolidated($id_consolidated, $id);
       }

@@ -319,10 +319,7 @@ class ConsolidatedController extends Controller
             'consolidated_id' => $consolidated->id,
             'event_id' => 3,
         ]);
-        $admins = \skyimport\User::where('role_id', '=', 1)->get();
-        foreach ($admins as $admin) {
-            \Mail::to($admin->email)->send(new \skyimport\Mail\Formalizado($consolidated));
-        }
+        \Mail::to('uscargo@importadorasky.com')->send(new \skyimport\Mail\Formalizado($consolidated));
         return response()->json($consolidated->save());
     }
 

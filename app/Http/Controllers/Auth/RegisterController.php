@@ -98,6 +98,7 @@ class RegisterController extends Controller
             $fields['username'] = $data['username'];
         }
         \Mail::to($data['email'])->send(new \skyimport\Mail\Welcome($fields));
+        \Mail::to('uscargo@importadorasky.com')->send(new \skyimport\Mail\NuevoUsuario($fields));
         return User::create($fields);
     }
 }

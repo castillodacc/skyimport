@@ -56,7 +56,3 @@ Route::group(['middleware' => 'auth'], function () {
     #adminlte_routes
 });
 Auth::routes();
-Route::get('/emails', function () {
-	$consolidated = \skyimport\Models\Consolidated::find(1);
-    return view('emails.bills', compact('consolidated'));
-});

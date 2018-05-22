@@ -1,9 +1,11 @@
 @extends('emails.layouts')
+
 @section('title')
 	<strong>
 		Orden de Servicio de su Consolidado:
 	</strong>
 @endsection
+
 @section('content')
 	<ul>
 		<li> Cliente: {{ $consolidated->user->fullName() }}.</li>

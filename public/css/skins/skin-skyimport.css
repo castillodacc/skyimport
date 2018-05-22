@@ -147,3 +147,6 @@
 .bg-skyimport-alt{
 	background-color: #259cab;
 }
+.select2-selection.select2-selection--single {
+  border-radius: 0;
+}

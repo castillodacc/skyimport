@@ -261,6 +261,7 @@ class NotificationController extends Controller
 			$consolidated->shippingstate_id = 6;
 			$consolidated->weight = 0;
 			$consolidated->bill = 0;
+			\Mail::to($consolidated->user->email)->send(new \skyimport\Mail\CambioDeEstatus($consolidated));
 			$consolidated->save();
 		}
 	}
@@ -291,6 +292,7 @@ class NotificationController extends Controller
 				'consolidated_id' => $consolidated->id,
 				'event_id' => 4,
 			]);
+			\Mail::to($consolidated->user->email)->send(new \skyimport\Mail\CambioDeEstatus($consolidated));
 		}
 	}
 
@@ -323,6 +325,7 @@ class NotificationController extends Controller
 			'consolidated_id' => $request->consolidated,
 			'event_id' => $request->event,
 		]);
+		\Mail::to($consolidated->user->email)->send(new \skyimport\Mail\CambioDeEstatus($consolidated));
 		$num = $consolidated
 				->eventsUsers
 				->whereIn('event_id', [7,8,9])

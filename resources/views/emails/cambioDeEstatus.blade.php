@@ -2,7 +2,7 @@
 
 @section('title')
 	<strong>
-		Hola, el siguiente correo es para notificarle que el siguiente consolidado fue formalizado.
+		Hola, el siguiente correo es para notificarle que el siguiente consolidado le fue registrado un nuevo evento.
 	</strong>
 @endsection
 
@@ -11,7 +11,7 @@
 		<li>Consolidado n°: {{ $consolidado->number }}</li>
 		<li>Cliente: {{ $consolidado->user->fullName() }}</li>
 		<li>Total de trackigns: {{ $consolidado->trackings->count() }}</li>
-		<li>Identificación: {{ $consolidado->user->num_id }}</li>
+		<li><b>Evento: {{ $consolidado->eventsUsers->last()->events->event }}</b></li>
 	</ul>
 	<p>Trackings:</p>
 	<ul>
