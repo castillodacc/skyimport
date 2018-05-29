@@ -755,6 +755,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 					});
 				});
 				$('button#editEventConsolidated').click(function () {
+					$(this).attr('disabled');
 					let consolidated = $(this).attr('consolidated');
 					let event = $(this).attr('event');
 					let data = {

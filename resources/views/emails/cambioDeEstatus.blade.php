@@ -11,7 +11,7 @@
 		<li>Consolidado n°: {{ $consolidado->number }}</li>
 		<li>Cliente: {{ $consolidado->user->fullName() }}</li>
 		<li>Total de trackigns: {{ $consolidado->trackings->count() }}</li>
-		<li><b>Evento: {{ $consolidado->eventsUsers->last()->events->event }}</b></li>
+		<li><b>Evento: {!! $consolidado->eventsUsers->last()->events->event !!}</b></li>
 	</ul>
 	<p>Trackings:</p>
 	<ul>

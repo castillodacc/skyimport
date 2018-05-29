@@ -325,7 +325,9 @@ class NotificationController extends Controller
 			'consolidated_id' => $request->consolidated,
 			'event_id' => $request->event,
 		]);
-		\Mail::to($consolidated->user->email)->send(new \skyimport\Mail\CambioDeEstatus($consolidated));
+		if ($consolidated->shippingstate_id != 6) {
+			\Mail::to($consolidated->user->email)->send(new \skyimport\Mail\CambioDeEstatus($consolidated));
+		}
 		$num = $consolidated
 				->eventsUsers
 				->whereIn('event_id', [7,8,9])

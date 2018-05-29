@@ -38,9 +38,9 @@ class DatabaseSeeder extends Seeder
 
         /* user admin */
         DB::table('users')->insert([
-            'name' => 'root',
-            'last_name' => 'root',
-            'email' => 'root@importadorasky.com',
+            'name' => 'Uscargo',
+            'last_name' => 'Importadorasky',
+            'email' => 'uscargo@importadorasky.com',
             'password' => bcrypt('secret'),
             'role_id' => 1,
             'created_at' => Carbon::now(),
