@@ -7,7 +7,7 @@
     {{-- CSRF Token --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="shortcut icon" href="/img/favicon-96x96.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/img/skyimportnavmini.png" type="image/x-icon">
     <link href="{{ asset('/plugins/toastr.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('/css/all.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('/plugins/dataTables.bootstrap.css') }}" rel="stylesheet" type="text/css" />

@@ -3,9 +3,9 @@
   <!-- Logo -->
   <a href="{{ url('/home') }}" class="logo">
     <!-- mini logo for sidebar mini 50x50 pixels -->
-    <span class="logo-mini"><img src="/img/skynavsm.png"></span>
+    <span class="logo-mini"><img src="/img/skyimportnavmini.png"></span>
     <!-- logo for regular state and mobile devices -->
-    <span class="logo-lg"><img src="/img/skynavlg.png" width="160px" height="50px"></span>
+    <span class="logo-lg"><img src="/img/skyimportglobal.png" width="180px" height="55px"></span>
   </a>
   <!-- Header Navbar -->
   <nav class="navbar navbar-static-top" role="navigation">

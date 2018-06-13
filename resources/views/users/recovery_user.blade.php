@@ -9,7 +9,7 @@ Recuperar usuario.
     <div id="app" v-cloak>
         <div class="login-box">
             <div class="login-logo">
-                <img class="center-block" src="/img/skyimport.png" height="100px">
+                <img class="center-block" src="/img/skyimportglobal.png" height="100px">
             </div><!-- /.login-logo -->
 
             @if (count($errors) > 0)

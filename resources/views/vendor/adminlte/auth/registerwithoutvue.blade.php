@@ -10,7 +10,7 @@
     <div id="app" v-cloak>
         <div class="register-box">
             <div class="login-logo">
-                <img class="center-block" src="/img/sky.png">
+                <img class="center-block" src="/img/skyimportglobal.png">
             </div><!-- /.login-logo -->
 
             @if (count($errors) > 0)

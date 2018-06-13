@@ -8,7 +8,7 @@ Restablecer Contraseña
         <div class="login-box">
 
             <div class="login-logo">
-                <img class="center-block" src="/img/sky.png">
+                <img class="center-block" src="/img/skyimportglobal.png">
             </div><!-- /.login-logo -->
 
             @if (session('status'))

@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-            	<img class="center-block" src="/img/skyterms.png">
+            	<img class="center-block" src="/img/skyimportglobal.png">
                 <h4 class="modal-title text-center">Terminos y condiciones</h4>
             </div>
 
