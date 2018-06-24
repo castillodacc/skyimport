@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
         /* user admin */
         DB::table('users')->insert([
             'name' => 'Uscargo',
-            'last_name' => 'Importadorasky',
+            'last_name' => 'Importadora',
             'email' => 'uscargo@importadorasky.com',
             'password' => bcrypt('secret'),
             'role_id' => 1,
@@ -198,7 +198,9 @@ class DatabaseSeeder extends Seeder
             (88, 'Washington', 2, null, null, null),
             (89, 'West Virginia', 2, null, null, null),
             (90, 'Wisconsin', 2, null, null, null),
-            (91, 'Wyoming', 2, null, null, null);");
+            (91, 'Wyoming', 2, null, null, null),
+            (92, 'Medellin', 1, null, null, null),
+            (93, 'Antioquia', 1, null, null, null);");
 
         /**
          * Eventos 1) consolidateds - 2) trackings

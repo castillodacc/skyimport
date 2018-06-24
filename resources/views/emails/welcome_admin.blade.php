@@ -2,7 +2,7 @@
 
 @section('title')
 	<strong>
-		Bienvenido a U.S Cargo el Servicio Courier de Importadora Sky.
+		<strong><b style="color: #b51a00">U.S Cargo</b> el Servicio Courier de Importadora Sky.</strong>
 	</strong>
 @endsection
 

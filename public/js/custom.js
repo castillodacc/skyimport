@@ -161,119 +161,130 @@ function number_format(amount, decimals) {
     return amount_parts.join(',');
 }
 if (location.href.indexOf('/perfil') > 0) {
-// al cargar la pagina se colocan los inputs con readonly
-let inputs = $('form#profile').find('input, textarea, select');
-inputs.attr('disabled', '');
-$('#buttons_edit_perfil').hide();
-// se altera el estado de los inputs con este boton
-$('button#active_edit_profile, button#cancel').click(function (e) {
-	e.preventDefault();
-	restoreSmallInputs(messages)
-	if ($(inputs[0]).attr('disabled') == undefined) {
-		inputs.attr('disabled', '');
-		$('#buttons_edit_perfil').fadeOut();
-		UserProfile();
-	} else {
-		$('#buttons_edit_perfil').fadeIn();
-		inputs.removeAttr('disabled');
-	}
-});
-UserProfile();
-function UserProfile() {
-	let id = $('form#profile')[0].action.split('/')[4];
-	$.get(path + 'usuarios/'+id, function (response) {
-		let option = '<option value="" selected disabled>Seleccione un pais.</option>';
-		let countries = response.countries;
-		for (let i in countries) {
-			option += '<option value="'+i+'">'+countries[i]+'</option>';
+	// al cargar la pagina se colocan los inputs con readonly
+	let inputs = $('form#profile').find('input, textarea, select');
+	inputs.attr('disabled', '');
+	$('#buttons_edit_perfil').hide();
+	// se altera el estado de los inputs con este boton
+	$('button#active_edit_profile, button#cancel').click(function (e) {
+		e.preventDefault();
+		restoreSmallInputs(messages)
+		if ($(inputs[0]).attr('disabled') == undefined) {
+			inputs.attr('disabled', '');
+			$('#buttons_edit_perfil').fadeOut();
+			UserProfile();
+		} else {
+			$('#buttons_edit_perfil').fadeIn();
+			inputs.removeAttr('disabled');
 		}
-		let user = response.user;
-		$('select#country_id').html(option)
-		$('a#sin-form').text(user.consolidateda);
-		$('a#form').text(user.consolidatedc);
-		if (user.state) {
-			$('select#country_id').val(user.state.countrie_id);
-			$.get(path + 'get-data-states/' + user.state.countrie_id, function (response) {
-				if (user.country_id == 1) {
-					option = '<option value="">Seleccione un Departamento</option>';
-				} else {
-					option = '<option value="">Seleccione un Estado</option>';
-				}
-				for (let i in response) {
-					option += '<option value="'+i+'">'+response[i]+'</option>';
-				}
-				$('select#state_id').html(option);
+	});
+	UserProfile();
+	function UserProfile() {
+		let id = $('form#profile')[0].action.split('/')[4];
+		$.get(path + 'usuarios/'+id, function (response) {
+			let option = '<option value="" selected disabled>Seleccione un pais.</option>';
+			let countries = response.countries;
+			for (let i in countries) {
+				option += '<option value="'+i+'">'+countries[i]+'</option>';
+			}
+			let user = response.user;
+			$('select#country_id').html(option)
+			$('a#sin-form').text(user.consolidateda);
+			$('a#form').text(user.consolidatedc);
+			if (user.state) {
+				$('select#country_id').val(user.state.countrie_id);
+				$.get(path + 'get-data-states/' + user.state.countrie_id, function (response) {
+					if (user.country_id == 1) {
+						option = '<option value="">Seleccione un Departamento</option>';
+					} else {
+						option = '<option value="">Seleccione un Estado</option>';
+					}
+					for (let i in response) {
+						option += '<option value="'+response[i].id+'">'+response[i].state+'</option>';
+					}
+					$('select#state_id').html(option);
+					for(let i in inputs) {
+						if (inputs[i].id && inputs[i].id != 'country_id') {
+							let value = user[inputs[i].name];
+							$(inputs[i]).val(value);
+						}
+					}
+				});
+			} else {
 				for(let i in inputs) {
 					if (inputs[i].id && inputs[i].id != 'country_id') {
 						let value = user[inputs[i].name];
 						$(inputs[i]).val(value);
 					}
 				}
+			}
+		});
+	}
+	// eventos al enviar el formulario del perfil
+	$('form#profile').submit(function (e) {
+		e.preventDefault();
+		if ($(inputs[0]).attr('disabled') !== undefined) {
+			toastr.warning("Debe activar la edición en el boton Editar Perfil!")
+			return;
+		}
+		let url  = $(this).attr('action');
+		let data = $(this).serializeArray();
+		restoreSmallInputs(messages)
+		$.ajax({
+			url: url,
+			type: 'POST',
+			dataType: 'json',
+			data: data,
+		})
+		.done(function(response) {
+			toastr.success('Usuario editado exitosamente!');
+			inputs.attr('disabled', '');
+			$('#buttons_edit_perfil').hide();
+			restoreSmallInputs(messages)
+			UserProfile();
+		})
+		.fail(function(response) {
+			mgs_errors(response.responseJSON)
+		});
+		if ($('input[name="avatar"]')[0].files[0]) {	
+			$('#avatar').removeClass('text-danger')
+			.text('Imagen Personal');
+			let form = new FormData();
+			let file = $('input[name="avatar"]')[0].files[0];
+			form.append('avatar', file);
+			let id = $('form#profile')[0].action.split('/')[4];
+			axios
+			.post(path+'save-image/'+id, form)
+			.then(function (response) {
+				toastr.success('Imagen editada con exito');
+			})
+			.catch(function (error) {
+				$('#avatar').addClass('text-danger')
+				.text(error.response.data.avatar[0])
 			});
-		} else {
-			for(let i in inputs) {
-				if (inputs[i].id && inputs[i].id != 'country_id') {
-					let value = user[inputs[i].name];
-					$(inputs[i]).val(value);
-				}
+		}
+	});
+	// coloca un preview de la imagen subida
+	$('input[name="avatar"]').change(function (e) {
+		if (this.files && this.files[0]) {
+			var reader = new FileReader();
+			reader.readAsDataURL(this.files[0]);
+			reader.onload = function (e) {
+				$('div#avatar_profile img').attr({'src': e.target.result})
 			}
 		}
 	});
-}
-// eventos al enviar el formulario del perfil
-$('form#profile').submit(function (e) {
-	e.preventDefault();
-	if ($(inputs[0]).attr('disabled') !== undefined) {
-		toastr.warning("Debe activar la edición en el boton Editar Perfil!")
-		return;
-	}
-	let url  = $(this).attr('action');
-	let data = $(this).serializeArray();
-	restoreSmallInputs(messages)
-	$.ajax({
-		url: url,
-		type: 'POST',
-		dataType: 'json',
-		data: data,
-	})
-	.done(function(response) {
-		toastr.success('Usuario editado exitosamente!');
-		inputs.attr('disabled', '');
-		$('#buttons_edit_perfil').hide();
-		restoreSmallInputs(messages)
-		UserProfile();
-	})
-	.fail(function(response) {
-		mgs_errors(response.responseJSON)
-	});
-	if ($('input[name="avatar"]')[0].files[0]) {	
-		$('#avatar').removeClass('text-danger')
-		.text('Imagen Personal');
-		let form = new FormData();
-		let file = $('input[name="avatar"]')[0].files[0];
-		form.append('avatar', file);
-		let id = $('form#profile')[0].action.split('/')[4];
-		axios
-		.post(path+'save-image/'+id, form)
-		.then(function (response) {
-			toastr.success('Imagen editada con exito');
-		})
-		.catch(function (error) {
-			$('#avatar').addClass('text-danger')
-			.text(error.response.data.avatar[0])
-		});
-	}
-});
-// coloca un preview de la imagen subida
-$('input[name="avatar"]').change(function (e) {
-	if (this.files && this.files[0]) {
-		var reader = new FileReader();
-		reader.readAsDataURL(this.files[0]);
-		reader.onload = function (e) {
-			$('div#avatar_profile img').attr({'src': e.target.result})
-		}
-	}
-});
+	// darse de baja
+	// $('#auto_deleted .btn-danger').click(function () {
+	// 	$.post('auto-deleting', {sr: 'asd'}, function () {
+	// 		$('#auto_deleted').find('button').hide();
+	// 		$('#auto_deleted').find('.modal-title').text('Usted ha sido borrado con exito!');
+	// 		$('#auto_deleted').find('.modal-body').html('<div class="text-center"><p>Muchas gracias por haber pertenecido a nuestra familia de U.S. Cargo.</p><p>Si desea obtener nuevamente su casillero, debera registrarse y llenar de nuevo su perfil de usuario para seguir recibiendo sus paquetes por nuestros servicios de curier.</p><a class="btn btn-success btn-flat" href="/">Muchas gracias.</a></div>');
+	// 	})
+	// 	.fail(function (r) {
+	// 		toastr.warning(r.responseJSON.error);
+	// 	});
+	// });
 }
 if (location.href.indexOf('/usuarios') > 0 || location.href.indexOf('/perfil') > 0) {
 	$('select#country_id').change(function (e) {
@@ -286,7 +297,7 @@ if (location.href.indexOf('/usuarios') > 0 || location.href.indexOf('/perfil') >
 				option = '<option value="">Seleccione un Estado</option>';
 			}
 			for (let i in response) {
-				option += '<option value="'+i+'">'+response[i]+'</option>';
+				option += '<option value="'+response[i].id+'">'+response[i].state+'</option>';
 			}
 			$('select#state_id').html(option);
 		});
@@ -397,7 +408,7 @@ if (location.href.indexOf('/usuarios') > 0) {
 									option = '<option value="">Seleccione un Estado</option>';
 								}
 								for (let i in response) {
-									option += '<option value="'+i+'">'+response[i]+'</option>';
+									option += '<option value="'+response[i].id+'">'+response[i].state+'</option>';
 								}
 								$('select#state_id').html(option).val(state);
 							});

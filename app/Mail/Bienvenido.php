@@ -8,7 +8,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use skyimport\Models\Country;
 
-class Welcome extends Mailable
+class Bienvenido extends Mailable
 {
     use Queueable, SerializesModels;
 

@@ -39,7 +39,7 @@ class UsersController extends Controller
             return '<span class="label ' . $class . '">' . $user->role->rol . '</span>';
         })->addColumn('pais', function ($user) {
             if ($user->state == null) return '-';
-            return $user->state->countrie->country;
+            return $user->state->state;
         })->addColumn('action', function ($user) {
             return '
                     <div class="text-center">
@@ -195,7 +195,7 @@ class UsersController extends Controller
         $states = \DB::table('states')
         ->where('countrie_id', '=', $id)
         ->orderBy('state', 'ASC')
-        ->pluck('state', 'id');
+        ->get(['state', 'id']);
         return response()->json($states);
     }
 
@@ -218,4 +218,18 @@ class UsersController extends Controller
         $users = User::get(['name', 'last_name', 'id', 'num_id']);
         return response()->json(compact('users'));
     }
+
+    // public function autoDeleting(Request $request)
+    // {
+    //     if ($request->sr == 'asd') {
+    //         if(\Auth::user()->id == 1) return response(['error' => 'Error al modificar usuario'], 421);
+    //         \Auth::user()->fill([
+    //             'email' => \Auth::user()->email . ' - ' . 'D',
+    //             'num_id' => \Auth::user()->num_id . ' - ' . 'D',
+    //             'password' => '',
+    //         ])->save();
+    //         $user = \Auth::user()->delete();
+    //         return response()->json($user);
+    //     }
+    // }
 }

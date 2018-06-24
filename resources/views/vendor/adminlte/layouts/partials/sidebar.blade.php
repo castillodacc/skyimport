@@ -2,8 +2,6 @@
     <section class="sidebar">
         <ul class="sidebar-menu tree" data-widget="tree">
             <li class="header text-center">Menu de navegacion</li>
-            <li class="{!! Request::is('/') ? 'active' : '' !!}"><a href="{{ url('/') }}"><i class='fa fa-dashboard'></i><span>Inicio</span></a></li>
-            <hr>
             <li class="{!! Request::is('perfil') ? 'active' : '' !!}"><a href="{{ route('profile') }}"><i class='fa fa-user-circle'></i><span>Perfil</span></a></li>
             <hr>
             @if(Auth::user()->role_id == 1)

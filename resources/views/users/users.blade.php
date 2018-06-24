@@ -19,7 +19,7 @@
 					<th>Identificación</th>
 					<th width="5%">Rol</th>
 					<th>Correo</th>
-					<th>Pais</th>
+					<th>Departamento</th>
 					<th>Telefono</th>
 					<th class="text-center" width="20%">Acciones</th>
 				</tr>

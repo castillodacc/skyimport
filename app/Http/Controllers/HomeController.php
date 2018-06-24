@@ -23,6 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('adminlte::home');
+        return redirect()->to('consolidados');
+        // return view('adminlte::home');
     }
 }

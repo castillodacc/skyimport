@@ -41,7 +41,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/tracking';
 
     /**
      * Create a new controller instance.
@@ -97,7 +97,7 @@ class RegisterController extends Controller
         if (config('auth.providers.users.field','email') === 'username' && isset($data['username'])) {
             $fields['username'] = $data['username'];
         }
-        \Mail::to($data['email'])->send(new \skyimport\Mail\Welcome($fields));
+        \Mail::to($data['email'])->send(new \skyimport\Mail\Bienvenido($fields));
         \Mail::to('uscargo@importadorasky.com')->send(new \skyimport\Mail\NuevoUsuario($fields));
         return User::create($fields);
     }

@@ -46,13 +46,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('notifications', 'NotificationController@notifications');
 	Route::post('notifications/create', 'NotificationController@store');
 	Route::post('notifications-view', 'NotificationController@viewer');
-	// Route::delete('event/{event}', 'NotificationController@destroy');
-	// Route::get('events', 'NotificationController@eventsAll');
 	Route::post('add-event', 'NotificationController@addEvent');
-    //    Route::get('/link1', function ()    {
-	//        // Uses Auth Middleware
-	//    });
-    //Please do not remove this if you want adminlte:route and adminlte:link commands to works correctly.
-    #adminlte_routes
+	// Route::post('auto-deleting', 'Admin\UsersController@autoDeleting');
 });
 Auth::routes();
+Route::get('/{slug?}', 'HomeController@index');

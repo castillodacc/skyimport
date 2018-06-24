@@ -61,7 +61,18 @@ class ValidationsProvider extends ServiceProvider
         {
             return Hash::check($value, Auth::user()->password);
         }, 'El campo :attribute no coincide con su contraseña actual.');
+
+        /**
+         * Verifiva el campo solo tenga letras y espacios.
+         */
+        Validator::extend('alfa_space', function($attribute, $value)
+        {
+            if ($value[0] == '') return false;
+            return preg_match('/.([a-zA-Z])$/', $value);
+            return false;
+        }, 'No debe poseer caracteres especiales ni números.');
     }
+
 
     /**
      * Register the application services.

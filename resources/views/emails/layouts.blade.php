@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Importadora Sky</title>
+	<title>U.S Cargo el Servicio Courier de Importadora Sky</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body style="margin: 0; padding: 0;">
@@ -20,7 +20,7 @@
 							<table border="0" cellpadding="0" cellspacing="0" width="100%">
 								<tr>
 									<td style="color: #153643; font-family: Arial, sans-serif; font-size: 24px; text-align: center;">
-										<b>U.S Cargo el Servicio Courier de Importadora Sky.</b>
+										<b>@yield('saludo', 'U.S Cargo el Servicio Courier de Importadora Sky.')</b>
 									</td>
 								</tr>
 								<hr/>
@@ -88,11 +88,11 @@
 								<tr>
 									<td style="color: #ffffff; font-family: Arial, sans-serif; font-size: 14px; text-align: justify;" width="75%">
 										<p>
-											&reg; 2018 Importadora Sky. All Rights Reserved<br/>
+											&reg; 2018 U.S. Cargo. All Rights Reserved<br/>
 										</p>
 										<p>
 											COLOMBIA<br>
-											Calle 35#29-54 Oficina 806.<br>
+											Calle 35#29-54 Oficina 806 - Bucaramanga, Santander.<br>
 											Celular / WhatsApp: 317-5608824.<br>
 											U.S.A - OPERATION CENTER<br>
 											9759 Misty Plain Drive, San Antonio Texas 78238 U.S.A.<br>
