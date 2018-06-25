@@ -71,6 +71,18 @@ class ValidationsProvider extends ServiceProvider
             return preg_match('/.([a-zA-Z])$/', $value);
             return false;
         }, 'No debe poseer caracteres especiales ni números.');
+
+        /**
+         * Verifiva que el valor a ingrasar solo este 1 vez en la bd.
+         */
+        Validator::extend('unique1', function($attribute, $value, $parameters)
+        {
+            $match = \DB::table($parameters[0])->where($attribute, '=', $value)->count();
+            if ($match > 1) {
+                return false;
+            }
+            return true;
+        }, 'El elemento :attribute ya está en uso.');
     }
 
 

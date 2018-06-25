@@ -19,9 +19,9 @@
             <a id="form" class="pull-right"></a>
           </li>
         </ul>
-{{--         <div class="text-center">
+        <div class="text-center">
           <button class="btn btn-danger btn-flat btn-sm" data-toggle="modal" data-target="#auto_deleted">Darse de baja</button>
-        </div> --}}
+        </div>
       </div>
     </div>
   </div>
@@ -157,5 +157,5 @@
     </div> 
   </div>
 </div>
-{{-- @include('modals.auto_deleted') --}}
+@include('modals.auto_deleted')
 @endsection

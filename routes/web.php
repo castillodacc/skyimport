@@ -47,7 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('notifications/create', 'NotificationController@store');
 	Route::post('notifications-view', 'NotificationController@viewer');
 	Route::post('add-event', 'NotificationController@addEvent');
-	// Route::post('auto-deleting', 'Admin\UsersController@autoDeleting');
+	Route::post('auto-deleting', 'Admin\UsersController@autoDeleting');
 });
 Auth::routes();
 Route::get('/{slug?}', 'HomeController@index');

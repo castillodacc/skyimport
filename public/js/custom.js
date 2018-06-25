@@ -275,16 +275,16 @@ if (location.href.indexOf('/perfil') > 0) {
 		}
 	});
 	// darse de baja
-	// $('#auto_deleted .btn-danger').click(function () {
-	// 	$.post('auto-deleting', {sr: 'asd'}, function () {
-	// 		$('#auto_deleted').find('button').hide();
-	// 		$('#auto_deleted').find('.modal-title').text('Usted ha sido borrado con exito!');
-	// 		$('#auto_deleted').find('.modal-body').html('<div class="text-center"><p>Muchas gracias por haber pertenecido a nuestra familia de U.S. Cargo.</p><p>Si desea obtener nuevamente su casillero, debera registrarse y llenar de nuevo su perfil de usuario para seguir recibiendo sus paquetes por nuestros servicios de curier.</p><a class="btn btn-success btn-flat" href="/">Muchas gracias.</a></div>');
-	// 	})
-	// 	.fail(function (r) {
-	// 		toastr.warning(r.responseJSON.error);
-	// 	});
-	// });
+	$('#auto_deleted .btn-danger').click(function () {
+		$.post('auto-deleting', {sr: 'asd'}, function () {
+			$('#auto_deleted').find('button').hide();
+			$('#auto_deleted').find('.modal-title').text('Usted ha sido borrado con exito!');
+			$('#auto_deleted').find('.modal-body').html('<div class="text-center"><p>Muchas gracias por haber pertenecido a nuestra familia de U.S. Cargo.</p><p>Si desea obtener nuevamente su casillero, debera registrarse y llenar de nuevo su perfil de usuario para seguir recibiendo sus paquetes por nuestros servicios de curier.</p><a class="btn btn-success btn-flat" href="/">Muchas gracias.</a></div>');
+		})
+		.fail(function (r) {
+			toastr.warning(r.responseJSON.error);
+		});
+	});
 }
 if (location.href.indexOf('/usuarios') > 0 || location.href.indexOf('/perfil') > 0) {
 	$('select#country_id').change(function (e) {

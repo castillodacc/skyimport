@@ -159,15 +159,14 @@ class UsersController extends Controller
 
         if ($id > 0) {
             $user = User::findOrFail($id);
-            // $n = substr_count($user->email, '- D');
-            // $x = 0;
-            // $string = '';
-            // do {
-            //      $string .= ' - ' . 'D';
-            // } while (++$x < $n);
+            $string = '';
+            do {
+                $string = $string . ' - ' . 'D';
+                $u = User::where('email', '=', $user->email . $string)->count();
+            } while ($u == 1);
             $user->fill([
-                'email' => $user->email . ' - ' . 'D',
-                'num_id' => $user->num_id . ' - ' . 'D',
+                'email' => $user->email . $string,
+                'num_id' => $user->num_id . $string,
                 'password' => '',
             ])->save();
             return response()->json($user);
@@ -245,17 +244,23 @@ class UsersController extends Controller
         return response()->json(compact('users'));
     }
 
-    // public function autoDeleting(Request $request)
-    // {
-    //     if ($request->sr == 'asd') {
-    //         if(\Auth::user()->id == 1) return response(['error' => 'Error al modificar usuario'], 421);
-    //         \Auth::user()->fill([
-    //             'email' => \Auth::user()->email . ' - ' . 'D',
-    //             'num_id' => \Auth::user()->num_id . ' - ' . 'D',
-    //             'password' => '',
-    //         ])->save();
-    //         $user = \Auth::user()->delete();
-    //         return response()->json($user);
-    //     }
-    // }
+    public function autoDeleting(Request $request)
+    {
+        if ($request->sr == 'asd') {
+            if(\Auth::user()->id == 1) return response(['error' => 'Error al modificar usuario'], 421);
+            $string = '';
+            do {
+                $string = $string . ' - ' . 'D';
+                $u = User::where('email', '=', \Auth::user()->email . $string)->count();
+            } while ($u == 1);
+
+            \Auth::user()->fill([
+                'email' => \Auth::user()->email . $string,
+                'num_id' => \Auth::user()->num_id . $string,
+                'password' => '',
+            ])->save();
+            $user = \Auth::user()->delete();
+            return response()->json($user);
+        }
+    }
 }
