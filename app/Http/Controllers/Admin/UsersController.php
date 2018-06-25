@@ -41,16 +41,28 @@ class UsersController extends Controller
             if ($user->state == null) return '-';
             return $user->state->state;
         })->addColumn('action', function ($user) {
-            return '
-                    <div class="text-center">
-                       
-                         <button id="edit-user" type="button" class="btn btn-primary btn-flat btn-xs" user="'.$user->id.'"><span class="fa fa-pencil"></span> Editar</button>
-                       
-                        
-                        <button id="delete-user" type="button" class="btn btn-danger btn-flat btn-xs" user="'.$user->id.'"><span class="fa fa-trash"></span> Eliminar</button>
-                        
-                    </div>
-                ';
+            if (substr_count($user->email, '- D')) {
+                return '
+                        <div class="text-center">
+                           
+                             <button id="edit-user" type="button" class="btn btn-primary btn-flat btn-xs" user="'.$user->id.'"><span class="fa fa-pencil"></span> Editar</button>
+                           
+                        </div>
+                    ';
+                
+            } else {
+                return '
+                        <div class="text-center">
+                           
+                             <button id="edit-user" type="button" class="btn btn-primary btn-flat btn-xs" user="'.$user->id.'"><span class="fa fa-pencil"></span> Editar</button>
+                           
+                            
+                            <button id="delete-user" type="button" class="btn btn-danger btn-flat btn-xs" user="'.$user->id.'"><span class="fa fa-trash"></span> Eliminar</button>
+                            
+                        </div>
+                    ';
+            }
+            
         })
         ->editColumn('fullname', function ($user) {
             return $user->fullname();
@@ -141,11 +153,25 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id = null)
     {
         if($id == 1) return response(['error' => 'Error al modificar usuario'], 421);
-        $user = User::findOrFail($id)->delete();
-        return response()->json($user);
+
+        if ($id > 0) {
+            $user = User::findOrFail($id);
+            // $n = substr_count($user->email, '- D');
+            // $x = 0;
+            // $string = '';
+            // do {
+            //      $string .= ' - ' . 'D';
+            // } while (++$x < $n);
+            $user->fill([
+                'email' => $user->email . ' - ' . 'D',
+                'num_id' => $user->num_id . ' - ' . 'D',
+                'password' => '',
+            ])->save();
+            return response()->json($user);
+        }
     }
 
     /**

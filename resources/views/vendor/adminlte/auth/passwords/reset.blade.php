@@ -10,9 +10,9 @@
 
     <div id="app">
         <div class="login-box">
-        <div class="login-logo">
-            <a href="{{ url('/home') }}"><b>Admin</b>LTE</a>
-        </div><!-- /.login-logo -->
+            <div class="login-logo">
+                <img class="center-block" src="/img/skyimportglobal.png">
+            </div><!-- /.login-logo -->
 
         @if (session('status'))
             <div class="alert alert-success">
@@ -36,8 +36,7 @@
 
             <reset-password-form token="{{ $token }}">></reset-password-form>
 
-            <a href="{{ url('/login') }}">Log in</a><br>
-            <a href="{{ url('/register') }}" class="text-center">{{ trans('adminlte_lang::message.membreship') }}</a>
+            <a href="{{ url('/login') }}">Iniciar Sesion</a><br>
 
         </div><!-- /.login-box-body -->
 
