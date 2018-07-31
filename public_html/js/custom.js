@@ -1,3 +1,4 @@
+"use strict";
 $('.date').datepicker({
 	format: "yyyy-mm-dd",
 	todayBtn: true,
@@ -7,7 +8,6 @@ $('.date').datepicker({
 	autoclose: true,
 	todayHighlight: true
 });
-"use strict";
 toastr.options = {
 	"closeButton": true,
 	"newestOnTop": true,
@@ -525,7 +525,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 		e.preventDefault();
 		$('div#header-search-a').fadeToggle();
 	});
-	$('button#cancel-consolidated, #modal-send-form button[class="close"]').click(function () {
+	$('button#cancel-consolidated, #modal-send-form button.delete-consolidated').click(function () {
 		$(this).attr('disabled', 'disabled');
 		let id = $('form#tracking-form-register input#consolidated_id')[0].value;
 		$.post(path + 'consolidados/'+id, {'_method':'DELETE'}, function (response) {
@@ -534,6 +534,9 @@ if (location.href.indexOf('/consolidados') > 0) {
 			toastr.success('Consolidado Cancelado.');
 			$('button#cancel-consolidated, #modal-send-form button[class="close"]').removeAttr('disabled');
 		});
+	});
+	$('#modal-send-form button.close-consolidated').click(function () {
+		$('#modal-send-form').modal('toggle');
 	});
 	$.post(path + 'data-for-consolidated', function (response) {
 		let d = response.distributors;
@@ -622,6 +625,13 @@ if (location.href.indexOf('/consolidados') > 0) {
 					$(this).attr('disabled', 'disabled');
 					let consolidated = $(this).attr('consolidated');
 					let url = path + 'consolidados/' + consolidated;
+					if ($(this).attr('tabla') == 'formalizado') {
+						$('button#cancel-consolidated, button#consolidated-consolidated, button.delete-consolidated').hide();
+						$('button.close-consolidated').show();
+					} else {
+						$('button#cancel-consolidated, button#consolidated-consolidated, button.delete-consolidated').show();
+						$('button.close-consolidated').hide();
+					}
 					$.get(url, function (response) {
 						$('tr').removeClass('info');
 						$('#btn-create-tracking').show();
@@ -796,7 +806,7 @@ var consTable2 = $('table#consolidated-b-table').DataTable({
 					event: event,
 				}
 				$.post(path + 'add-event', data, function (response) {
-				    $(this).removeAttr('disabled');
+					$(this).removeAttr('disabled');
 					consTable2.draw();
 					toastr.success('Cambio de estado Exitoso');
 				});
@@ -806,6 +816,13 @@ var consTable2 = $('table#consolidated-b-table').DataTable({
 				$(this).attr('disabled', 'disabled');
 				let consolidated = $(this).attr('consolidated');
 				let url = path + 'consolidados/' + consolidated;
+				if ($(this).attr('tabla') == 'formalizado') {
+					$('button#cancel-consolidated, button#consolidated-consolidated, button.delete-consolidated').hide();
+					$('button.close-consolidated').show();
+				} else {
+					$('button#cancel-consolidated, button#consolidated-consolidated, button.delete-consolidated').show();
+					$('button.close-consolidated').hide();
+				}
 				$.get(url, function (response) {
 					$('tr').removeClass('info');
 					$('#btn-create-tracking').show();
@@ -1223,7 +1240,7 @@ if (location.href.indexOf('/tracking') > 0) {
 		let trac = localStorage.getItem('trackings');
 		let eve = $('select#event_to').val();
 		if (trac) {
-		    
+
 			trac = trac.split(',');
 			if (eve == '') {
 				toastr.warning('Debe agregar un evento');
