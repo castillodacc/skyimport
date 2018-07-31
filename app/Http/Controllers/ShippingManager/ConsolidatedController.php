@@ -40,6 +40,7 @@ class ConsolidatedController extends Controller
             'bill',
             'shippingstate_id'
         ]);
+
         if ($request->c === 'abierto') {
             $object->where('closed_at', '>', \Carbon::now());
         } else {
@@ -101,7 +102,7 @@ class ConsolidatedController extends Controller
             if ((\Auth::user()->role_id == 2 && $consolidated->shippingstate_id < 2) ||
                 (\Auth::user()->role_id == 1 && $consolidated->shippingstate_id < 5)) {
                 $html .= '
-                    <button id="editConsolidated" type="button" class="btn btn-primary btn-flat btn-xs" consolidated="' . $consolidated->id . '"><span class="fa fa-pencil"></span> Editar</button>
+                    <button id="editConsolidated" type="button" class="btn btn-primary btn-flat btn-xs" consolidated="' . $consolidated->id . '" tabla="' . ((request()->c === 'abierto') ? 'abierto' : 'formalizado') . '"><span class="fa fa-pencil"></span> Editar</button>
                 ';
             }
             if (request()->c != 'abierto') {
@@ -237,12 +238,11 @@ class ConsolidatedController extends Controller
     public function destroy($id)
     {
         $consolidated = Consolidated::findOrFail($id);
-        if($consolidated->shippingstate_id > 2) return response()->json(true);
         $consolidated->trackings->each(function ($t) {
             $t->eventsUsers->each(function ($e) {
                 $e->delete();
             });
-            return $t->delete();
+            $t->delete();
         });
         $consolidated->delete();
         return response()->json($consolidated);

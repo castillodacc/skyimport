@@ -2,7 +2,8 @@
     <div class="modal-dialog modal-lg" style="width: 75%;" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary">
-                <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close delete-consolidated" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close close-consolidated" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title text-center" id="ModalLabel"></h4>
             </div>
             <div class="modal-header">
@@ -102,7 +103,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" id="cancel-consolidated" class="btn btn-danger btn-flat"><span class="fa fa-close"></span> Cancelar</butotton>
+                <button type="button" id="cancel-consolidated" class="btn btn-danger btn-flat"><span class="fa fa-close"></span> Cancelar</button>
                 <button type="button" id="consolidated-save" class="btn btn-primary btn-flat"><span class="glyphicon glyphicon-saved"></span> Guardar</button>
                 <button type="button" id="consolidated-consolidated" class="btn btn-success btn-flat"><span class="fa fa-send"></span> Formalizar</button>
             </div>
