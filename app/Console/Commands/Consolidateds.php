@@ -44,8 +44,8 @@ class Consolidateds extends Command
             $consolidateds = Consolidated::where('shippingstate_id', 4)->get();
             $consolidateds->each(function ($c) {
                 $event = $c->eventsUsers->where('event_id', 4)->first();
-                $this->info($event->created_at->diffInHours(\Carbon::now()));
-                if ($event->created_at->diffInHours(\Carbon::now()) == 24) {
+                $this->info($event->created_at->diffInHours(\Carbon::now()) > 24);
+                if ($event->created_at->diffInHours(\Carbon::now()) > 24) {
                     $c->trackings->each(function ($t) {
                         if ($t->shippingstate_id < 14) {
                             $t->update(['shippingstate_id' => 14]);
@@ -61,6 +61,7 @@ class Consolidateds extends Command
                         'event_id' => 5,
                     ]);
                     \Mail::to($c->user->email)->send(new \skyimport\Mail\CambioDeEstatus($c));
+                    $this->info($c->user->email);
                 }
             });
         }
@@ -75,7 +76,8 @@ class Consolidateds extends Command
                         'consolidated_id' => $c->id,
                         'event_id' => 3,
                     ]);
-                    \Mail::to('uscargo@importadorasky.com')->send(new \skyimport\Mail\Formalizado($consolidated));
+                    \Mail::to('uscargo@importadorasky.com')->send(new \skyimport\Mail\Formalizado($c));
+                    \Mail::to($c->user->email)->send(new \skyimport\Mail\Formalizado($c));
                     $c->save();
                 }
             } else {

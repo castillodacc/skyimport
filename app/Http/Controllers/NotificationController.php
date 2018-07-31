@@ -1,20 +1,16 @@
 <?php
-
 namespace skyimport\Http\Controllers;
-
 use Illuminate\Http\Request;
 use skyimport\Models\Consolidated;
 use skyimport\Models\Tracking;
 use skyimport\Models\EventsUsers;
 use Yajra\DataTables\Datatables;
-
 class NotificationController extends Controller
 {
 	public function __construct()
 	{
 		$this->middleware('ajax');
 	}
-
 	public function eventsAll()
 	{
 		$request = request();
@@ -27,26 +23,26 @@ class NotificationController extends Controller
 			}
 			if (isset($tr)) {
 				$events = EventsUsers::whereIn('tracking_id', $tr)
+				->where('event_id', '<>', 1)
 				->where('event_id', '<>', 11)
 				->where('event_id', '<>', 13)
 				->where('event_id', '<>', 14)
 				->where('event_id', '<>', 15)
 				->orWhere('consolidated_id', '=', $c)
-				->whereIn('event_id', [1,4,5,7,8,12])
+				->whereIn('event_id', [3,4,5,7,8,9,10,12])
 				->orderBy('created_at', 'DESC');
 			}
 		}
-
 		return (new Datatables)->of($events)
 		->addColumn('fecha', function ($event) {
-			return $event->created_at->format('d/m/y');
+			return $event->created_at->format('d/m/Y');
 		})
 		->addColumn('hora', function ($event) {
-			return $event->created_at->format('h:m:s');
+			return $event->created_at->format('g:i:s a');
 		})
 		->addColumn('evento', function ($e) {
 			if ($e->tracking_id == '') {
-				if ($e->event_id == 1) {
+				if ($e->event_id == 3) {
 					return 'Consolidado creado, en espera de recibir los paquetes con los trackings del consolidado para hacer el despacho.';
 				} elseif ($e->event_id == 4) {
 					return 'Trackings del consolidado recibidos, Salida de la bodega de Importadora Sky, destino: Bogotá, Colombia.';
@@ -64,7 +60,6 @@ class NotificationController extends Controller
 		})
 		->make(true);
 	}
-
 	public function notifications(Request $request)
 	{
 		if (\Auth::user()->role_id == 1) {
@@ -74,7 +69,6 @@ class NotificationController extends Controller
 							->orWhere('shippingstate_id', '=', 5)
 							->orderBy('created_at', 'DESC')->get();
 			$notifications_total = $notifications->count();
-
 			$html = "<li class='header text-center'>$notifications_total  Consolidados formalizados hoy.</li>
 						<li>
 			              <ul class='menu'>";
@@ -97,7 +91,6 @@ class NotificationController extends Controller
 		} else {
 			$user = \Auth::user()->id;
 			$consolidados = Consolidated::where('user_id', '=', $user)->limit(10)->get();
-
 			$notifications_total = 0;
 			$html = "<li class='header'> Eventos en Trackings.</li>
 						<li>
@@ -185,7 +178,6 @@ class NotificationController extends Controller
 		}
 		return response()->json(compact('html', 'notifications_total'));
 	}
-
 	public function viewer()
 	{
 		if (\Auth::user()->role_id == 1) {
@@ -206,7 +198,6 @@ class NotificationController extends Controller
 			});
 		}
 	}
-
 	public function store(Request $request)
 	{
 		$eventos = EventsUsers::where('tracking_id', '=', $request->tracking)
@@ -224,7 +215,6 @@ class NotificationController extends Controller
 		$this->changeStateOfConsolidated($id, $request->event);
 		return;
 	}
-
 	public static function changeStateOfConsolidated($id, $event)
 	{
 		$event_current = Consolidated::findOrFail($id)->eventsUsers->last()->event_id;
@@ -235,7 +225,6 @@ class NotificationController extends Controller
 			if ($event_current <= 5) { Self::allTrackingsInColombia($id); }
 		}
 	}
-
 	public static function allTrackingsInColombia($id)
 	{
 		$consolidated = Consolidated::findOrFail($id);
@@ -255,12 +244,10 @@ class NotificationController extends Controller
 			$consolidated->shippingstate_id = 6;
 			$consolidated->weight = 0;
 			$consolidated->bill = 0;
-			\Mail::to($consolidated->user->email)->send(new \skyimport\Mail\CambioDeEstatus($consolidated));
+			//\Mail::to($consolidated->user->email)->send(new \skyimport\Mail\CambioDeEstatus($consolidated));
 			$consolidated->save();
 		}
 	}
-
-
 	public static function allStatusInMiami($id)
 	{
 		$consolidated = Consolidated::findOrFail($id);
@@ -289,7 +276,6 @@ class NotificationController extends Controller
 			\Mail::to($consolidated->user->email)->send(new \skyimport\Mail\CambioDeEstatus($consolidated));
 		}
 	}
-
     public function events($id)
     {
         $consolidated = Consolidated::findOrFail($id);
@@ -310,7 +296,6 @@ class NotificationController extends Controller
         });
         return response()->json(compact('event', 'consolidated'));
     }
-
     public function addEvent(Request $request)
     {
     	$consolidated = Consolidated::findOrFail($request->consolidated);

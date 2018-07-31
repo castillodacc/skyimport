@@ -766,7 +766,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 					});
 				});
 				$('button#editEventConsolidated').click(function () {
-					$(this).attr('disabled');
+					$(this).attr('disabled','disabled');
 					let consolidated = $(this).attr('consolidated');
 					let event = $(this).attr('event');
 					let data = {
@@ -774,6 +774,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 						event: event,
 					}
 					$.post(path + 'add-event', data, function (response) {
+					    $(this).removeAttr('disabled');
 						consTable2.draw();
 						toastr.success('Cambio de estado Exitoso');
 					});
@@ -863,7 +864,7 @@ if (location.href.indexOf('/consolidados') > 0) {
 				});
 			}
 		},
-		order: [[3, 'DESC']],
+		order: [[5, 'DESC']],
 		columns: [
 		{data: 'number', name: 'number'},
 		{data: 'fullname', name: 'user_id'},

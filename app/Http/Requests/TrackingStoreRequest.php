@@ -24,8 +24,8 @@ class TrackingStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'tracking' => 'required|min:5|max:25',
-            'description' => 'required|string|max:15|min:3',
+            'tracking' => 'required|min:2|max:100',
+            'description' => 'required|string|max:100|min:3',
             'consolidated_id' => 'required|numeric',
             'distributor_id' => 'required|numeric',
             'price' => 'required|numeric|max:1000000',

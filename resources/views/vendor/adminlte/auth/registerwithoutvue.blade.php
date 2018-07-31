@@ -74,7 +74,7 @@
                             <button type="submit" class="btn btn-primary btn-block btn-flat"><span class="fa fa-send"></span> {{ trans('adminlte_lang::message.register') }}</button>
                         </div><!-- /.col -->
                         <div class="col-md-12">
-                            <p class="text-justify"><b>* Ley de Protección de Datos Personales:</b> "La autorización suministrada en el presente formulario faculta a Deloitte para que dé a sus datos aquí recopilados el tratamiento señalado en la "Política de Privacidad para el Tratamiento de Datos Personales" de Deloitte, el cual incluye, entre otras, el envío de información promocional, así como la invitación de eventos. El titular de los datos podrá, en cualquier momento, solicitar que la información sea modificada, actualizada o retirada de las bases de datos de Deloitte.</p>
+                            <p class="text-justify"><b>* Ley de Protección de Datos Personales:</b> "La autorización suministrada en el presente formulario faculta a U.S Cargo SKY para que dé a sus datos aquí recopilados el tratamiento señalado en la "Política de Privacidad para el Tratamiento de Datos Personales" de U.S Cargo SKY, el cual incluye, entre otras, el envío de información promocional, así como la invitación de eventos. El titular de los datos podrá, en cualquier momento, solicitar que la información sea modificada, actualizada o retirada de las bases de datos de U.S Cargo SKY.</p>
                         </div>
                     </div>
                 </form>

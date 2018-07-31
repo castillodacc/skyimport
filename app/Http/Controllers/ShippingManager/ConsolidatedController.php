@@ -43,7 +43,7 @@ class ConsolidatedController extends Controller
         if ($request->c === 'abierto') {
             $object->where('closed_at', '>', \Carbon::now());
         } else {
-            $object->where('closed_at', '<', \Carbon::now())->orderBy('closed_at', 'DESC');
+            $object->where('closed_at', '<', \Carbon::now());
         }
 
 
@@ -154,11 +154,14 @@ class ConsolidatedController extends Controller
             if ($request->has('consolidated')) {
                 $query->Where('number', 'like', "%{$request->consolidated}%");
             }
-            if ($request->has('create_date')) {
-                $query->Where('created_at', 'like', "%{$request->create_date}%");
-            }
-            if ($request->has('close_date')) {
-                $query->Where('closed_at', 'like', "%{$request->close_date}%");
+            $from = date('2010-01-01 h:m:s');
+            $to = \Carbon::now();
+            if ($request->has('create_date')) $from = \Carbon::parse("{$request->create_date} 00:00:00");
+            if ($request->has('close_date')) $to = date("{$request->close_date} 23:59:59");
+            if ($request->c === 'abierto') {
+                $query->whereBetween('created_at', [$from, $to]);
+            } else {
+                $query->whereBetween('closed_at', [$from, $to]);
             }
         })
         ->make(true); 
@@ -234,6 +237,7 @@ class ConsolidatedController extends Controller
     public function destroy($id)
     {
         $consolidated = Consolidated::findOrFail($id);
+        if($consolidated->shippingstate_id > 2) return response()->json(true);
         $consolidated->trackings->each(function ($t) {
             $t->eventsUsers->each(function ($e) {
                 $e->delete();
@@ -320,7 +324,9 @@ class ConsolidatedController extends Controller
             'event_id' => 3,
         ]);
         \Mail::to('uscargo@importadorasky.com')->send(new \skyimport\Mail\Formalizado($consolidated));
+        \Mail::to($consolidated->user->email)->send(new \skyimport\Mail\Formalizado($consolidated));
         return response()->json($consolidated->save());
+        
     }
 
     public function dataEvents($id = null)

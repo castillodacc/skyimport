@@ -1,7 +1,5 @@
 <?php
-
 namespace skyimport\Http\Controllers\ShippingManager;
-
 use Illuminate\Http\Request;
 use skyimport\Http\Controllers\Controller;
 use skyimport\Models\Tracking;
@@ -10,14 +8,12 @@ use skyimport\Http\Requests\TrackingUpdateRequest;
 use skyimport\Models\EventsUsers;
 use skyimport\Models\Consolidated;
 use Yajra\DataTables\Datatables;
-
 class TrackingController extends Controller
 {
   public function __construct()
   {
     $this->middleware('ajax')->except(['index', 'viewConsult']);
   }
-
   /**
    * Display a listing of the resource.
    *
@@ -32,13 +28,10 @@ class TrackingController extends Controller
         return redirect()->to('/');
       }
     }
-
     $request = request();
-
     $query = Tracking::query()
     ->with(['distributor'])
     ->select(['trackings.*']);
-
     return (new Datatables)->of($query)
     ->addColumn('action', function ($tracking) {
       return '
@@ -70,7 +63,6 @@ class TrackingController extends Controller
     })
     ->make(true);
   }
-
   /**
    * Show the form for creating a new resource.
    *
@@ -80,7 +72,6 @@ class TrackingController extends Controller
   {
     return redirect()->to('/');
   }
-
   /**
    * Store a newly created resource in storage.
    *
@@ -93,7 +84,6 @@ class TrackingController extends Controller
     ->where('distributor_id', '=', $request->distributor_id)
     ->where('consolidated_id', '=', $request->consolidated_id)
     ->value('id');
-
     if ($existe) return response()->json(['msg' => 'El Tracking Ya fue registrado.']);
     $tracking = Tracking::create($request->all());
     EventsUsers::create([
@@ -102,7 +92,6 @@ class TrackingController extends Controller
     ]);
     return response()->json($tracking);
   }
-
   /**
    * Display the specified resource.
    *
@@ -114,7 +103,6 @@ class TrackingController extends Controller
     $tracking = Tracking::findOrFail($id);
     return response()->json($tracking);
   }
-
   /**
    * Show the form for editing the specified resource.
    *
@@ -125,7 +113,6 @@ class TrackingController extends Controller
   {
     return redirect()->to('/');
   }
-
   /**
    * Update the specified resource in storage.
    *
@@ -138,7 +125,6 @@ class TrackingController extends Controller
     $tracking = Tracking::findOrFail($id)->update($request->all());
     return response()->json($tracking);
   }
-
   /**
    * Remove the specified resource from storage.
    *
@@ -154,7 +140,6 @@ class TrackingController extends Controller
     $tracking->delete();
     return response()->json($tracking);
   }
-
   /**
    * restaura el recurso especificado desde el almacenamiento.
    *
@@ -172,7 +157,6 @@ class TrackingController extends Controller
     $tracking->delete();
     return response()->json($consolidated);
   }
-
   public function all()
   {
     $query = Tracking::query()
@@ -186,13 +170,12 @@ class TrackingController extends Controller
       'trackings.consolidated_id',
       'trackings.description'
     ]);
-
     return (new Datatables)->of($query)
     ->addColumn('consolidated_num', function ($tracking) {
-      return $tracking->consolidated->number;
+     return $tracking->consolidated->number;
     })
     ->addColumn('user', function ($tracking) {
-      return $tracking->consolidated->user->fullName();
+     return $tracking->consolidated->user->fullName();
     })
     ->addColumn('action', function ($tracking) {
       return '<label class="control control--checkbox">
@@ -214,7 +197,6 @@ class TrackingController extends Controller
       $query
       ->where('consolidateds.closed_at', '<', \Carbon::now())
       ->where('consolidateds.shippingstate_id', '<>', 10);
-
       if (isset($request->search['value']) && count($request->search['value']) > 0) {
         $query
         ->where('consolidateds.number', '=', $request->search['value'])
@@ -229,7 +211,6 @@ class TrackingController extends Controller
     })
     ->make(true);
   }
-
   public function addMassive($id, Request $request)
   {
     $trackings = $request->trackings;
@@ -248,17 +229,18 @@ class TrackingController extends Controller
           'tracking_id' => $key,
           'event_id' => $id,
         ]);
+        if ($id == 12) {
+        \Mail::to(Tracking::findOrFail($key)->consolidated->user->email)->send(new \skyimport\Mail\TrackingRecibido($key));
+        }
         $id_consolidated = Tracking::findOrFail($key)->consolidated->id;
         \skyimport\Http\Controllers\NotificationController::changeStateOfConsolidated($id_consolidated, $id);
-      }
+        }
     }
     return response()->json(compact('errors'));
   }
-
   public function viewConsult()
   {
     if (request()->method() == 'GET') return view('sendings.consult');
-
     $consolidated = Consolidated::where('number', '=', request()->consolidated)->first();
     if ($consolidated == null) {
       return response()->json(['mgs' => 'Este consolidado no ha sido registrado en nuestro sistema.']);

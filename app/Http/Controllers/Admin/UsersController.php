@@ -1,14 +1,11 @@
 <?php
-
 namespace skyimport\Http\Controllers\Admin;
-
 use Illuminate\Http\Request;
 use skyimport\Http\Controllers\Controller;
 use skyimport\Http\Requests\ { UserStoreRequest, UserUpdateRequest, changePasswordRequest };
 use skyimport\User;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Datatables;
-
 class UsersController extends Controller
 {
     public function __construct()
@@ -16,7 +13,6 @@ class UsersController extends Controller
         $this->middleware('admin')->only(['index', 'store', 'destroy', 'restore']);
         $this->middleware('ajax')->except(['index', 'profile']);
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -25,10 +21,8 @@ class UsersController extends Controller
     public function index()
     {
         if (!request()->ajax()) return view('users.users');
-
         $query = User::query()->with(['role'])
-        ->select(['id', 'name', 'last_name', 'num_id', 'email', 'phone', 'role_id', 'state_id']);
-
+        ->select(['*']);
         return (new Datatables)->of($query)
         ->addColumn('role.rol', function ($user) {
             if ($user->role->id == 1) {
@@ -69,7 +63,6 @@ class UsersController extends Controller
         })
         ->make(true);
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -83,7 +76,6 @@ class UsersController extends Controller
         $user = User::create($data);
         return response()->json($user);
     }
-
     /**
      * Display the specified resource.
      *
@@ -99,7 +91,6 @@ class UsersController extends Controller
         $countries = \DB::table('countries')->latest('id')->pluck('country', 'id');
         return response()->json(compact('user', 'countries'));
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -122,7 +113,6 @@ class UsersController extends Controller
         $user = User::findOrFail($id)->fill($data);
         return response()->json($user->save());
     }
-
     /**
      * Upload image 'avatar' from user.
      *
@@ -146,7 +136,6 @@ class UsersController extends Controller
         }
         return response('', 200);
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -156,14 +145,15 @@ class UsersController extends Controller
     public function destroy($id = null)
     {
         if($id == 1) return response(['error' => 'Error al modificar usuario'], 421);
-
         if ($id > 0) {
             $user = User::findOrFail($id);
             $string = '';
+            $u = 0;
+            $num = \DB::select('select count(*) as total from users where email LIKE "' . \Auth::user()->email . '%"')[0]->total;
             do {
-                $string = $string . ' - ' . 'D';
-                $u = User::where('email', '=', $user->email . $string)->count();
-            } while ($u == 1);
+                $string .= ' - ' . 'D';
+                $u++;
+            } while ($u < $num);
             $user->fill([
                 'email' => $user->email . $string,
                 'num_id' => $user->num_id . $string,
@@ -172,7 +162,6 @@ class UsersController extends Controller
             return response()->json($user);
         }
     }
-
     /**
      * Show the user's profile.
      *
@@ -188,7 +177,6 @@ class UsersController extends Controller
         }
         return view('users.profile', compact('user', 'id'));
     }
-
     /**
      * Change of password.
      *
@@ -202,7 +190,6 @@ class UsersController extends Controller
         ]);
         return response()->json($user->save());
     }
-
     /**
      * Data for register of user.
      *
@@ -214,7 +201,6 @@ class UsersController extends Controller
         $roles = \DB::table('roles')->latest('id')->select('id', 'rol')->get();
         return response()->json(compact('countries', 'roles'));
     }
-
     public function dataStates($id)
     {
         $states = \DB::table('states')
@@ -223,7 +209,6 @@ class UsersController extends Controller
         ->get(['state', 'id']);
         return response()->json($states);
     }
-
     /**
      * restaura el recurso especificado desde el almacenamiento.
      *
@@ -237,27 +222,25 @@ class UsersController extends Controller
         $user = User::withTrashed()->findOrFail($id)->restore();
         return response()->json($user);
     }
-
     public function getAll()
     {
         $users = User::get(['name', 'last_name', 'id', 'num_id']);
         return response()->json(compact('users'));
     }
-
     public function autoDeleting(Request $request)
     {
         if ($request->sr == 'asd') {
             if(\Auth::user()->id == 1) return response(['error' => 'Error al modificar usuario'], 421);
             $string = '';
+            $u = 0;
+            $num = \DB::select('select count(*) as total from users where email LIKE "' . \Auth::user()->email . '%"')[0]->total;
             do {
-                $string = $string . ' - ' . 'D';
-                $u = User::where('email', '=', \Auth::user()->email . $string)->count();
-            } while ($u == 1);
-
+                $string .= ' - ' . 'D';
+                $u++;
+            } while ($u < $num);
             \Auth::user()->fill([
                 'email' => \Auth::user()->email . $string,
                 'num_id' => \Auth::user()->num_id . $string,
-                'password' => '',
             ])->save();
             $user = \Auth::user()->delete();
             return response()->json($user);

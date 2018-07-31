@@ -1,20 +1,20 @@
 @extends('emails.layouts')
 
 @section('title')
-	<strong>
-		Hola, el siguiente correo es para notificarle que el siguiente consolidado fue formalizado.
-	</strong>
+    <strong>Hola, este correo es para notificarte que el siguiente consolidado fue formalizado.</strong>
+
 @endsection
+
 
 @section('content')
 	<ul>
-		<li>Consolidado n°: {{ $consolidado->number }}</li>
+	    <li><b>Evento: Consolidado {{ $consolidado->number }}</b></li>
 		<li>Cliente: {{ $consolidado->user->fullName() }}</li>
-		<li>Total de trackigns: {{ $consolidado->trackings->count() }}</li>
-		<li>Identificación: {{ $consolidado->user->num_id }}</li>
+		<li>Total de Trackings: {{ $consolidado->trackings->count() }}</li> 
 	</ul>
-	<p>Trackings:</p>
+
 	<ul>
+	    <li>Trackings:</li>
 		@foreach($consolidado->trackings as $tracking)
 		<li>Tracking: {{ $tracking->tracking }} - Descripción: {{ $tracking->description }}</li>
 		@endforeach

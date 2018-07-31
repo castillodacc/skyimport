@@ -1,18 +1,13 @@
 <?php
-
 namespace skyimport\Mail;
-
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-
 class Formalizado extends Mailable
 {
     use Queueable, SerializesModels;
-
     public $consolidado;
-
     /**
      * Create a new message instance.
      *
@@ -22,7 +17,6 @@ class Formalizado extends Mailable
     {
         $this->consolidado = $consolidado;
     }
-
     /**
      * Build the message.
      *
@@ -31,6 +25,7 @@ class Formalizado extends Mailable
     public function build()
     {
         $consolidado = $this->consolidado;
-        return $this->view('emails.formalizado', compact('consolidado'));
+        return $this->view('emails.formalizado', compact('consolidado'))
+        ->subject('Consolidado Formalizado ' . $consolidado->number);
     }
 }

@@ -26,9 +26,7 @@
 								<hr/>
 								<tr>
 									<td style="padding: 5px 0 5px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px; text-align: justify;">
-										<hr />
-										 @yield('title')
-										<hr />
+									
 										<section>
 											 @yield('content')
 										</section>
@@ -108,13 +106,17 @@
 											<tr>
 												<td style="font-family: Arial, sans-serif; font-size: 12px; font-weight: bold;">
 													<a href="https://twitter.com/importadorasky" style="color: #ffffff;">
-														<img src="{{ asset('img/tw.gif') }}" alt="Twitter" width="38" height="38" style="display: block;" border="0" />
+														<img src="{{ asset('img/tw.gif') }}" alt="Twitter" width="38" height="38" style="display: block;margin: 3px" border="0" />
 													</a>
 												</td>
-												<td style="font-size: 0; line-height: 0;" width="20">&nbsp;</td>
 												<td style="font-family: Arial, sans-serif; font-size: 12px; font-weight: bold;">
 													<a href="https://www.facebook.com/importadorasky/" style="color: #ffffff;">
-														<img src="{{ asset('img/fb.gif') }}" alt="Facebook" width="38" height="38" style="display: block;" border="0" />
+														<img src="{{ asset('img/fb.gif') }}" alt="Facebook" width="38" height="38" style="display: block;margin: 3px" border="0" />
+													</a>
+												</td>
+												<td style="font-family: Arial, sans-serif; font-size: 12px; font-weight: bold;">
+													<a href="https://www.instagram.com/importadorasky/" style="color: #ffffff;">
+														<img src="{{ asset('img/ins.png') }}" alt="Instagram" width="38" height="38" style="display: block;margin: 3px" border="0" />
 													</a>
 												</td>
 											</tr>
