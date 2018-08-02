@@ -314,19 +314,19 @@ class ConsolidatedController extends Controller
      */
     public function formalize($id)
     {
-        $consolidated = Consolidated::findOrFail($id);
+        $consolidated = $consolidated2 = Consolidated::findOrFail($id);
         if (! $consolidated->trackings->count()) return response(['msg' => 'El consolidado debe tener al menos un tracking.'], 422);
-        if ($consolidated->shippingstate_id == 3) return;
+        if ($consolidated->shippingstate_id >= 3) return;
         $consolidated->closed_at = \Carbon::now();
         $consolidated->shippingstate_id = 3;
+        $consolidated->save();
         EventsUsers::create([
-            'consolidated_id' => $consolidated->id,
+            'consolidated_id' => $consolidated2->id,
             'event_id' => 3,
         ]);
-        \Mail::to('uscargo@importadorasky.com')->send(new \skyimport\Mail\Formalizado($consolidated));
-        \Mail::to($consolidated->user->email)->send(new \skyimport\Mail\Formalizado($consolidated));
-        return response()->json($consolidated->save());
-        
+        \Mail::to('uscargo@importadorasky.com')->send(new \skyimport\Mail\Formalizado($consolidated2));
+        \Mail::to($consolidated2->user->email)->send(new \skyimport\Mail\Formalizado($consolidated2));
+        return response()->json($consolidated2);
     }
 
     public function dataEvents($id = null)
@@ -373,5 +373,16 @@ class ConsolidatedController extends Controller
         }
         $c->update(['user_id' => request()->user_id]);
         return response()->json($c);
+    }
+
+    public function testDelete($id)
+    {
+        $consolidated = Consolidated::findOrFail($id);
+        if (!$consolidated->trackings->count()) {
+            $consolidated->eventsUsers->each(function ($e) {
+                $e->delete();
+            });
+            $consolidated->delete();
+        }
     }
 }

@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
 	});
 	Route::group(['namespace' => 'ShippingManager'], function () {
 		Route::resource('consolidados', 'ConsolidatedController');
+		Route::post('test-consolidados/{id}', 'ConsolidatedController@testDelete');
 		Route::post('consolidados/restore/{id}', 'ConsolidatedController@restore');
 		Route::post('consolidados/data-events/{id?}', 'ConsolidatedController@dataEvents');
 		Route::post('data-for-consolidated', 'ConsolidatedController@dataForRegister');

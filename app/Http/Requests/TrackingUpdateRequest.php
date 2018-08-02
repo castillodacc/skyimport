@@ -25,7 +25,7 @@ class TrackingUpdateRequest extends FormRequest
     {
         return [
             'tracking' => 'required|min:2|max:100',
-            'description' => 'required|string|alpha|max:15|min:3',
+            'description' => 'required|alfa_space|max:15|min:3',
             'consolidated_id' => 'required|numeric',
             'distributor_id' => 'required|numeric',
             'price' => 'required|numeric|max:1000000',
