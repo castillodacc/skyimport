@@ -930,7 +930,7 @@ $('#addForm').click(function (e) {
 	})
 	.done(function(response) {
 		$('tr').removeClass('info');
-		$('#btn-create-tracking').show();
+		$('#btn-create-tracking, #consolidated-consolidated').show();
 		$('#btns-edit-tracking').hide();
 		$('#tracking-form-register input[name=_method]').val('POST');
 		$('#tracking-form-register').attr('action', path + 'tracking');
@@ -1067,6 +1067,7 @@ $('#consolidated-save').click(function () {
 	$('#tracking-form-register').find('[name="_method"]').val('POST');
 	$('#modal-send-form').modal('toggle');
 	consTable.draw();
+	consTable2.draw();
 });
 function cargarEventos(id) {
 	$.post(path + 'formalized/' + id, function (response) {
@@ -1233,7 +1234,6 @@ if (location.href.indexOf('/tracking') > 0) {
 		let trac = localStorage.getItem('trackings');
 		let eve = $('select#event_to').val();
 		if (trac) {
-
 			trac = trac.split(',');
 			if (eve == '') {
 				toastr.warning('Debe agregar un evento');

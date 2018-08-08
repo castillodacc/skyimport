@@ -5,6 +5,7 @@ namespace skyimport\Console\Commands;
 use Illuminate\Console\Command;
 use skyimport\Models\Consolidated;
 use skyimport\Models\EventsUsers;
+use skyimport\Http\Controllers\NotificationController;
 
 class Consolidateds extends Command
 {
@@ -86,5 +87,11 @@ class Consolidateds extends Command
                 }
             }
         });
+
+        $consolidated = Consolidated::where('shippingstate_id', '=', 3)->get();
+        $consolidated->each(function ($c) {
+            NotificationController::allStatusInMiami($c->id);
+        });
+
     }
 }

@@ -134,9 +134,7 @@ class TrackingController extends Controller
   public function destroy($id)
   {
     $tracking = Tracking::findOrFail($id);
-    $tracking->eventsUsers->each(function ($e) {
-      $e->delete();
-    });
+    // $tracking->eventsUsers->each(function ($e) {$e->delete(); });
     $tracking->delete();
     return response()->json($tracking);
   }

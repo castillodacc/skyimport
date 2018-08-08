@@ -11,9 +11,8 @@ class NotificationController extends Controller
 	{
 		$this->middleware('ajax');
 	}
-	public function eventsAll()
+	public function eventsAll(Request $request)
 	{
-		$request = request();
 		$consolidated = Consolidated::find($request->consolidated_id);
 		$events = EventsUsers::query()->withTrashed()->limit(10);
 		if (! is_null($consolidated)) {
@@ -52,7 +51,7 @@ class NotificationController extends Controller
 					return 'Entregado a Importadora Sky. Se adjunta Orden de servicio por valor de $'.number_format($e->consolidated->bill, 2, ',', '.').' COP.';
 				}
 			} else {
-				if ($e->event_id === 12) {
+				if ($e->event_id === 12 && $e->tracking) {
 					return 'Tracking '.$e->tracking->tracking.' recibido en bodega Miami, Florida.';
 				}
 			}

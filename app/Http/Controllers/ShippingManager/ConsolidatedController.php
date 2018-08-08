@@ -238,14 +238,12 @@ class ConsolidatedController extends Controller
     public function destroy($id)
     {
         $consolidated = Consolidated::findOrFail($id);
+        // $consolidated->eventsUsers->each(function ($e) {$e->delete(); });
         $consolidated->trackings->each(function ($t) {
-            $t->eventsUsers->each(function ($e) {
-                $e->delete();
-            });
+            // $t->eventsUsers->each(function ($e) {$e->delete(); });
             $t->delete();
         });
-        $consolidated->delete();
-        return response()->json($consolidated);
+        return response()->json($consolidated->delete());
     }
 
     /**
@@ -379,9 +377,7 @@ class ConsolidatedController extends Controller
     {
         $consolidated = Consolidated::findOrFail($id);
         if (!$consolidated->trackings->count()) {
-            $consolidated->eventsUsers->each(function ($e) {
-                $e->delete();
-            });
+            // $consolidated->eventsUsers->each(function ($e) {$e->delete(); });
             $consolidated->delete();
         }
     }
